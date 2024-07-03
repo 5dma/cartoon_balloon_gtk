@@ -6,7 +6,11 @@
 int main(int argc, char *argv[])
 {
 
-	int a = read_json();
+	Settings * settings;
+	settings = read_json();
+	if (settings == NULL) {
+		return 0;
+	}
 	MagickWand *m_wand = NULL;
 	
 	int width,height;

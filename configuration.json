@@ -1,0 +1,17 @@
+{
+	"new_width": 520,
+	"balloon_fill_color": "#f2e38b",
+	"balloon_stroke_color": "#000000",
+	"excess_font_height": 10,
+	"padding": 10,
+	"excess_text_height": 10,
+	"callout_indent": 10,
+	"callout_space": 20,
+	"elevation": 5,
+	"space": 10,
+	"stroke_width": 2,
+	"extra_offset": 10,
+	"font_size": 20,
+	"font": "DejaVu-Sans",
+	"new_image": "/tmp/new_image.jpg"
+}
