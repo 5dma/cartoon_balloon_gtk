@@ -1,8 +1,8 @@
 typedef struct Settings
 {
 	gint64 new_width;
-	char balloon_fill_color[7];
-	char balloon_stroke_color[7];
+	char balloon_fill_color[8];
+	char balloon_stroke_color[8];
 	gint64 excess_font_height;
 	gint64 padding;
 	gint64 excess_text_height;

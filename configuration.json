@@ -13,5 +13,5 @@
 	"extra_offset": 10,
 	"font_size": 20,
 	"font": "DejaVu-Sans",
-	"new_image": "/tmp/new_image.jpg"
+	"new_image_path": "/tmp/new_image.jpg"
 }

@@ -11,6 +11,9 @@ int main(int argc, char *argv[])
 	if (settings == NULL) {
 		return 0;
 	}
+	g_print("font size %lli \n",settings->font_size);
+	g_print("balloon_fill_color %s \n",settings->balloon_fill_color);
+	return 0;
 	MagickWand *m_wand = NULL;
 	
 	int width,height;
@@ -44,5 +47,6 @@ int main(int argc, char *argv[])
 	
 	MagickWandTerminus();
 	printf("Finished\n");
+	g_free(settings);
 	return 0;
 }
