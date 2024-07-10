@@ -5,6 +5,7 @@
 
 /* https://imagemagick.org/api/magick-image.php */
 /* https://imagemagick.org/api/drawing-wand.php */
+/* https://imagemagick.org/api/pixel-wand.php */
 int main(int argc, char *argv[])
 {
 
@@ -36,9 +37,24 @@ int main(int argc, char *argv[])
 
 	MagickResizeImage(m_wand, settings->new_width ,new_height,LanczosFilter,1);
 	
+	DrawingWand * d_wand =  NewDrawingWand();
+	PixelWand * p_wand = NewPixelWand();
+	PixelSetColor(p_wand,  "#0000ff");
+	PixelSetAlpha(p_wand,1.0);
+
+
+	DrawSetStrokeColor(d_wand, p_wand);
+	DrawSetStrokeWidth(d_wand, 4.0);
+	DrawSetStrokeOpacity(d_wand, 1.0);
+
+	DrawLine(d_wand, 20,20, 300, 100);
+
+
 	/* Write the new image */
 	MagickWriteImage(m_wand,"/tmp/logo_resize.jpg");
 	
+	DestroyDrawingWand(d_wand);
+
 	/* Clean up */
 	if (m_wand) m_wand = DestroyMagickWand(m_wand);
 	
