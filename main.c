@@ -3,6 +3,8 @@
 #include <wand/magick_wand.h>
 #include "headers.h"
 
+/* https://imagemagick.org/api/magick-image.php */
+/* https://imagemagick.org/api/drawing-wand.php */
 int main(int argc, char *argv[])
 {
 
@@ -13,37 +15,32 @@ int main(int argc, char *argv[])
 	}
 	g_print("font size %lli \n",settings->font_size);
 	g_print("balloon_fill_color %s \n",settings->balloon_fill_color);
-	return 0;
+
 	MagickWand *m_wand = NULL;
 	
-	int width,height;
+	gint64 old_width, old_height;
 	
 	MagickWandGenesis();
 	m_wand = NewMagickWand();
 	// Read the image - all you need to do is change "logo:" to some other
 	// filename to have this resize and, if necessary, convert a different file
-	MagickReadImage(m_wand,"/tmp/pears.jpg");
-	width = MagickGetImageWidth(m_wand);
-	height = MagickGetImageHeight(m_wand);
-	
-	// Cut them in half but make sure they don't underflow
-	if((width /= 2) < 1)width = 1;
-	if((height /= 2) < 1)height = 1;
-	
+	MagickReadImage(m_wand,"/Users/mlautman/Documents/graphics/light-snack.jpg");
+	old_width = MagickGetImageWidth(m_wand);
+	old_height = MagickGetImageHeight(m_wand);
+
+	gint64 new_height;
+	new_height = (settings->new_width * old_height ) / old_width;
+
 	// Resize the image using the Lanczos filter
 	// The blur factor is a "double", where > 1 is blurry, < 1 is sharp
-	// I haven't figured out how you would change the blur parameter of MagickResizeImage
-	// on the command line so I have set it to its default of one.
-	MagickResizeImage(m_wand,width,height,LanczosFilter,1);
-	
-	// Set the compression quality to 95 (high quality = low compression)
-	MagickSetImageCompressionQuality(m_wand,95);
+
+	MagickResizeImage(m_wand, settings->new_width ,new_height,LanczosFilter,1);
 	
 	/* Write the new image */
 	MagickWriteImage(m_wand,"/tmp/logo_resize.jpg");
 	
 	/* Clean up */
-	if(m_wand)m_wand = DestroyMagickWand(m_wand);
+	if (m_wand) m_wand = DestroyMagickWand(m_wand);
 	
 	MagickWandTerminus();
 	printf("Finished\n");

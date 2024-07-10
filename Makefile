@@ -7,7 +7,7 @@ JSONGLIBCFLAGS=$(shell pkg-config --cflags json-glib-1.0)
 JSONGLIBLFLAGS=$(shell pkg-config --libs json-glib-1.0) 
 GLIB_HOME=/opt/homebrew/Cellar/glib/2.80.3/
 hellomake: main.c read_json.c
-	$(CC) -o balloon -I$(GLIB_HOME)include/glib-2.0/ \
+	$(CC) -g -o balloon -I$(GLIB_HOME)include/glib-2.0/ \
 	-I$(GLIB_HOME)lib/glib-2.0/include \
 	$(IMCFLAGS) \
 	$(IMLFLAGS) \
