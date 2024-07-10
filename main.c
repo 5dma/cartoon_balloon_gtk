@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 
 	DrawLine(d_wand, 20,20, 300, 100);
 
+	MagickDrawImage(m_wand,d_wand);
 
 	/* Write the new image */
 	MagickWriteImage(m_wand,"/tmp/logo_resize.jpg");
