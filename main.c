@@ -26,6 +26,15 @@ int main(int argc, char *argv[])
 
 	/* Resize the image */
 	resize(m_wand, settings);
+
+	Annotation * annotation;
+	annotation = read_annotation();
+	if (annotation == NULL) {
+		return 0;
+	}
+	g_print("The annotation text is %s\n", annotation->text_string);
+
+//	add_text(m_wand, settings);
 		
 	DrawingWand * d_wand =  NewDrawingWand();
 	PixelWand * p_wand = NewPixelWand();

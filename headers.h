@@ -20,5 +20,11 @@ typedef struct Settings
 	char new_image_path[256];
 } Settings;
 
+typedef struct Annotation
+{
+	char text_string[256];
+} Annotation;
+
 Settings * read_json();
+Annotation * read_annotation();
 void resize (MagickWand *m_wand, Settings * settings );

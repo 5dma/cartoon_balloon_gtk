@@ -13,4 +13,4 @@ hellomake: main.c read_json.c
 	$(IMLFLAGS) \
 	$(JSONGLIBCFLAGS) \
 	$(JSONGLIBLFLAGS) \
-	read_json.c resize.c main.c 
+	read_json.c resize.c add_text.c read_annotation.c main.c 
