@@ -1,3 +1,6 @@
+#include <wand/magick_wand.h>
+#include "glib.h"
+
 typedef struct Settings
 {
 	gint64 new_width;
@@ -18,3 +21,4 @@ typedef struct Settings
 } Settings;
 
 Settings * read_json();
+void resize (MagickWand *m_wand, Settings * settings );
