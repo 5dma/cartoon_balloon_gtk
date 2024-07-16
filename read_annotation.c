@@ -29,9 +29,32 @@ Annotation * read_annotation() {
 	
 	json_cursor = json_reader_read_member (reader, "text_string");
 	g_strlcpy(annotation->text_string, json_reader_get_string_value (reader), 255);
+	json_reader_end_member(reader);
+	g_print("The text string is %s\n", annotation->text_string);
 
+	json_cursor = json_reader_read_member (reader, "text_bottom_left");
+	json_cursor = json_reader_read_member (reader, "x");
+	annotation->text_bottom_left.x = json_reader_get_int_value (reader);
 	json_reader_end_member(reader);
 
+	json_cursor = json_reader_read_member (reader, "y");
+	annotation->text_bottom_left.y = json_reader_get_int_value (reader);
+	json_reader_end_member(reader);
+	json_reader_end_member(reader);
+	
+	json_cursor = json_reader_read_member (reader, "callout_vertex");
+	json_cursor = json_reader_read_member (reader, "x");
+	annotation->callout_vertex.x = json_reader_get_int_value (reader);
+	json_reader_end_member(reader);
+
+	json_cursor = json_reader_read_member (reader, "y");
+	annotation->callout_vertex.y = json_reader_get_int_value (reader);
+
+	annotation->resize_proportion_x = 0;
+	annotation->resize_proportion_y = 0;
+
+	g_print("Text bottom vertex x, y = %lld , %lld\n", annotation->text_bottom_left.x, annotation->text_bottom_left.y);
+	g_print("Callout vertex x, y = %lld , %lld\n", annotation->callout_vertex.x, annotation->callout_vertex.y);
 
 	g_object_unref (parser);
 	g_object_unref(reader);

@@ -20,11 +20,22 @@ typedef struct Settings
 	char new_image_path[256];
 } Settings;
 
+typedef struct Coordinates
+{
+	gint64 x;
+	gint64 y;
+} Coordinates;
+
 typedef struct Annotation
 {
 	char text_string[256];
+	float resize_proportion_x;
+	float resize_proportion_y;
+	Coordinates text_bottom_left;
+	Coordinates callout_vertex;
 } Annotation;
 
 Settings * read_json();
 Annotation * read_annotation();
-void resize (MagickWand *m_wand, Settings * settings );
+void resize (MagickWand *m_wand, Settings * settings, Annotation * annotation );
+void add_text (MagickWand *m_wand, Settings * settings, Annotation * annotation);

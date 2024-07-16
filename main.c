@@ -24,15 +24,18 @@ int main(int argc, char *argv[])
 	
 	MagickReadImage(m_wand,"/Users/mlautman/Documents/graphics/light-snack.jpg");
 
-	/* Resize the image */
-	resize(m_wand, settings);
-
 	Annotation * annotation;
 	annotation = read_annotation();
 	if (annotation == NULL) {
 		return 0;
 	}
 	g_print("The annotation text is %s\n", annotation->text_string);
+
+
+	/* Resize the image */
+	resize(m_wand, settings, annotation);
+
+
 
 //	add_text(m_wand, settings);
 		
@@ -61,6 +64,7 @@ int main(int argc, char *argv[])
 	MagickWandTerminus();
 	g_print("The new image is at %s\n", settings -> new_image_path);
 	g_free(settings);
+	g_free(annotation);
 
 
 	return 0;

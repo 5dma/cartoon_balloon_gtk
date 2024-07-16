@@ -1,3 +1,12 @@
 {
-	"text_string": "Hi everbody!"
+	"text_string": "Hi everbody!",
+	"text_bottom_left": {
+		"x": 200,
+		"y": 210
+	},
+	"callout_vertex": {
+		"x": 250,
+		"y": 260
+	}
+
 }
