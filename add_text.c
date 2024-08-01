@@ -48,9 +48,6 @@ MagickBooleanType add_text (MagickWand *m_wand, DrawingWand *d_wand, Settings * 
 	gint64 left_offset;
 	left_offset = annotation->text_bottom_left.x * annotation->resize_proportion_x;
 
-	//DrawInfo *draw_info;
-	//draw_info = PeekDrawingWand(d_wand);
-
 	MagickBooleanType result = MagickAnnotateImage(m_wand, d_wand, left_offset, 20, 0, annotation->text_string );
 	
 	//Text_Analysis * text_analysis = drawing_with_split_text(m_wand, draw_info, settings, left_offset, annotation->text_string);

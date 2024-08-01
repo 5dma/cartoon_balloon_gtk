@@ -52,11 +52,13 @@ int main(int argc, char *argv[])
 	DrawSetStrokeWidth(d_wand, settings->stroke_width);
 	DrawSetStrokeOpacity(d_wand, 1.0);
 	DrawSetFontSize(d_wand, 50);
+	result = DrawSetFontFamily(d_wand, settings->font);
+
+	if (result == MagickFalse) {
+		g_message("Could not set font");
+	}
 
 	DrawLine(d_wand, 20, 20, 300, 100);
-
-	Text_Analysis *text_analysis;
-	//text_analysis = add_text(m_wand, d_wand, settings, annotation);
 
 	result = add_text(m_wand, d_wand, settings, annotation);
 
@@ -75,7 +77,6 @@ int main(int argc, char *argv[])
 	g_print("The new image is at %s\n", settings->new_image_path);
 	g_free(settings);
 	g_free(annotation);
-	g_free(text_analysis);
 
 	return 0;
 }
