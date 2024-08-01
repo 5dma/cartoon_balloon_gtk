@@ -9,63 +9,73 @@
 int main(int argc, char *argv[])
 {
 
-	Settings * settings;
+	Settings *settings;
 	settings = read_json();
-	if (settings == NULL) {
+	if (settings == NULL)
+	{
 		return 0;
 	}
 
 	MagickWand *m_wand = NULL;
-	
+
 	gint64 old_width, old_height;
-	
+
 	MagickWandGenesis();
 	m_wand = NewMagickWand();
-	
-	MagickReadImage(m_wand,"/Users/mlautman/Documents/graphics/light-snack.jpg");
 
-	Annotation * annotation;
+	MagickBooleanType result = MagickReadImage(m_wand, "/Users/mlautman/Documents/graphics/light-snack.jpg");
+
+	if (result == MagickFalse) {
+		g_print("Could not read the image %s. Exiting\n","/Users/mlautman/Documents/graphics/light-snack.jpg");
+		return -1;
+	}
+
+
+
+	Annotation *annotation;
 	annotation = read_annotation();
-	if (annotation == NULL) {
+	if (annotation == NULL)
+	{
 		return 0;
 	}
 	g_print("The annotation text is %s\n", annotation->text_string);
 
-
 	/* Resize the image */
 	resize(m_wand, settings, annotation);
 
-
-
-//	add_text(m_wand, settings);
-		
-	DrawingWand * d_wand =  NewDrawingWand();
-	PixelWand * p_wand = NewPixelWand();
-	PixelSetColor(p_wand,  "#0000ff");
-	PixelSetAlpha(p_wand,1.0);
-
+	DrawingWand *d_wand = NewDrawingWand();
+	PixelWand *p_wand = NewPixelWand();
+	PixelSetColor(p_wand, "#0000ff");
+	PixelSetAlpha(p_wand, 1.0);
 
 	DrawSetStrokeColor(d_wand, p_wand);
-	DrawSetStrokeWidth(d_wand, settings -> stroke_width);
+	DrawSetStrokeWidth(d_wand, settings->stroke_width);
 	DrawSetStrokeOpacity(d_wand, 1.0);
+	DrawSetFontSize(d_wand, 50);
 
-	DrawLine(d_wand, 20,20, 300, 100);
+	DrawLine(d_wand, 20, 20, 300, 100);
 
-	MagickDrawImage(m_wand,d_wand);
+	Text_Analysis *text_analysis;
+	//text_analysis = add_text(m_wand, d_wand, settings, annotation);
+
+	result = add_text(m_wand, d_wand, settings, annotation);
+
+	MagickDrawImage(m_wand, d_wand);
 
 	/* Write the new image */
-	MagickWriteImage(m_wand, settings -> new_image_path);
-	
-		/* Clean up */
+	MagickWriteImage(m_wand, settings->new_image_path);
+
+	/* Clean up */
 	DestroyPixelWand(p_wand);
 	DestroyDrawingWand(d_wand);
-	if (m_wand) m_wand = DestroyMagickWand(m_wand);
-	
+	if (m_wand)
+		m_wand = DestroyMagickWand(m_wand);
+
 	MagickWandTerminus();
-	g_print("The new image is at %s\n", settings -> new_image_path);
+	g_print("The new image is at %s\n", settings->new_image_path);
 	g_free(settings);
 	g_free(annotation);
-
+	g_free(text_analysis);
 
 	return 0;
 }

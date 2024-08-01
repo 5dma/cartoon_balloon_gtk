@@ -3,13 +3,60 @@
 #include "glib.h"
 #include <wand/magick_wand.h>
 
-void add_text (MagickWand *m_wand, Settings * settings, Annotation * annotation ) {
+
+Text_Analysis * drawing_with_split_text(MagickWand *m_wand, DrawInfo * draw_info, Settings * settings, gint64 left_offset, char * text_string) {
+
+	Text_Analysis * text_analysis;
+	text_analysis = (Text_Analysis *) g_malloc(sizeof(Text_Analysis));
+	gint64 max_width;
+	max_width = settings->new_width - left_offset - settings->padding - settings->stroke_width;
+	gboolean is_multiline = FALSE;
+
+
+	PixelWand * p_wand = NewPixelWand();
+	PixelSetColor(p_wand,  "#0000ff");
+	PixelSetAlpha(p_wand,1.0);
+
+	
+	DrawingWand * my_wand = NewDrawingWand();
+	MagickBooleanType test = DrawSetFont(my_wand, settings->font );
+	DrawSetFillColor(my_wand ,p_wand);
+	DrawSetFontSize(my_wand, settings->font_size);
+	DrawSetGravity(my_wand,NorthWestGravity);
+
+	TypeMetric *metrics;
+	Image * my_image;
+
+	my_image = GetImageFromMagickWand(m_wand);
+	double * text_width;
+	text_width = MagickQueryFontMetrics( m_wand, my_wand, text_string);
+
+	text_analysis->text_wand = my_wand;
+	strlcpy(text_analysis->split_string, text_string, 256 );
+	text_analysis ->metrics = metrics;
+	text_analysis->number_text_lines = 1;
+
+	return text_analysis;
+}
+
+
+MagickBooleanType add_text (MagickWand *m_wand, DrawingWand *d_wand, Settings * settings, Annotation * annotation ) {
 
 
 	// Resize the image using the Lanczos filter
 	// The blur factor is a "double", where > 1 is blurry, < 1 is sharp
+	gint64 left_offset;
+	left_offset = annotation->text_bottom_left.x * annotation->resize_proportion_x;
 
+	//DrawInfo *draw_info;
+	//draw_info = PeekDrawingWand(d_wand);
+
+	MagickBooleanType result = MagickAnnotateImage(m_wand, d_wand, left_offset, 20, 0, annotation->text_string );
 	
+	//Text_Analysis * text_analysis = drawing_with_split_text(m_wand, draw_info, settings, left_offset, annotation->text_string);
+	
+
+	return result;
 }
 
 
