@@ -3,14 +3,11 @@
 #include "wand/MagickWand.h"
 #include "headers.h"
 
-
-
 /* https://imagemagick.org/api/magick-image.php */
 /* https://imagemagick.org/api/drawing-wand.php */
 /* https://imagemagick.org/api/pixel-wand.php */
 int main(int argc, char *argv[])
 {
-
 
 	Settings *settings;
 	settings = read_json();
@@ -26,14 +23,13 @@ int main(int argc, char *argv[])
 	MagickWandGenesis();
 	m_wand = NewMagickWand();
 
-	MagickBooleanType result = MagickReadImage(m_wand, "/Users/mlautman/Documents/graphics/light-snack.jpg");
+	MagickBooleanType result = MagickReadImage(m_wand, "/Users/mlautman/Documents/graphics/tolstoy_2.jpg");
 
-	if (result == MagickFalse) {
-		g_print("Could not read the image %s. Exiting\n","/Users/mlautman/Documents/graphics/light-snack.jpg");
+	if (result == MagickFalse)
+	{
+		g_print("Could not read the image %s. Exiting\n", "/Users/mlautman/Documents/graphics/tolstoy_2.jpg");
 		return -1;
 	}
-
-
 
 	Annotation *annotation;
 	annotation = read_annotation();
@@ -57,7 +53,8 @@ int main(int argc, char *argv[])
 	DrawSetFontSize(d_wand, 50);
 	result = DrawSetFontFamily(d_wand, settings->font);
 
-	if (result == MagickFalse) {
+	if (result == MagickFalse)
+	{
 		g_message("Could not set font");
 	}
 

@@ -1,12 +1,12 @@
 {
 	"text_string": "Hi everbody!",
 	"text_bottom_left": {
-		"x": 200,
-		"y": 210
+		"x": 147,
+		"y": 213
 	},
 	"callout_vertex": {
-		"x": 250,
-		"y": 260
+		"x": 573,
+		"y": 330
 	}
 
 }

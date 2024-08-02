@@ -41,6 +41,15 @@ Text_Analysis *drawing_with_split_text(MagickWand *m_wand, DrawInfo *draw_info, 
 MagickBooleanType add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation)
 {
 
+
+
+	gint64 left_offset;
+	left_offset = annotation->text_bottom_left.x * annotation->resize_proportion_x;
+	gint64 max_width;
+	max_width = settings->new_width - left_offset - settings->padding - settings->stroke_width;
+	gboolean is_multiline = FALSE;
+
+
 	/* Get analysis of text, retain width and height, free memory for returned metrics.*/
 	double *metrics = MagickQueryFontMetrics(m_wand, d_wand, annotation->text_string);
 	double text_width = metrics[4];
@@ -48,8 +57,6 @@ MagickBooleanType add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *se
 
 	RelinquishMagickMemory(metrics);
 
-	gint64 left_offset;
-	left_offset = annotation->text_bottom_left.x * annotation->resize_proportion_x;
 
 	MagickBooleanType result = MagickAnnotateImage(m_wand, d_wand, 50, 120, 0, annotation->text_string);
 
