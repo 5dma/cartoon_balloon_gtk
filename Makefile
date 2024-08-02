@@ -1,8 +1,8 @@
 CC = gcc
 # CFLAGS += $(shell pkg-config --cflags json-c)
 # LDFLAGS += $(shell pkg-config --libs json-c)
-IMCFLAGS=$(shell /opt/homebrew/Cellar/imagemagick@6/6.9.13-12/bin/MagickWand-config --cflags)
-IMLFLAGS=$(shell /opt/homebrew/Cellar/imagemagick@6/6.9.13-12/bin/MagickWand-config --ldflags --lib)
+IMCFLAGS=$(shell /opt/homebrew/Cellar/imagemagick@6/6.9.13-14/bin/MagickWand-config --cflags)
+IMLFLAGS=$(shell /opt/homebrew/Cellar/imagemagick@6/6.9.13-14/bin/MagickWand-config --ldflags --lib)
 JSONGLIBCFLAGS=$(shell pkg-config --cflags json-glib-1.0)
 JSONGLIBLFLAGS=$(shell pkg-config --libs json-glib-1.0) 
 GLIB_HOME=/opt/homebrew/Cellar/glib/2.80.3/
