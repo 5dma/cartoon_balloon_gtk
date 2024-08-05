@@ -4,6 +4,7 @@
 typedef struct Settings
 {
 	gint64 new_width;
+	gint32 max_annotation_length;
 	char balloon_fill_color[8];
 	char balloon_stroke_color[8];
 	gint64 excess_font_height;
@@ -39,13 +40,13 @@ typedef struct Text_Analysis
 {
 	DrawingWand *text_wand;
 	char split_string[300];
-	gint8 number_text_lines;
+	gint64 number_text_lines;
 	gint64 y;
 	TypeMetric *metrics;
 } Text_Analysis;
 
 Settings *read_json();
-Annotation *read_annotation();
+Annotation *read_annotation(Settings *settings);
 void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation);
 MagickBooleanType add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation);
 GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);

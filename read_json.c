@@ -32,6 +32,10 @@ Settings *read_json()
 	settings->new_width = json_reader_get_int_value(reader);
 	json_reader_end_member(reader);
 
+	json_cursor = json_reader_read_member(reader, "max_annotation_length");
+	settings->max_annotation_length = json_reader_get_int_value(reader);
+	json_reader_end_member(reader);
+
 	json_cursor = json_reader_read_member(reader, "balloon_fill_color");
 	g_strlcpy(settings->balloon_fill_color, json_reader_get_string_value(reader), 8);
 	json_reader_end_member(reader);

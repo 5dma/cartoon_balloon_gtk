@@ -4,7 +4,7 @@
 #include <json-glib/json-glib.h>
 #include "headers.h"
 
-Annotation *read_annotation()
+Annotation *read_annotation(Settings *settings)
 {
 	JsonParser *parser;
 	GError *error;
@@ -29,7 +29,7 @@ Annotation *read_annotation()
 	gboolean json_cursor;
 
 	json_cursor = json_reader_read_member(reader, "text_string");
-	g_strlcpy(annotation->text_string, json_reader_get_string_value(reader), 255);
+	g_strlcpy(annotation->text_string, json_reader_get_string_value(reader), settings->max_annotation_length);
 	json_reader_end_member(reader);
 	g_print("The text string is %s\n", annotation->text_string);
 

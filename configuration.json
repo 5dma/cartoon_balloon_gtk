@@ -1,5 +1,6 @@
 {
 	"new_width": 520,
+	"max_annotation_length": 256,
 	"balloon_fill_color": "#f2e38b",
 	"balloon_stroke_color": "#000000",
 	"excess_font_height": 10,
@@ -11,7 +12,7 @@
 	"space": 10,
 	"stroke_width": 2,
 	"extra_offset": 10,
-	"font_size": 20,
+	"font_size": 40,
 	"font": "American Typewriter",
 	"new_image_path": "/tmp/new_image.jpg"
 }

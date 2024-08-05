@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	}
 
 	Annotation *annotation;
-	annotation = read_annotation();
+	annotation = read_annotation(settings);
 	if (annotation == NULL)
 	{
 		return 0;
