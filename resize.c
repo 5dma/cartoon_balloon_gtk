@@ -19,7 +19,7 @@ void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 
 	MagickResizeImage(m_wand, settings->new_width, new_height, LanczosFilter, 1);
 
-	annotation->resize_proportion_x = settings->new_width / old_width;
+	annotation->resize_proportion_x = (float) settings->new_width / old_width;
 
-	annotation->resize_proportion_y = new_height / old_height;
+	annotation->resize_proportion_y = (float) new_height / old_height;
 }

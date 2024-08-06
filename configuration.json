@@ -6,13 +6,13 @@
 	"excess_font_height": 10,
 	"padding": 10,
 	"excess_text_height": 10,
+	"elevation": 5,
 	"callout_indent": 10,
 	"callout_space": 20,
-	"elevation": 5,
 	"space": 10,
 	"stroke_width": 2,
 	"extra_offset": 10,
-	"font_size": 40,
-	"font": "American Typewriter",
+	"font_size": 20,
+	"font": "DejaVu-Sans",
 	"new_image_path": "/tmp/new_image.jpg"
 }

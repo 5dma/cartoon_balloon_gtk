@@ -44,13 +44,13 @@ int main(int argc, char *argv[])
 
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
-	PixelSetColor(p_wand, "#0000ff");
+	PixelSetColor(p_wand, settings->balloon_stroke_color);
 	PixelSetAlpha(p_wand, 1.0);
 
 	DrawSetStrokeColor(d_wand, p_wand);
 	DrawSetStrokeWidth(d_wand, settings->stroke_width);
 	DrawSetStrokeOpacity(d_wand, 1.0);
-	DrawSetFontSize(d_wand, 50);
+	DrawSetFontSize(d_wand, settings->font_size );
 	result = DrawSetFontFamily(d_wand, settings->font);
 
 	if (result == MagickFalse)
