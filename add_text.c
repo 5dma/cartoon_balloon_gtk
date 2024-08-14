@@ -52,6 +52,10 @@ void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation 
 	type_metrics = (TypeMetric *)g_malloc(sizeof(TypeMetric));
 
 	text_metrics = MagickQueryMultilineFontMetrics(m_wand, my_wand, current_text);
+
+	//temp = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
+	//temp->text_height = text_metrics[5];
+
 	*text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
 	Text_Analysis *temp = *text_analysis;
 	temp->text_wand = my_wand;
@@ -59,6 +63,8 @@ void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation 
 	temp->number_text_lines = number_text_lines;
 	temp->y = 50;
 	temp->metrics = NULL;
+	//(*text_analysis)->text_height = text_metrics[5];
+
 
 	RelinquishMagickMemory(text_metrics);
 	return;
@@ -96,6 +102,8 @@ MagickBooleanType add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *se
 	MagickBooleanType result = MagickAnnotateImage(m_wand, d_wand, left_offset, baseline + offset, 0, text_analysis->split_string);
 
 	RelinquishMagickMemory(metrics);
-	g_free(text_analysis);
+	g_print("Hi\n");
+	g_free((Text_Analysis *)text_analysis);
+		g_print("Bye\n");
 	return result;
 }
