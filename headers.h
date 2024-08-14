@@ -41,12 +41,14 @@ typedef struct Text_Analysis
 	DrawingWand *text_wand;
 	char split_string[300];
 	gint64 number_text_lines;
-	gint64 y;
+	gint64 y;//What is this for?
 	TypeMetric *metrics;
+	gint64 text_height;
 } Text_Analysis;
 
 Settings *read_json();
 Annotation *read_annotation(Settings *settings);
 void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation);
 MagickBooleanType add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation);
+void add_balloon(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation);
 GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
