@@ -70,8 +70,23 @@ void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation 
 	RelinquishMagickMemory(text_metrics);
 }
 
-gboolean add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation)
+void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 {
+
+	DrawingWand *d_wand = NewDrawingWand();
+	PixelWand *p_wand = NewPixelWand();
+
+	PixelSetColor(p_wand, settings->balloon_fill_color);
+	DrawSetFillColor(d_wand, p_wand);
+
+
+	PixelSetAlpha(p_wand, 1.0);
+
+	DrawSetStrokeColor(d_wand, p_wand);
+	DrawSetStrokeWidth(d_wand, settings->stroke_width);
+	DrawSetStrokeOpacity(d_wand, 1.0);
+	DrawSetFontSize(d_wand, settings->font_size);
+
 
 	Text_Analysis *text_analysis;
 	drawing_with_split_text(m_wand, settings, annotation, &text_analysis);
@@ -105,5 +120,12 @@ gboolean add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, A
 	g_print("Hi\n");
 	g_free((Text_Analysis *)text_analysis);
 		g_print("Bye\n");
-	return result;
+
+
+	MagickAnnotateImage(m_wand, d_wand, 55, 65, 0, "I REALLY AM GOING TO BARF");
+
+	MagickDrawImage(m_wand, d_wand);
+
+
+	return;
 }
