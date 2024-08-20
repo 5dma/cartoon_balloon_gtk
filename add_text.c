@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "headers.h"
 #include "glib.h"
-#include <wand/magick_wand.h>
-#include <wand/drawing-wand.h>
+#include "wand/magick_wand.h"
+#include "wand/drawing_wand.h"
 
 void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis **text_analysis)
 {
@@ -32,12 +32,12 @@ void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation 
 	gchar *rightmost_space;
 
 	char *token = strtok(annotation->text_string, " ");
-	cat_result = strlcpy(current_text, token, settings->max_annotation_length);
+	cat_result = g_strlcpy(current_text, token, settings->max_annotation_length);
 	gint64 number_text_lines = 1;
 	while ((token = strtok(NULL, " ")) != NULL)
 	{
-		cat_result = strlcat(current_text, " ", settings->max_annotation_length);
-		cat_result = strlcat(current_text, token, settings->max_annotation_length);
+		cat_result = g_strlcat(current_text, " ", settings->max_annotation_length);
+		cat_result = g_strlcat(current_text, token, settings->max_annotation_length);
 		text_metrics = MagickQueryMultilineFontMetrics(m_wand, my_wand, current_text);
 		text_width = text_metrics[4];
 		RelinquishMagickMemory(text_metrics);
@@ -59,15 +59,15 @@ void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation 
 	*text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
 	Text_Analysis *temp = *text_analysis;
 	temp->text_wand = my_wand;
-	strlcpy(temp->split_string, current_text, settings->max_annotation_length);
+	g_aligned_alloc(temp->split_string, current_text, settings->max_annotation_length);
 	temp->number_text_lines = number_text_lines;
-	temp->y = 50;
+	temp->y = 0;
 	temp->metrics = NULL;
+	temp->text_height = text_metrics[5];
 	//(*text_analysis)->text_height = text_metrics[5];
 
 
 	RelinquishMagickMemory(text_metrics);
-	return;
 }
 
 MagickBooleanType add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation)

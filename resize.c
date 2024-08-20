@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "headers.h"
 #include "glib.h"
-#include <wand/magick_wand.h>
+#include "wand/magick_wand.h"
 
 void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 {

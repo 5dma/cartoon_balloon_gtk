@@ -1,14 +1,15 @@
 #include <stdlib.h>
 #include "headers.h"
-#include <wand/magick_wand.h>
-#include <wand/drawing-wand.h>
+#include "wand/magick_wand.h"
+// For Linux Builds
+#include "wand/drawing_wand.h"
 
 
 void add_balloon(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation)
 {
 
 	gint64 left = annotation->text_bottom_left.x * annotation->resize_proportion_x - settings->padding;
-	gint64 top = annotation->text_bottom_left.y * annotation->resize_proportion_y; //- annotation->
+	gint64 top = annotation->text_bottom_left.y * annotation->resize_proportion_y - 20; //- annotation->
 
 	/*gint64 excess_spacing = text_height - (text_analysis->number_text_lines * settings->font_size );
 	gint64 partial_excess_spacing = excess_spacing * 0.75;

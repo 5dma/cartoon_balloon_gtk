@@ -1,4 +1,4 @@
-#include <wand/magick_wand.h>
+#include "wand/magick_wand.h"
 #include "glib.h"
 
 typedef struct Settings
