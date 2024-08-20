@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "headers.h"
 #include "glib.h"
-#include "wand/magick_wand.h"
-#include "wand/drawing_wand.h"
+#include "MagickWand/MagickWand.h"
+
 
 void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis **text_analysis)
 {
@@ -70,7 +70,7 @@ void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation 
 	RelinquishMagickMemory(text_metrics);
 }
 
-MagickBooleanType add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation)
+gboolean add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation)
 {
 
 	Text_Analysis *text_analysis;

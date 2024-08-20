@@ -1,8 +1,7 @@
 #include <stdlib.h>
 #include "headers.h"
-#include "wand/magick_wand.h"
-// For Linux Builds
-#include "wand/drawing_wand.h"
+#include "MagickWand/MagickWand.h"
+
 
 
 void add_balloon(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation)

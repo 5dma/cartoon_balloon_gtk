@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "glib.h"
-#include "wand/magick_wand.h"
+#include "MagickWand/MagickWand.h"
 #include "headers.h"
 
 /* https://imagemagick.org/api/magick-image.php */

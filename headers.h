@@ -1,4 +1,4 @@
-#include "wand/magick_wand.h"
+#include "MagickWand/MagickWand.h"
 #include "glib.h"
 
 typedef struct Settings
@@ -49,6 +49,6 @@ typedef struct Text_Analysis
 Settings *read_json();
 Annotation *read_annotation(Settings *settings);
 void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation);
-MagickBooleanType add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation);
+gboolean add_text(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation);
 void add_balloon(MagickWand *m_wand, DrawingWand *d_wand, Settings *settings, Annotation *annotation);
 GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);

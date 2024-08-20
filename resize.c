@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "headers.h"
 #include "glib.h"
-#include "wand/magick_wand.h"
+#include "MagickWand/MagickWand.h"
 
 void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 {
@@ -17,7 +17,7 @@ void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 	// Resize the image using the Lanczos filter
 	// The blur factor is a "double", where > 1 is blurry, < 1 is sharp
 
-	MagickResizeImage(m_wand, settings->new_width, new_height, LanczosFilter, 1);
+	MagickResizeImage(m_wand, settings->new_width, new_height, LanczosFilter);
 
 	annotation->resize_proportion_x = (float) settings->new_width / old_width;
 
