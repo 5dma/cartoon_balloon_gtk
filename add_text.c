@@ -48,8 +48,8 @@ void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation 
 			number_text_lines++;
 		}
 	}
-	TypeMetric *type_metrics;
-	type_metrics = (TypeMetric *)g_malloc(sizeof(TypeMetric));
+	
+	TypeMetric *type_metrics = (TypeMetric *)g_malloc(sizeof(TypeMetric));
 
 	text_metrics = MagickQueryMultilineFontMetrics(m_wand, my_wand, current_text);
 
@@ -59,7 +59,7 @@ void drawing_with_split_text(MagickWand *m_wand, Settings *settings, Annotation 
 	*text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
 	Text_Analysis *temp = *text_analysis;
 	temp->text_wand = my_wand;
-	g_aligned_alloc(temp->split_string, current_text, settings->max_annotation_length);
+	//gpointer omg = g_aligned_alloc(temp->split_string, current_text, settings->max_annotation_length);
 	temp->number_text_lines = number_text_lines;
 	temp->y = 0;
 	temp->metrics = NULL;
