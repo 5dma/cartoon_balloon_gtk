@@ -1,6 +1,6 @@
 # On Ubuntu, need to remove the standard GraphicsMagick and ImageMagick, and compile from source. See https://imagemagick.org/script/install-source.php
 
-CC = gcc
+CC := gcc
 #ifeq ($(HOME),/Users/mlautman)
 #	IMCFLAGS=$(shell /opt/homebrew/Cellar/imagemagick@6/6.9.13-14/bin/MagickWand-config --cflags)
 #	IMLFLAGS=$(shell /opt/homebrew/Cellar/imagemagick@6/6.9.13-14/bin/MagickWand-config --ldflags --lib)
@@ -21,6 +21,13 @@ CC = gcc
 #	read_json.c resize.c add_text.c logging.c read_annotation.c main.c 
 
 #/usr/bin/gcc -g -Wall -o balloon `pkg-config --cflags glib-2.0` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags GraphicsMagick` -I/usr/include/ImageMagick-6 main.c logging.c read_annotation.c read_json.c resize.c add_balloon.c add_text.c
+all: main.c
 
-hellomake: main.c
-	/usr/bin/gcc -g -Wall -o balloon `pkg-config --cflags glib-2.0` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags MagickCore` main.c logging.c read_annotation.c read_json.c resize.c add_balloon.c add_text.c `pkg-config --libs glib-2.0` `pkg-config --libs MagickCore`
+	$(CC) -g -Wall -o balloon \
+	`pkg-config --cflags glib-2.0` \
+	`pkg-config --cflags json-glib-1.0` \
+	`pkg-config --cflags MagickWand` \
+	$(wildcard *.c) \
+	`pkg-config --libs MagickWand` \
+	`pkg-config --libs glib-2.0` \
+	`pkg-config --libs json-glib-1.0` 
