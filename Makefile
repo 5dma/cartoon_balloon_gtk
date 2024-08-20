@@ -22,6 +22,5 @@ CC = gcc
 
 #/usr/bin/gcc -g -Wall -o balloon `pkg-config --cflags glib-2.0` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags GraphicsMagick` -I/usr/include/ImageMagick-6 main.c logging.c read_annotation.c read_json.c resize.c add_balloon.c add_text.c
 
-/usr/bin/gcc -g -Wall -o balloon `pkg-config --cflags glib-2.0` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags GraphicsMagick`  main.c logging.c read_annotation.c read_json.c resize.c add_balloon.c add_text.c
-
-/usr/bin/gcc -g -Wall -o balloon `pkg-config --cflags glib-2.0` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags MagickCore` main.c logging.c read_annotation.c read_json.c resize.c add_balloon.c add_text.c
+hellomake: main.c
+	/usr/bin/gcc -g -Wall -o balloon `pkg-config --cflags glib-2.0` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags MagickCore` main.c logging.c read_annotation.c read_json.c resize.c add_balloon.c add_text.c `pkg-config --libs glib-2.0` `pkg-config --libs MagickCore`
