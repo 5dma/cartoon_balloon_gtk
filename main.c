@@ -8,51 +8,51 @@
 /* https://imagemagick.org/api/drawing-wand.php */
 /* https://imagemagick.org/api/pixel-wand.php */
 int main(int argc, char *argv[]) {
-	Settings *settings;
-	settings = read_json();
-	if (settings == NULL) {
-		return 0;
-	}
+    Settings *settings;
+    settings = read_json();
+    if (settings == NULL) {
+        return 0;
+    }
 
-	MagickWand *m_wand = NULL;
+    Annotation *annotation;
+    annotation = read_annotation(settings);
+    if (annotation == NULL) {
+        return 0;
+    }
 
-	MagickWandGenesis();
-	m_wand = NewMagickWand();
+    MagickWand *m_wand = NULL;
 
-	MagickBooleanType result = MagickReadImage(m_wand, "/home/abba/Desktop/leo-tolstoy-21.jpg");
+    MagickWandGenesis();
+    m_wand = NewMagickWand();
 
-	if (result == MagickFalse) {
-		g_print("Could not read the image %s. Exiting\n", "/home/abba/Desktop/leo-tolstoy-21.jpg");
-		return -1;
-	}
+    MagickBooleanType result = MagickReadImage(m_wand, annotation->original_image_path);
 
-	Annotation *annotation;
-	annotation = read_annotation(settings);
-	if (annotation == NULL) {
-		return 0;
-	}
-	g_print("The annotation text is %s\n", annotation->text_string);
+    if (result == MagickFalse) {
+        g_print("Could not read the image %s. Exiting\n", annotation->original_image_path);
+        return -1;
+    }
 
-	/* Resize the image */
-	resize(m_wand, settings, annotation);
+    g_print("The annotation text is %s\n", annotation->text_string);
 
-	add_balloon(m_wand, settings, annotation);
+    /* Resize the image */
+    resize(m_wand, settings, annotation);
 
-	add_text(m_wand, settings, annotation);
+    add_balloon(m_wand, settings, annotation);
 
-	
-	/* Write the new image */
-	MagickWriteImage(m_wand, settings->new_image_path);
+    add_text(m_wand, settings, annotation);
 
-	/* Clean up */
+    /* Write the new image */
+    MagickWriteImage(m_wand, settings->new_image_path);
 
-	if (m_wand)
-		m_wand = DestroyMagickWand(m_wand);
+    /* Clean up */
 
-	MagickWandTerminus();
-	g_print("The new image is at %s\n", settings->new_image_path);
-	g_free(settings);
-	g_free(annotation);
+    if (m_wand)
+        m_wand = DestroyMagickWand(m_wand);
 
-	return 0;
+    MagickWandTerminus();
+    g_print("The new image is at %s\n", settings->new_image_path);
+    g_free(settings);
+    g_free(annotation);
+
+    return 0;
 }

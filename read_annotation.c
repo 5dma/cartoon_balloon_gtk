@@ -12,10 +12,10 @@ Annotation *read_annotation(Settings *settings)
 
 	parser = json_parser_new();
 	error = NULL;
-	json_parser_load_from_file(parser, "/home/abba/programming/c_programs/balloon/annotation.json", &error);
+	json_parser_load_from_file(parser, "/home/abba/programming/c_programs/cartoon_balloon_gtk/annotation.json", &error);
 	if (error)
 	{
-		g_print("Unable to parse `%s': %s\n", "/home/abba/programming/c_programs/balloon/annotation.json", error->message);
+		g_print("Unable to parse `%s': %s\n", "/home/abba/programming/c_programs/cartoon_balloon_gtk/annotation.json", error->message);
 		g_error_free(error);
 		g_object_unref(parser);
 		return NULL;
@@ -29,7 +29,11 @@ Annotation *read_annotation(Settings *settings)
 	json_reader_read_member(reader, "text_string");
 	g_strlcpy(annotation->text_string, json_reader_get_string_value(reader), settings->max_annotation_length);
 	json_reader_end_member(reader);
-	g_print("The text string is %s\n", annotation->text_string);
+
+	json_reader_read_member(reader, "original_image_path");
+	g_strlcpy(annotation->original_image_path, json_reader_get_string_value(reader), settings->max_annotation_length);
+	json_reader_end_member(reader);
+
 
 	json_reader_read_member(reader, "text_bottom_left");
 	json_reader_read_member(reader, "x");
