@@ -17,6 +17,7 @@ typedef struct Settings
 	gint64 stroke_width;
 	gint64 extra_offset;
 	gint64 font_size;
+	gchar text_color[8];
 	gchar font[256];
 	gchar new_image_path[256];
 } Settings;
@@ -42,7 +43,6 @@ typedef struct Text_Analysis
 	gchar split_string[300];
 	gint64 number_text_lines;
 	gint64 left_offset;
-//	TypeMetric *metrics;
 	gint64 text_height;
 	gint64 text_width;
 } Text_Analysis;

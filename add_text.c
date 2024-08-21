@@ -65,12 +65,12 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
 	PixelWand *p_wand = NewPixelWand();
 
 	PixelSetColor(p_wand, settings->balloon_fill_color);
+	PixelSetColor(p_wand, settings->text_color);
 	DrawSetFillColor(d_wand, p_wand);
 
 	PixelSetAlpha(p_wand, 1.0);
 
 	DrawSetStrokeColor(d_wand, p_wand);
-	DrawSetStrokeWidth(d_wand, settings->stroke_width);
 	DrawSetStrokeOpacity(d_wand, 1.0);
 	DrawSetFontSize(d_wand, settings->font_size);
 

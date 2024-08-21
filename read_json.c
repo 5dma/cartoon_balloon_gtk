@@ -80,6 +80,10 @@ Settings *read_json() {
 	settings->font_size = json_reader_get_int_value(reader);
 	json_reader_end_member(reader);
 
+	json_reader_read_member(reader, "text_color");
+	g_strlcpy(settings->text_color, json_reader_get_string_value(reader), 8);
+	json_reader_end_member(reader);
+
 	json_reader_read_member(reader, "font");
 	g_strlcpy(settings->font, json_reader_get_string_value(reader), 256);
 	json_reader_end_member(reader);
