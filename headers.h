@@ -53,3 +53,4 @@ void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation);
 void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation);
 void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation);
 GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
+
