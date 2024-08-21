@@ -70,8 +70,8 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
 
 	PixelSetAlpha(p_wand, 1.0);
 
-	DrawSetStrokeColor(d_wand, p_wand);
-	DrawSetStrokeOpacity(d_wand, 1.0);
+	//DrawSetStrokeColor(d_wand, p_wand);
+	//DrawSetStrokeOpacity(d_wand, 1.0);
 	DrawSetFontSize(d_wand, settings->font_size);
 
 	
@@ -109,16 +109,19 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 	text_analysis->text_height = 0;
 
 	gint64 max_text_width;
-	max_text_width = settings->new_width - text_analysis->left_offset - settings->padding - settings->stroke_width;
+	max_text_width = settings->new_width - \
+	text_analysis->left_offset - \
+	settings->padding * 2 - \
+	settings->stroke_width * 2;
 	
 	gboolean is_multiline = TRUE;
 
 	DrawingWand *d_wand = NewDrawingWand();
 	MagickBooleanType test = DrawSetFont(d_wand, settings->font);
+	DrawSetFontSize(d_wand, settings->font_size);
 
 
 	gdouble *text_metrics;
-	gdouble text_width;
 	gchar *rightmost_space;
 
 	gchar *token = strtok(annotation->text_string, " ");
@@ -128,13 +131,12 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 		g_strlcat(text_analysis->split_string, " ", settings->max_annotation_length);
 		g_strlcat(text_analysis->split_string, token, settings->max_annotation_length);
 		text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
-		text_width = text_metrics[4];
-		RelinquishMagickMemory(text_metrics);
-		if (text_width > max_text_width) {
+		if (text_metrics[4] > max_text_width) {
 			rightmost_space = g_strrstr(text_analysis->split_string, " ");
 			*rightmost_space = '\n';
 			(text_analysis->number_text_lines)++;
 		}
+		RelinquishMagickMemory(text_metrics);
 	}
 
 	text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
