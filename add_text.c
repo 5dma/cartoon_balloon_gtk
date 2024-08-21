@@ -94,8 +94,6 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
 
 	MagickBooleanType result = MagickAnnotateImage(m_wand, d_wand, left_offset, baseline + offset, 0, text_analysis->split_string);
 
-	MagickAnnotateImage(m_wand, d_wand, 55, 65, 0, text_analysis->split_string);
-
 	MagickDrawImage(m_wand, d_wand);
 
 	return;
