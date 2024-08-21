@@ -39,18 +39,18 @@ typedef struct Annotation
 
 typedef struct Text_Analysis
 {
-	DrawingWand *text_wand;
 	gchar split_string[300];
 	gint64 number_text_lines;
-	gint64 y;//What is this for?
-	TypeMetric *metrics;
+	gint64 left_offset;
+//	TypeMetric *metrics;
 	gint64 text_height;
+	gint64 text_width;
 } Text_Analysis;
 
 Settings *read_json();
 Annotation *read_annotation(Settings *settings);
 void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation);
-void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation);
-void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation);
+void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis);
+void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis);
 GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
-
+Text_Analysis * analyze_text(MagickWand *m_wand, Settings *settings, Annotation *annotation);

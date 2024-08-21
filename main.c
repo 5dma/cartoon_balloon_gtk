@@ -32,14 +32,17 @@ int main(int argc, char *argv[]) {
 		return -1;
 	}
 
-	g_print("The annotation text is %s\n", annotation->text_string);
 
 	/* Resize the image */
 	resize(m_wand, settings, annotation);
 
-	add_balloon(m_wand, settings, annotation);
+	Text_Analysis *text_analysis;
+	text_analysis = analyze_text(m_wand, settings, annotation);
 
-	add_text(m_wand, settings, annotation);
+
+	add_balloon(m_wand, settings, annotation, text_analysis);
+
+	add_text(m_wand, settings, annotation, text_analysis);
 
 	/* Write the new image */
 	MagickWriteImage(m_wand, settings->new_image_path);
@@ -51,6 +54,7 @@ int main(int argc, char *argv[]) {
 
 	MagickWandTerminus();
 	g_print("The new image is at %s\n", settings->new_image_path);
+	g_free(text_analysis);
 	g_free(settings);
 	g_free(annotation);
 
