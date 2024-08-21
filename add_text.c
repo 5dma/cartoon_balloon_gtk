@@ -116,16 +116,57 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 
 	MagickBooleanType result = MagickAnnotateImage(m_wand, d_wand, left_offset, baseline + offset, 0, text_analysis->split_string);
 
-	RelinquishMagickMemory(metrics);
 	g_print("Hi\n");
 	g_free((Text_Analysis *)text_analysis);
-		g_print("Bye\n");
+	g_print("Bye\n");
 
-
-	MagickAnnotateImage(m_wand, d_wand, 55, 65, 0, "I REALLY AM GOING TO BARF");
+	MagickAnnotateImage(m_wand, d_wand, 55, 65, 0, text_analysis->split_string);
 
 	MagickDrawImage(m_wand, d_wand);
 
-
 	return;
+} 
+
+Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *annotation) {
+	
+	Text_Analysis *text_analysis;
+	text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
+	
+	text_analysis->left_offset = annotation->text_bottom_left.x * annotation->resize_proportion_x;
+	text_analysis->text_width = 0;
+	text_analysis->text_height = 0;
+
+	gint64 max_text_width;
+	max_text_width = settings->new_width - text_analysis->left_offset - settings->padding - settings->stroke_width;
+	
+	gboolean is_multiline = TRUE;
+
+	DrawingWand *d_wand = NewDrawingWand();
+	MagickBooleanType test = DrawSetFont(d_wand, settings->font);
+
+
+	gdouble *text_metrics;
+	gdouble text_width;
+	gchar *rightmost_space;
+
+	gchar *token = strtok(annotation->text_string, " ");
+	g_strlcpy(text_analysis->split_string, token, settings->max_annotation_length);
+	text_analysis->number_text_lines = 1;
+	while ((token = strtok(NULL, " ")) != NULL) {
+		g_strlcat(text_analysis->split_string, " ", settings->max_annotation_length);
+		g_strlcat(text_analysis->split_string, token, settings->max_annotation_length);
+		text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
+		text_width = text_metrics[4];
+		RelinquishMagickMemory(text_metrics);
+		if (text_width > max_text_width) {
+			rightmost_space = g_strrstr(text_analysis->split_string, " ");
+			*rightmost_space = '\n';
+			(text_analysis->number_text_lines)++;
+		}
+	}
+
+	text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
+	text_analysis->text_height = text_metrics[5] + text_metrics[1]; //This may change to + text_metrics[2]
+	RelinquishMagickMemory(text_metrics);
+	return text_analysis;
 }
