@@ -77,7 +77,7 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
 
 	MagickAnnotateImage(m_wand, d_wand, \
 		text_analysis->left_offset, \
-		text_analysis->bottom_offset  - text_analysis->text_height, \
+		text_analysis->bottom_offset  - text_analysis->text_height - text_analysis->overflow, \
 		0, \
 		text_analysis->split_string);
 
@@ -95,6 +95,7 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 	text_analysis->bottom_offset = annotation->text_bottom_left.y * annotation->resize_proportion_y;
 	text_analysis->text_width = 0;
 	text_analysis->text_height = 0;
+	text_analysis->overflow = 0;
 
 	gint64 max_text_width;
 	max_text_width = settings->new_width - \

@@ -23,7 +23,8 @@ void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 
 void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_analysis) {
 
-	gint64 overflow = text_analysis->bottom_offset - \
+	text_analysis->overflow = \
+		text_analysis->bottom_offset - \
 		text_analysis->text_height - \
 		settings->padding - \
 		settings->stroke_width -\
@@ -31,13 +32,13 @@ void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_a
 
 	unsigned long current_image_height = MagickGetImageHeight(m_wand);
 
-	if (overflow < 0) {
-			g_print("I need to resizs\n");
+	if (text_analysis->overflow < 0) {
 
 			MagickExtentImage(m_wand, \
 			settings->new_width, \
-			current_image_height - overflow,
-			0,overflow);
+			current_image_height - text_analysis->overflow, \
+			0, \
+			text_analysis->overflow);
 		}
 
 	

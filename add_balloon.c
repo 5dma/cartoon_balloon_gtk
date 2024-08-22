@@ -21,18 +21,20 @@ void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation,
 	gint64 top_left_x = \
 		text_analysis->left_offset - \
 		settings->padding -\
-		settings->stroke_width ;
+		settings->stroke_width;
 	
 	gint64 top_left_y = \
 		annotation->text_bottom_left.y * annotation->resize_proportion_y - \
 		text_analysis->text_height - \
 		settings->padding -\
-		settings->stroke_width;
+		settings->stroke_width -\
+		text_analysis->overflow;
 
 	gint64 bottom_right_x = top_left_x + \
 		text_analysis->text_width + \
 		settings->padding * 2 + \
 		settings->stroke_width * 2;
+
 	gint64 bottom_right_y = \
 		top_left_y + \
 		text_analysis->text_height + \
