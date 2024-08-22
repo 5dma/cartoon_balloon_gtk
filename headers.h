@@ -43,6 +43,7 @@ typedef struct Text_Analysis
 	gchar split_string[300];
 	gint64 number_text_lines;
 	gint64 left_offset;
+	gint64 bottom_offset;
 	gint64 text_height;
 	gint64 text_width;
 } Text_Analysis;

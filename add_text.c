@@ -67,6 +67,7 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
 	PixelSetColor(p_wand, settings->balloon_fill_color);
 	PixelSetColor(p_wand, settings->text_color);
 	DrawSetFillColor(d_wand, p_wand);
+	DrawSetGravity(d_wand, NorthWestGravity);
 
 	PixelSetAlpha(p_wand, 1.0);
 
@@ -74,25 +75,11 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
 	//DrawSetStrokeOpacity(d_wand, 1.0);
 	DrawSetFontSize(d_wand, settings->font_size);
 
-	
-	gint64 excess_spacing = text_analysis->text_height - (text_analysis->number_text_lines * settings->font_size);
-	gint64 partial_excess_spacing = excess_spacing * 0.75;
-	gint64 baseline =
-		(annotation->text_bottom_left.y * annotation->resize_proportion_y) -
-		(text_analysis->number_text_lines * settings->font_size) -
-		partial_excess_spacing;
-
-	gint64 offset = 0;
-	if (baseline < 0) {
-		offset = abs((int)baseline) + settings->extra_offset;
-		// ADD CANVASE ENLARGEMENT HERE
-		// new_image.extent(None,new_height + offset ,None,None, 'south')
-	}
-
-	gint64 left_offset;
-	left_offset = annotation->text_bottom_left.x * annotation->resize_proportion_x;
-
-	MagickAnnotateImage(m_wand, d_wand, left_offset, baseline + offset, 0, text_analysis->split_string);
+	MagickAnnotateImage(m_wand, d_wand, \
+		text_analysis->left_offset, \
+		text_analysis->bottom_offset  - text_analysis->text_height, \
+		0, \
+		text_analysis->split_string);
 
 	MagickDrawImage(m_wand, d_wand);
 
@@ -105,6 +92,7 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 	text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
 	
 	text_analysis->left_offset = annotation->text_bottom_left.x * annotation->resize_proportion_x;
+	text_analysis->bottom_offset = annotation->text_bottom_left.y * annotation->resize_proportion_y;
 	text_analysis->text_width = 0;
 	text_analysis->text_height = 0;
 
