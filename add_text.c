@@ -92,7 +92,7 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
 	gint64 left_offset;
 	left_offset = annotation->text_bottom_left.x * annotation->resize_proportion_x;
 
-	MagickBooleanType result = MagickAnnotateImage(m_wand, d_wand, left_offset, baseline + offset, 0, text_analysis->split_string);
+	MagickAnnotateImage(m_wand, d_wand, left_offset, baseline + offset, 0, text_analysis->split_string);
 
 	MagickDrawImage(m_wand, d_wand);
 
@@ -113,11 +113,9 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 	text_analysis->left_offset - \
 	settings->padding * 2 - \
 	settings->stroke_width * 2;
-	
-	gboolean is_multiline = TRUE;
 
 	DrawingWand *d_wand = NewDrawingWand();
-	MagickBooleanType test = DrawSetFont(d_wand, settings->font);
+	DrawSetFont(d_wand, settings->font);
 	DrawSetFontSize(d_wand, settings->font_size);
 
 
@@ -140,7 +138,8 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 	}
 
 	text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
-	text_analysis->text_height = text_metrics[5] + text_metrics[1]; //This may change to + text_metrics[2]
+	text_analysis->text_height = text_metrics[5]; //This may change to + text_metrics[2]
+	text_analysis->text_width = text_metrics[4] - text_metrics[6]; //This may change to + text_metrics[2]
 	RelinquishMagickMemory(text_metrics);
 	return text_analysis;
 }

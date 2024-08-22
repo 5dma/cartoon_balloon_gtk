@@ -21,6 +21,7 @@ void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation,
 
 */
 
+
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
 	PixelSetColor(p_wand, settings->balloon_stroke_color);
@@ -32,8 +33,17 @@ void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation,
 	DrawSetStrokeOpacity(d_wand, 1.0);
 	DrawSetFillColor(d_wand, p_wand);
 
-	gint64 top_left_x = text_analysis->left_offset;
-	gint64 top_left_y = annotation->text_bottom_left.y - text_analysis->text_height;
+	gint64 top_left_x = \
+		text_analysis->left_offset - \
+		settings->padding -\
+		settings->stroke_width ;
+	
+	gint64 top_left_y = \
+		annotation->text_bottom_left.y - \
+		text_analysis->text_height - \
+		settings->padding -\
+		settings->stroke_width;
+		
 	gint64 bottom_right_x = top_left_x + text_analysis->text_width;
 	gint64 bottom_right_y = top_left_y + text_analysis->text_height;
 	DrawRectangle(d_wand, top_left_x, top_left_y, bottom_right_x, bottom_right_y);
