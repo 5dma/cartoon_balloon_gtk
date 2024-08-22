@@ -96,6 +96,8 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 	text_analysis->text_width = 0;
 	text_analysis->text_height = 0;
 	text_analysis->overflow = 0;
+	text_analysis->balloon_midpoint = 0;
+	text_analysis->balloon_bottom = 0;
 
 	gint64 max_text_width;
 	max_text_width = settings->new_width - \

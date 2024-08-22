@@ -38,6 +38,9 @@ void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation,
 		settings->padding * 2 +
 		settings->stroke_width * 2;
 
+	text_analysis->balloon_midpoint =  (bottom_right_x - top_left_x)/2 + top_left_x;
+	text_analysis->balloon_bottom = bottom_right_y;
+
 	DrawRectangle(d_wand, top_left_x, top_left_y, bottom_right_x, bottom_right_y);
 	MagickDrawImage(m_wand, d_wand);
 
@@ -62,12 +65,13 @@ void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Te
 	PointInfo p1;
 	PointInfo vertex;
 	PointInfo p3;
-	p1.x = 100;
-	p1.y = 100;
+	
+	p1.x = text_analysis->balloon_midpoint - settings->space;
+	p1.y = text_analysis->balloon_bottom - settings->elevation;
 	vertex.x =  annotation->callout_vertex.x * annotation->resize_proportion_x;
 	vertex.y = annotation->callout_vertex.y  * annotation->resize_proportion_y - text_analysis->overflow;
-	p3.x = 500;
-	p3.y = 100;
+	p3.x = text_analysis->balloon_midpoint + settings->space;
+	p3.y = text_analysis->balloon_bottom - settings->elevation;
 
 	PointInfo  barf[3] = {p1, vertex, p3};
 

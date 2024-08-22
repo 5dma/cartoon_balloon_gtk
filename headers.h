@@ -47,6 +47,8 @@ typedef struct Text_Analysis
 	gint64 text_height;
 	gint64 text_width;
 	gint64 overflow;
+	gint64 balloon_midpoint;
+	gint64 balloon_bottom;
 } Text_Analysis;
 
 Settings *read_json();
