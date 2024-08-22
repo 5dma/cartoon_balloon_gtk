@@ -6,15 +6,16 @@
 void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis) {
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
-	PixelSetColor(p_wand, settings->balloon_stroke_color);
-
+	
+	PixelSetColor(p_wand, settings->balloon_fill_color);
 	PixelSetAlpha(p_wand, 1.0);
-
-	DrawSetStrokeColor(d_wand, p_wand);
-	DrawSetStrokeWidth(d_wand, settings->stroke_width);
-	DrawSetStrokeOpacity(d_wand, 1.0);
 	DrawSetFillColor(d_wand, p_wand);
 
+	PixelSetColor(p_wand, settings->balloon_stroke_color);
+	DrawSetStrokeColor(d_wand,p_wand);
+	DrawSetStrokeWidth(d_wand, settings->stroke_width);
+	DrawSetStrokeOpacity(d_wand, 1.0);
+	
 	gint64 top_left_x =
 		text_analysis->left_offset -
 		settings->padding -
@@ -53,14 +54,14 @@ void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Te
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
 	PixelSetColor(p_wand, settings->balloon_stroke_color);
-
 	PixelSetAlpha(p_wand, 1.0);
-
 	DrawSetStrokeColor(d_wand, p_wand);
 	DrawSetStrokeWidth(d_wand, settings->stroke_width);
 	DrawSetStrokeOpacity(d_wand, 1.0);
-	DrawSetFillOpacity(d_wand, 0.0);
-	//DrawSetFillColor(d_wand, p_wand);
+
+	PixelSetColor(p_wand, settings->balloon_fill_color);
+	DrawSetFillOpacity(d_wand, 1.0);
+	DrawSetFillColor(d_wand, p_wand);
 
 	PointInfo p1;
 	PointInfo vertex;

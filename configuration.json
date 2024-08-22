@@ -2,7 +2,7 @@
 	"new_width": 520,
 	"max_annotation_length": 256,
 	"balloon_fill_color": "#f2e38b",
-	"balloon_stroke_color": "#ff0000",
+	"balloon_stroke_color": "#000000",
 	"excess_font_height": 10,
 	"padding": 10,
 	"excess_text_height": 10,
