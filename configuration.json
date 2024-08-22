@@ -11,7 +11,7 @@
 	"callout_space": 20,
 	"space": 10,
 	"stroke_width": 2,
-	"extra_offset": 10,
+	"top_margin": 10,
 	"font_size": 20,
 	"text_color": "#000000",
 	"font": "DejaVu-Sans",
