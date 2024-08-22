@@ -72,8 +72,8 @@ Settings *read_json() {
 	settings->stroke_width = json_reader_get_int_value(reader);
 	json_reader_end_member(reader);
 
-	json_reader_read_member(reader, "extra_offset");
-	settings->extra_offset = json_reader_get_int_value(reader);
+	json_reader_read_member(reader, "top_margin");
+	settings->top_margin = json_reader_get_int_value(reader);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "font_size");

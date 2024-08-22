@@ -15,7 +15,7 @@ typedef struct Settings
 	gint64 elevation;
 	gint64 space;
 	gint64 stroke_width;
-	gint64 extra_offset;
+	gint64 top_margin;
 	gint64 font_size;
 	gchar text_color[8];
 	gchar font[256];
@@ -50,8 +50,9 @@ typedef struct Text_Analysis
 
 Settings *read_json();
 Annotation *read_annotation(Settings *settings);
-void resize(MagickWand *m_wand, Settings *settings, Annotation *annotation);
+void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation);
 void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis);
 void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis);
 GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
 Text_Analysis * analyze_text(MagickWand *m_wand, Settings *settings, Annotation *annotation);
+void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_analysis);

@@ -33,12 +33,13 @@ int main(int argc, char *argv[]) {
 	}
 
 
-	/* Resize the image */
-	resize(m_wand, settings, annotation);
+	/* Scale the image to a max of 520 pixels. */
+	scale_image(m_wand, settings, annotation);
 
 	Text_Analysis *text_analysis;
 	text_analysis = analyze_text(m_wand, settings, annotation);
 
+	resize_image(m_wand, settings, text_analysis);
 
 	add_balloon(m_wand, settings, annotation, text_analysis);
 
