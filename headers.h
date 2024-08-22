@@ -57,4 +57,4 @@ void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation,
 GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
 Text_Analysis * analyze_text(MagickWand *m_wand, Settings *settings, Annotation *annotation);
 void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_analysis);
-void add_path(MagickWand *m_wand, Settings *settings);
+void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis);

@@ -46,7 +46,7 @@ void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation,
 	return;
 }
 
-void add_path(MagickWand *m_wand, Settings *settings) {
+void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis) {
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
 	PixelSetColor(p_wand, settings->balloon_stroke_color);
@@ -60,16 +60,16 @@ void add_path(MagickWand *m_wand, Settings *settings) {
 	//DrawSetFillColor(d_wand, p_wand);
 
 	PointInfo p1;
-	PointInfo p2;
+	PointInfo vertex;
 	PointInfo p3;
 	p1.x = 100;
 	p1.y = 100;
-	p2.x = 300;
-	p2.y = 300;
+	vertex.x =  annotation->callout_vertex.x * annotation->resize_proportion_x;
+	vertex.y = annotation->callout_vertex.y  * annotation->resize_proportion_y - text_analysis->overflow;
 	p3.x = 500;
 	p3.y = 100;
 
-	PointInfo  barf[3] = {p1, p2, p3};
+	PointInfo  barf[3] = {p1, vertex, p3};
 
 	DrawPolyline(d_wand, 3, barf);
 

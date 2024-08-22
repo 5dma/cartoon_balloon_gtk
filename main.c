@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 
 	add_text(m_wand, settings, annotation, text_analysis);
 
-	add_path(m_wand, settings);
+	add_path(m_wand, annotation, settings, text_analysis);
 
 	/* Write the new image */
 	MagickWriteImage(m_wand, settings->new_image_path);
