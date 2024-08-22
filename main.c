@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
+
 	Annotation *annotation;
 	annotation = read_annotation(settings);
 	if (annotation == NULL) {
@@ -44,6 +45,8 @@ int main(int argc, char *argv[]) {
 	add_balloon(m_wand, settings, annotation, text_analysis);
 
 	add_text(m_wand, settings, annotation, text_analysis);
+
+	add_path(m_wand, settings);
 
 	/* Write the new image */
 	MagickWriteImage(m_wand, settings->new_image_path);
