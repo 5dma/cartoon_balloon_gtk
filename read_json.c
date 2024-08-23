@@ -5,6 +5,7 @@
 
 #include "headers.h"
 
+/* Reads the configuration file into a Settings struct. */
 Settings *read_json() {
 	JsonParser *parser;
 	GError *error;

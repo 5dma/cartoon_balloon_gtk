@@ -4,6 +4,7 @@
 #include <json-glib/json-glib.h>
 #include "headers.h"
 
+/* Reads the file annotation.json into an Annotation struct. */
 Annotation *read_annotation(Settings *settings)
 {
 	JsonParser *parser;
@@ -56,9 +57,7 @@ Annotation *read_annotation(Settings *settings)
 	annotation->resize_proportion_x = 0;
 	annotation->resize_proportion_y = 0;
 
-	g_print("Text bottom vertex x, y = %ld , %ld\n", annotation->text_bottom_left.x, annotation->text_bottom_left.y);
-	g_print("Callout vertex x, y = %ld , %ld\n", annotation->callout_vertex.x, annotation->callout_vertex.y);
-
+	/* Clean up */
 	g_object_unref(parser);
 	g_object_unref(reader);
 	return annotation;
