@@ -88,6 +88,8 @@ int main(int argc, char *argv[]) {
 	g_free(settings);
 	g_free(annotation);
 	
+	//cleanup(theme_list);
+	g_slist_free_full (theme_list, g_free);
 	g_print("The new image is at %s\n", settings->new_image_path);
 	
 	return 0;
