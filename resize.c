@@ -27,6 +27,8 @@ void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 	annotation->resize_proportion_x = (float) settings->new_width / old_width;
 
 	annotation->resize_proportion_y = (float) new_height / old_height;
+
+	g_print("Resize proportions\n  x: %f, y: %f\n", annotation->resize_proportion_x, annotation->resize_proportion_y);
 }
 
 

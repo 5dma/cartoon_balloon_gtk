@@ -102,8 +102,16 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 	/* Save the text's height and width. These will be used to determine the balloon's height and width. */
 	text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
 	text_analysis->text_height = text_metrics[5]; //This may change to + text_metrics[2]
-	text_analysis->text_width = text_metrics[4] - text_metrics[6]; //This may change to + text_metrics[2]
+	//The following line sometimes works with 
+	//text_metrics[4] - text_metrics[6];
+	//text_metrics[4] - text_metrics[6] + text_metrics[2] ;
+	text_analysis->text_width = text_metrics[4]; //This may change to + text_metrics[2]
 	
+
+	//for (int i= 0; i<13; i++) {
+	//	g_print("text_metrics[%d]: %f\n", i, text_metrics[i]);
+	//}
+
 	/* Clean up */
 	RelinquishMagickMemory(text_metrics);
 	DestroyDrawingWand(d_wand);

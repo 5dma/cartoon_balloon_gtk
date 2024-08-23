@@ -1,13 +1,13 @@
 {
-	"text_string": "OMG I should, really really have have have have have have have have have to take a massive dump.",
-	"original_image_path": "/home/abba/Desktop/leo-tolstoy-21.jpg",
+	"text_string": "The sooner we move this bench across the street, the sooner we take our lunch break.",
+	"original_image_path": "/tmp/omg.jpg",
 	"text_bottom_left": {
-		"x": 147,
-		"y": 45
+		"x": 160,
+		"y": 180
 	},
 	"callout_vertex": {
-		"x": 486,
-		"y": 252
+		"x": 350,
+		"y": 270
 	}
 
 }

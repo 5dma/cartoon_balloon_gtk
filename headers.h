@@ -23,7 +23,7 @@ typedef struct Settings
 	gint64 top_margin; /**< Top margin, measured from the top of the image to the top of the balloon.*/
 	gint64 font_size; /**< Font size, in points.*/
 	gchar text_color[8]; /**< Hex value of the text color including the octothorp. For example, white is `#FFFFFF`.*/
-	gchar font[256]; /**< Name of the font, provided as the font's full name with spaces replaced by underscore. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu_Serif_Bold` */
+	gchar font[256]; /**< Name of the font, provided as the font's full name with spaces replaced by hyphens. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu-Serif-Bold` */
 	gchar new_image_path[256]; /**< Maximal length of the new image's path. A reasonable value is 256. */
 } Settings;
 
