@@ -17,6 +17,7 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
 	DrawSetFillColor(d_wand, p_wand);
 	DrawSetGravity(d_wand, NorthWestGravity);
 	DrawSetFontSize(d_wand, settings->font_size);
+	DrawSetFont(d_wand,settings->font);
 
 
 	//DrawSetStrokeColor(d_wand, p_wand);
