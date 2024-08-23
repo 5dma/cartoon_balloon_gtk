@@ -67,12 +67,10 @@ GSList *read_themes(Settings *settings)
 		json_reader_end_member(reader);
 		success = json_reader_read_member(reader, "balloon_stroke_color");
 		g_strlcpy(theme->balloon_stroke_color, json_reader_get_string_value(reader), 100);
+
+		theme_list = g_slist_append (theme_list, (gpointer) theme);
+
 	}
-
-	success = json_reader_read_member(reader, "name");
-	settings->new_width = json_reader_get_int_value(reader);
-
-
 
 	/* Clean up */
 	g_object_unref(parser);
