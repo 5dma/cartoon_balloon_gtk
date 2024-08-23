@@ -41,24 +41,8 @@ Settings *read_json() {
 	g_strlcpy(settings->balloon_stroke_color, json_reader_get_string_value(reader), 8);
 	json_reader_end_member(reader);
 
-	json_reader_read_member(reader, "excess_font_height");
-	settings->excess_font_height = json_reader_get_int_value(reader);
-	json_reader_end_member(reader);
-
 	json_reader_read_member(reader, "padding");
 	settings->padding = json_reader_get_int_value(reader);
-	json_reader_end_member(reader);
-
-	json_reader_read_member(reader, "excess_text_height");
-	settings->excess_text_height = json_reader_get_int_value(reader);
-	json_reader_end_member(reader);
-
-	json_reader_read_member(reader, "callout_indent");
-	settings->callout_indent = json_reader_get_int_value(reader);
-	json_reader_end_member(reader);
-
-	json_reader_read_member(reader, "callout_space");
-	settings->callout_space = json_reader_get_int_value(reader);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "elevation");

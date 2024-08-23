@@ -71,7 +71,6 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 	/* Parse the annotation, placing newlines in places where the string exceeds max_text_width. */
 	gchar *token = strtok(annotation->text_string, " ");
 	g_strlcpy(text_analysis->split_string, token, settings->max_annotation_length);
-	text_analysis->number_text_lines = 1;
 	while ((token = strtok(NULL, " ")) != NULL) {
 		g_strlcat(text_analysis->split_string, " ", settings->max_annotation_length);
 		g_strlcat(text_analysis->split_string, token, settings->max_annotation_length);
@@ -79,7 +78,6 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 		if (text_metrics[4] > max_text_width) {
 			rightmost_space = g_strrstr(text_analysis->split_string, " ");
 			*rightmost_space = '\n';
-			(text_analysis->number_text_lines)++;
 		}
 		RelinquishMagickMemory(text_metrics);
 	}

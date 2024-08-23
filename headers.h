@@ -7,11 +7,7 @@ typedef struct Settings
 	gint32 max_annotation_length;
 	gchar balloon_fill_color[8];
 	gchar balloon_stroke_color[8];
-	gint64 excess_font_height;
 	gint64 padding;
-	gint64 excess_text_height;
-	gint64 callout_indent;
-	gint64 callout_space;
 	gint64 elevation;
 	gint64 space;
 	gint64 stroke_width;
@@ -41,7 +37,6 @@ typedef struct Annotation
 typedef struct Text_Analysis
 {
 	gchar split_string[300];
-	gint64 number_text_lines;
 	gint64 left_offset;
 	gint64 bottom_offset;
 	gint64 text_height;
