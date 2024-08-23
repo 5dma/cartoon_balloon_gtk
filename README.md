@@ -1,6 +1,16 @@
-Adds cartoon balloons to images.
+Adds speech balloons to images.
 
 
-# Library dependency
+# Library dependencies
 
 On Ubuntu, need to remove the standard GraphicsMagick and ImageMagick, and compile from source. See https://imagemagick.org/script/install-source.php
+
+
+# Compiling
+
+`make`
+
+# Running
+
+1. Configure settings in `annotation.json` and `configuration.json`.
+2. `./balloon`

@@ -5,7 +5,14 @@
 
 #include "headers.h"
 
-/* Reads the configuration file into a Settings struct. */
+/**
+ * @file read_json.c
+ * @brief Reads the application's configuration file.
+ */
+
+/**
+Reads the configuration file into a `Settings` struct. The settings in this configuration file are relatively static: they can apply to multiple images. 
+ */
 Settings *read_json() {
 	JsonParser *parser;
 	GError *error;

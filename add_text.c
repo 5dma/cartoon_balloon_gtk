@@ -3,8 +3,16 @@
 #include "MagickWand/MagickWand.h"
 #include "glib.h"
 #include "headers.h"
+/**
+ * @file add_text.c
+ * @brief Analyzes and places the text on the image.
+ */
 
-/* Adds text to the image. */
+/**
+  Adds text to the image.
+
+  The ImageMagic command <a href="https://imagemagick.org/api/magick-image.php#MagickAnnotateImage">MagickAnnotateImage</a> requires points for placing the text.  See the specification for detail about how those points are computed.
+ */
 void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis) {
 	
 	DrawingWand *d_wand = NewDrawingWand();
@@ -38,7 +46,15 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
 	return;
 } 
 
-/* Process and analyze the text. */
+/**
+  Processes and analyzes the text.
+
+  The user provides the lower-left corner of the text's position. In addition, there is a right margin on the image beyond which the text cannot flow. Using <a href="https://imagemagick.org/api/magick-wand.php#MagickQueryMultilineFontMetrics">MagickQueryMultilineFontMetrics</a>, this function examines the text word-by-word, and inserts newlines `\n` to prevent the text from extending past the margin.
+ *
+ * At the end of this function, this function saves the dimensions of the resulting text block. These dimenions are used for the following tasks:
+ * - Compute the size of the balloon.
+ * - Resize as necessary the image upward to contain the balloon.
+ */
 Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *annotation) {
 	
 	Text_Analysis *text_analysis;

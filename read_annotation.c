@@ -4,7 +4,15 @@
 #include <json-glib/json-glib.h>
 #include "headers.h"
 
-/* Reads the file annotation.json into an Annotation struct. */
+
+/**
+ * @file read_annotation.c
+ * @brief Reads an annotation's configuration file.
+ */
+
+/**
+Reads the configuration file into an `Annotation` struct. The settings in this configuration file, such as the annotation text, are one-off: they can apply to only the current image. 
+ */
 Annotation *read_annotation(Settings *settings)
 {
 	JsonParser *parser;

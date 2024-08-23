@@ -2,8 +2,16 @@
 
 #include "MagickWand/MagickWand.h"
 #include "headers.h"
+/**
+ * @file add_balloon.c
+ * @brief Adds the speech balloon and the path to the balloon.
+ */
 
-/* Draws a balloon large enough to accommodate the text, and in an appropriate location. */
+/**
+ * Draws a balloon large enough to accommodate the text, and in an appropriate location.
+ *  
+ * ImageMagick's <a href="https://imagemagick.org/api/drawing-wand.php#DrawRectangle">DrawRectangle</a> command requires providing four points representing the top-left and bottom-right corners. See the specification for detail about how those points are computed.
+ */
 void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis) {
 
 	DrawingWand *d_wand = NewDrawingWand();
@@ -59,8 +67,9 @@ void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation,
 	return;
 }
 
-/* Adds the path to the cartoon. The path is polyline of three points. The vertex is supplied by the user.
-	and the other two points jut into the balloon. */
+/**
+ * Adds the path to the image. The path is polyline of three points. The vertex is supplied by the user, and the other two points jut into the balloon. See the specification for detail about how those points are computed.
+ */
 void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis) {
 
 	DrawingWand *d_wand = NewDrawingWand();

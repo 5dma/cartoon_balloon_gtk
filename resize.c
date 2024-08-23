@@ -3,7 +3,14 @@
 #include "glib.h"
 #include "MagickWand/MagickWand.h"
 
-/* Scales the original image to no wider than the user-specified width (520 px for twitter, 740 for WordPress.)*/
+/**
+ * @file resize.c
+ * @brief Scales and resizes the image.
+ */
+
+/**
+Scales the original image to no wider than the user-specified width found in `settings->new_width`.
+ */
 void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 {
 
@@ -22,8 +29,10 @@ void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 	annotation->resize_proportion_y = (float) new_height / old_height;
 }
 
-/* Extends the original image upward to accommodate the text and balloon as necessary. */
 
+/**
+  Resizes the image vertically so that it can accommodate any overflow from the text, balloon, padding, and top margin.
+ */
 void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_analysis) {
 
 	text_analysis->overflow = \
