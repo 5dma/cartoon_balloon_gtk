@@ -34,16 +34,18 @@
  * -# Write the image.
  */
 int main(int argc, char *argv[]) {
+
 	Settings * settings = read_json();
 	if (settings == NULL) {
 		return 0;
 	}
 
-
 	Annotation * annotation = read_annotation(settings);
 	if (annotation == NULL) {
 		return 0;
 	}
+
+	GSList * theme_list = read_themes(settings);
 
 	MagickWandGenesis();
 

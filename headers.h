@@ -64,6 +64,19 @@ typedef struct Text_Analysis
 	gint64 balloon_bottom; /**< Bottom edge of the balloon. Required to position the y-coordinate of the polyline's intersection with the balloon. */
 } Text_Analysis;
 
+typedef struct Theme
+{
+	gchar name[100];  /**< Name of the theme. */
+	gchar text_color[8]; /**< Hex value of the text color including the octothorp. For example, white is `#FFFFFF`.*/
+	gchar font[256]; /**< Name of the font, provided as the font's full name with spaces replaced by hyphens. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu-Serif-Bold` */
+	gint64 font_size; /**< Font size, in points.*/
+	gint64 stroke_width; /**< Stroke width around balloon and polyline.*/
+	gchar balloon_fill_color[8]; /**< Hex value of the fill color including the octothorp. For example, white is `#FFFFFF`.*/
+	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
+
+} Theme;
+
+
 Settings *read_json();
 Annotation *read_annotation(Settings *settings);
 void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation);
@@ -72,3 +85,4 @@ void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation,
 Text_Analysis * analyze_text(MagickWand *m_wand, Settings *settings, Annotation *annotation);
 void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_analysis);
 void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis);
+GSList * read_themes(Settings *settings);
