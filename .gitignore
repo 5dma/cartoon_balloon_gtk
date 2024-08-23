@@ -6,3 +6,4 @@ balloon.dSYM/*
 *.odt
 *.odg
 .~lock.specifications.odt#
+doc/
