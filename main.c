@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <glib.h>
+#include <glib-object.h>
 
 #include "MagickWand/MagickWand.h"
-#include "glib.h"
 #include "headers.h"
 /**
  * @file main.c
@@ -82,17 +83,16 @@ int main(int argc, char *argv[]) {
 	/* Write the new image */
 	MagickWriteImage(m_wand, settings->new_image_path);
 
+	g_print("The new image is at %s\n", settings->new_image_path);
+
 	/* Clean up */
 	DestroyMagickWand(m_wand);
 	MagickWandTerminus();
 	
+	g_hash_table_destroy(theme_hash);
 	g_free(text_analysis);
 	g_free(settings);
 	g_free(annotation);
-	
-	//cleanup(theme_list);
-	
-	g_print("The new image is at %s\n", settings->new_image_path);
 	
 	return 0;
 }

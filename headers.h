@@ -66,6 +66,9 @@ typedef struct Text_Analysis
 	gint64 balloon_bottom; /**< Bottom edge of the balloon. Required to position the y-coordinate of the polyline's intersection with the balloon. */
 } Text_Analysis;
 
+/**
+ * Structure representing a theme, comprised of properties for colors, font, and stroke. Themes are user-defined, along with a default theme configured in Settings.
+ */
 typedef struct Theme
 {
 	gchar name[100];  /**< Name of the theme. */

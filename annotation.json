@@ -1,14 +1,14 @@
 {
-	"text_string": "The sooner we move this bench across the street, the sooner we take our lunch break.",
+	"text_string": "Look, Saba, these are all for you. Every single one of them. You don't have to share them with anyone!",
 	"original_image_path": "/tmp/omg.jpg",
 	"text_bottom_left": {
-		"x": 160,
-		"y": 180
+		"x": 190,
+		"y": 40
 	},
 	"callout_vertex": {
-		"x": 350,
-		"y": 270
+		"x": 680,
+		"y": 195
 	},
-	"theme": "girl"
+	"theme": "boy"
 
 }
