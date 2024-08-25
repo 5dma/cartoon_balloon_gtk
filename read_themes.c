@@ -13,13 +13,14 @@
 /**
 Reads the file of defined themes into a `GSList` of `Theme` structs. 
  */
-GSList *read_themes(Settings *settings)
+GHashTable *read_themes(Settings *settings)
 {
 	JsonParser *parser;
 	GError *error;
 	Theme *theme;
 
-	GSList * theme_list = NULL;
+	GHashTable* theme_hash = g_hash_table_new(g_str_hash, g_str_equal);
+
 	parser = json_parser_new();
 	error = NULL;
 	json_parser_load_from_file(parser, "/home/abba/programming/c_programs/cartoon_balloon_gtk/themes.json", &error);
@@ -35,21 +36,22 @@ GSList *read_themes(Settings *settings)
 	json_parser_get_root(parser);
 	JsonReader *reader;
 	reader = json_reader_new(json_parser_get_root(parser));
-	gboolean success;
+	gboolean success = FALSE;
 	
 	success = json_reader_read_member(reader, "themes");
 
 	success = json_reader_is_array(reader);
-
 	gint number_of_themes = json_reader_count_elements (reader);
 
 	for (gint i = 0; i<number_of_themes; i++) {
+		g_print("Reading element %d\n", i);
 		theme = (Theme *)g_malloc(sizeof(Theme));
 		success = json_reader_read_element (reader, i);
 		success = json_reader_read_member(reader, "name");
 		g_strlcpy(theme->name, json_reader_get_string_value(reader), 100);
 		json_reader_end_member(reader);
 		success = json_reader_read_member(reader, "properties");
+
 		success = json_reader_read_member(reader, "text_color");
 		g_strlcpy(theme->text_color, json_reader_get_string_value(reader), 100);
 		json_reader_end_member(reader);
@@ -67,13 +69,14 @@ GSList *read_themes(Settings *settings)
 		json_reader_end_member(reader);
 		success = json_reader_read_member(reader, "balloon_stroke_color");
 		g_strlcpy(theme->balloon_stroke_color, json_reader_get_string_value(reader), 100);
-
-		theme_list = g_slist_append (theme_list, (gpointer) theme);
-
+		json_reader_end_member(reader); /* From read_member inside properties. */
+		json_reader_end_member(reader); /* From read_member at outside properties*/
+		json_reader_end_element(reader); /* From read_element at element inside themes array . */
+		success = g_hash_table_insert (theme_hash, theme->name, theme);
 	}
 
 	/* Clean up */
 	g_object_unref(parser);
 	g_object_unref(reader);
-	return theme_list;
+	return theme_hash;
 }

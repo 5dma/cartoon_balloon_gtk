@@ -85,5 +85,5 @@ void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation,
 Text_Analysis * analyze_text(MagickWand *m_wand, Settings *settings, Annotation *annotation);
 void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_analysis);
 void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis);
-GSList * read_themes(Settings *settings);
-void cleanup(GSList * theme_list);
+GHashTable * read_themes(Settings *settings);
+//void cleanup(GSList * theme_list);
