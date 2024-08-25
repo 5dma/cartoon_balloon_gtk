@@ -7,11 +7,11 @@
 
 /**
  * @file read_themes.c
- * @brief Reads the list of themes.
+ * @brief Reads the configured themes.
  */
 
 /**
-Reads the file of defined themes into a `GSList` of `Theme` structs. 
+Reads the file of defined themes into a `GHashTable` of `Theme` structs. 
  */
 GHashTable *read_themes(Settings *settings)
 {
@@ -23,10 +23,10 @@ GHashTable *read_themes(Settings *settings)
 
 	parser = json_parser_new();
 	error = NULL;
-	json_parser_load_from_file(parser, "/home/abba/programming/c_programs/cartoon_balloon_gtk/themes.json", &error);
+	json_parser_load_from_file(parser, "/home/abba/programming/c_programs/cartoon_balloon_gtk/configuration.json", &error);
 	if (error)
 	{
-		g_print("Unable to parse `%s': %s\n", "/home/abba/programming/c_programs/cartoon_balloon_gtk/themes.json", error->message);
+		g_print("Unable to parse `%s': %s\n", "/home/abba/programming/c_programs/cartoon_balloon_gtk/configuration.json", error->message);
 		g_error_free(error);
 		g_object_unref(parser);
 		return NULL;
@@ -44,7 +44,6 @@ GHashTable *read_themes(Settings *settings)
 	gint number_of_themes = json_reader_count_elements (reader);
 
 	for (gint i = 0; i<number_of_themes; i++) {
-		g_print("Reading element %d\n", i);
 		theme = (Theme *)g_malloc(sizeof(Theme));
 		success = json_reader_read_element (reader, i);
 		success = json_reader_read_member(reader, "name");
@@ -79,4 +78,17 @@ GHashTable *read_themes(Settings *settings)
 	g_object_unref(parser);
 	g_object_unref(reader);
 	return theme_hash;
+}
+
+
+void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Settings **settings) {
+	Theme * requested_theme = (Theme *)g_hash_table_lookup (theme_hash, annotation->theme);
+	g_print("The name and color is %s %s\n", annotation->theme, requested_theme->balloon_fill_color );
+	Settings * local_settings = *settings;
+	g_strlcpy(local_settings->balloon_fill_color, requested_theme->balloon_fill_color, 8);
+	g_strlcpy(local_settings->balloon_stroke_color, requested_theme->balloon_stroke_color, 8);
+	g_strlcpy(local_settings->font, requested_theme->balloon_stroke_color, 256);
+	g_strlcpy(local_settings->text_color, requested_theme->text_color, 8);
+	local_settings->font_size = requested_theme->font_size;
+	local_settings->stroke_width = requested_theme->stroke_width;
 }

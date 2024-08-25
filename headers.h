@@ -43,10 +43,12 @@ typedef struct Annotation
 {
 	gchar text_string[256];  /**< Maximal length of the text. A reasonable value is 256. */
 	gchar original_image_path[256]; /**< Maximal length of the original image's path. A reasonable value is 256. */
+	gchar theme[256];  /**< Theme to apply to the text and balloon.  */
 	float resize_proportion_x; /**< Proportion the image is resized in the x direction so that it does not exceed the maximal width. */
 	float resize_proportion_y; /**< Proportion the image is resized in the y direction so that it does not exceed the maximal width. (Typically matches `resize_proportion_x`.) */
 	Coordinates text_bottom_left; /**< Position of the text's bottom-left corner on the final image. */
 	Coordinates callout_vertex; /**< Position of the polyline's vertex on the final image. */
+
 } Annotation;
 
 /**
@@ -86,4 +88,4 @@ Text_Analysis * analyze_text(MagickWand *m_wand, Settings *settings, Annotation 
 void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_analysis);
 void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis);
 GHashTable * read_themes(Settings *settings);
-//void cleanup(GSList * theme_list);
+void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Settings **settings);

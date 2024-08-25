@@ -47,12 +47,7 @@ int main(int argc, char *argv[]) {
 
 	GHashTable * theme_hash = read_themes(settings);
 
-	gint omg = g_hash_table_size (theme_hash);
-
-	
-	//Theme * theme = get_theme(theme_list, annotation);
-
-
+	apply_theme(theme_hash, annotation, &settings);
 
 	MagickWandGenesis();
 

@@ -11,5 +11,40 @@
 	"font_size": 20,
 	"text_color": "#000000",
 	"font": "DejaVu-Serif-Bold",
-	"new_image_path": "/tmp/new_image.jpg"
+	"new_image_path": "/tmp/new_image.jpg",
+	"themes": [
+		{
+			"name": "newspaper",
+			"properties": {
+				"text_color": "#000000",
+				"font": "DejaVu-Serif-Bold",
+				"font_size": 20,
+				"stroke_width": 3,
+				"balloon_fill_color": "#ffffff",
+				"balloon_stroke_color": "#000000"
+			}
+		},
+		{
+			"name": "boy",
+			"properties": {
+				"text_color": "#0500fa",
+				"font": "DejaVu-Serif-Bold",
+				"font_size": 20,
+				"stroke_width": 3,
+				"balloon_fill_color": "#8df1fd",
+				"balloon_stroke_color": "#0500fa"
+			}
+		},
+		{
+			"name": "girl",
+			"properties": {
+				"text_color": "#bb0086",
+				"font": "DejaVu-Serif-Bold",
+				"font_size": 20,
+				"stroke_width": 3,
+				"balloon_fill_color": "#ffb7eb",
+				"balloon_stroke_color": "#bb0086"
+			}
+		}
+	]
 }
