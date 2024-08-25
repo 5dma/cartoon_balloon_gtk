@@ -14,13 +14,10 @@ Scales the original image to no wider than the user-specified width found in `se
 void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 {
 
-	gint64 old_width, old_height;
+	gint64 old_width = MagickGetImageWidth(m_wand);
+	gint64 old_height = MagickGetImageHeight(m_wand);
 
-	old_width = MagickGetImageWidth(m_wand);
-	old_height = MagickGetImageHeight(m_wand);
-
-	gint64 new_height;
-	new_height = (settings->new_width * old_height) / old_width;
+	gint64 new_height = (settings->new_width * old_height) / old_width;
 
 	MagickResizeImage(m_wand, settings->new_width, new_height, LanczosFilter);
 
