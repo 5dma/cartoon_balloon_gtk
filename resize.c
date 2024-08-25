@@ -50,6 +50,8 @@ void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_a
 			current_image_height - text_analysis->overflow, \
 			0, \
 			text_analysis->overflow);
+		} else {
+			text_analysis->overflow = 0;
 		}
 
 	
