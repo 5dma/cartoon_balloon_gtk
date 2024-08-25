@@ -7,11 +7,11 @@
 
 /**
  * @file read_themes.c
- * @brief Reads the configured themes.
+ * @brief Functions for reading and applying themes.
  */
 
 /**
-Reads the file of defined themes into a `GHashTable` of `Theme` structs. 
+ * Reads the file of defined themes into a `GHashTable` of `Theme` structs. 
  */
 GHashTable *read_themes(Settings *settings)
 {
@@ -19,8 +19,9 @@ GHashTable *read_themes(Settings *settings)
 	GError *error;
 	Theme *theme;
 
-	GHashTable* theme_hash = g_hash_table_new(g_str_hash, g_str_equal);
-
+	//GHashTable* theme_hash = g_hash_table_new(g_str_hash, g_str_equal);
+	GHashTable* theme_hash = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, g_free);
+	
 	parser = json_parser_new();
 	error = NULL;
 	json_parser_load_from_file(parser, "/home/abba/programming/c_programs/cartoon_balloon_gtk/configuration.json", &error);
@@ -80,10 +81,14 @@ GHashTable *read_themes(Settings *settings)
 	return theme_hash;
 }
 
-
+/**
+* Retieves the requested theme from the theme_hash, and applies that theme's settings to the corresponding members of Settings. If the requested theme is not in the theme hash, the output falls back to the default theme. 
+ */
 void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Settings **settings) {
 	Theme * requested_theme = (Theme *)g_hash_table_lookup (theme_hash, annotation->theme);
-	g_print("The name and color is %s %s\n", annotation->theme, requested_theme->balloon_fill_color );
+	if (requested_theme == NULL) {
+		return;
+	}
 	Settings * local_settings = *settings;
 	g_strlcpy(local_settings->balloon_fill_color, requested_theme->balloon_fill_color, 8);
 	g_strlcpy(local_settings->balloon_stroke_color, requested_theme->balloon_stroke_color, 8);
