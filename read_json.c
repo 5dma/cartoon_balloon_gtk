@@ -32,10 +32,6 @@ Settings *read_json() {
 	JsonReader *reader;
 	reader = json_reader_new(json_parser_get_root(parser));
 
-	json_reader_read_member(reader, "new_width");
-	settings->new_width = json_reader_get_int_value(reader);
-	json_reader_end_member(reader);
-
 	json_reader_read_member(reader, "max_annotation_length");
 	settings->max_annotation_length = json_reader_get_int_value(reader);
 	json_reader_end_member(reader);

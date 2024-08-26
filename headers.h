@@ -22,7 +22,6 @@
  */
 typedef struct Settings
 {
-	gint64 new_width; /**< Maximal width of the resulting image. For Twitter, 520 is a good value. */
 	gint32 max_annotation_length; /**< Maximal length of an annotation. A reasonable value is 256. */
 	gchar balloon_fill_color[8]; /**< Hex value of the fill color including the octothorp. For example, white is `#FFFFFF`.*/
 	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
@@ -51,6 +50,7 @@ typedef struct Coordinates
  */
 typedef struct Annotation
 {
+	gint64 new_width; /**< Maximal width of the resulting image. For Twitter, 520 is a good value. */
 	gchar text_string[256];  /**< Maximal length of the text. A reasonable value is 256. */
 	gchar original_image_path[256]; /**< Maximal length of the original image's path. A reasonable value is 256. */
 	gchar theme[256];  /**< Theme to apply to the text and balloon.  */
@@ -98,7 +98,7 @@ void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis);
 void add_balloon(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis);
 Text_Analysis * analyze_text(MagickWand *m_wand, Settings *settings, Annotation *annotation);
-void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_analysis);
+void resize_image(MagickWand *m_wand, Settings *settings, Annotation * annotation, Text_Analysis * text_analysis);
 void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis);
 GHashTable * read_themes(Settings *settings);
 void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Settings **settings);

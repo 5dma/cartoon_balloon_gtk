@@ -71,7 +71,7 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 
 
 	/* Determine the maximal width of the text. */
-	gint64 max_text_width = settings->new_width - \
+	gint64 max_text_width = annotation->new_width - \
 		text_analysis->left_offset - \
 		settings->padding * 2 - \
 		settings->stroke_width * 2;

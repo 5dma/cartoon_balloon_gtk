@@ -9,7 +9,7 @@
  */
 
 /**
-Scales the original image to no wider than the user-specified width found in `settings->new_width`.
+Scales the original image to no wider than the user-specified width found in `annotation->new_width`.
  */
 void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 {
@@ -17,11 +17,11 @@ void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 	gint64 old_width = MagickGetImageWidth(m_wand);
 	gint64 old_height = MagickGetImageHeight(m_wand);
 
-	gint64 new_height = (settings->new_width * old_height) / old_width;
+	gint64 new_height = (annotation->new_width * old_height) / old_width;
 
-	MagickResizeImage(m_wand, settings->new_width, new_height, LanczosFilter);
+	MagickResizeImage(m_wand, annotation->new_width, new_height, LanczosFilter);
 
-	annotation->resize_proportion_x = (float) settings->new_width / old_width;
+	annotation->resize_proportion_x = (float) annotation->new_width / old_width;
 
 	annotation->resize_proportion_y = (float) new_height / old_height;
 
@@ -32,7 +32,7 @@ void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 /**
   Resizes the image vertically so that it can accommodate any overflow from the text, balloon, padding, and top margin.
  */
-void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_analysis) {
+void resize_image(MagickWand *m_wand, Settings *settings, Annotation * annotation, Text_Analysis * text_analysis) {
 
 	text_analysis->overflow = \
 		text_analysis->bottom_offset - \
@@ -46,7 +46,7 @@ void resize_image(MagickWand *m_wand, Settings *settings, Text_Analysis * text_a
 	if (text_analysis->overflow < 0) {
 
 			MagickExtentImage(m_wand, \
-			settings->new_width, \
+			annotation->new_width, \
 			current_image_height - text_analysis->overflow, \
 			0, \
 			text_analysis->overflow);

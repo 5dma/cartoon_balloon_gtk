@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 	Text_Analysis *text_analysis = analyze_text(m_wand, settings, annotation);
 
 	/* Extend the image vertically to accommodate the balloon. */
-	resize_image(m_wand, settings, text_analysis);
+	resize_image(m_wand, settings, annotation, text_analysis);
 
 	/* Add the balloon. */
 	add_balloon(m_wand, settings, annotation, text_analysis);

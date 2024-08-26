@@ -35,6 +35,10 @@ Annotation *read_annotation(Settings *settings)
 	JsonReader *reader;
 	reader = json_reader_new(json_parser_get_root(parser));
 
+	json_reader_read_member(reader, "new_width");
+	annotation->new_width = json_reader_get_int_value(reader);
+	json_reader_end_member(reader);
+
 	json_reader_read_member(reader, "text_string");
 	g_strlcpy(annotation->text_string, json_reader_get_string_value(reader), settings->max_annotation_length);
 	json_reader_end_member(reader);
