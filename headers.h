@@ -6,6 +6,16 @@
  */
 
 /**
+   \brief Path to the application's configuration file.
+*/
+#define CONFIG_FILE "/home/abba/.cartoon_balloon/configuration.json"
+
+/** 
+   \brief Path to the application's annotation file.
+*/
+#define ANNOTATION_FILE "/home/abba/.cartoon_balloon/annotation.json"
+
+/**
  * Structure containing user-defined configuration. The settings in this struct, such as the ballon's fill color, file are relatively static: they can apply to multiple images. The function read_json() reads the values from a JSON file.
  * 
  * All dimensions in this structure are in pixels. For a visual representation of the dimensions, see the specification.

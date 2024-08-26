@@ -20,9 +20,9 @@ Settings *read_json() {
 
 	parser = json_parser_new();
 	error = NULL;
-	json_parser_load_from_file(parser, "/home/abba/programming/c_programs/cartoon_balloon_gtk/configuration.json", &error);
+	json_parser_load_from_file(parser, CONFIG_FILE, &error);
 	if (error) {
-		g_print("Unable to parse `%s': %s\n", "/home/abba/programming/c_programs/cartoon_balloon_gtk/configuration.json", error->message);
+		g_print("Unable to parse `%s': %s\n", CONFIG_FILE, error->message);
 		g_error_free(error);
 		g_object_unref(parser);
 		return NULL;
