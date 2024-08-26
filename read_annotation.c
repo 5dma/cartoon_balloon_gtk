@@ -40,15 +40,15 @@ Annotation *read_annotation(Settings *settings)
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "text_string");
-	g_strlcpy(annotation->text_string, json_reader_get_string_value(reader), settings->max_annotation_length);
+	g_strlcpy(annotation->text_string, json_reader_get_string_value(reader), MAX_ANNOTATION_LENGTH);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "original_image_path");
-	g_strlcpy(annotation->original_image_path, json_reader_get_string_value(reader), settings->max_annotation_length);
+	g_strlcpy(annotation->original_image_path, json_reader_get_string_value(reader), MAX_ANNOTATION_LENGTH);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "theme");
-	g_strlcpy(annotation->theme, json_reader_get_string_value(reader), settings->max_annotation_length);
+	g_strlcpy(annotation->theme, json_reader_get_string_value(reader), MAX_ANNOTATION_LENGTH);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "text_bottom_left");

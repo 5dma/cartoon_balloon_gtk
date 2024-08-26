@@ -15,6 +15,11 @@
 */
 #define ANNOTATION_FILE "/home/abba/.cartoon_balloon/annotation.json"
 
+
+/** 
+   \brief Maximal number of characters in an annotation.
+*/
+#define MAX_ANNOTATION_LENGTH 256
 /**
  * Structure containing user-defined configuration. The settings in this struct, such as the ballon's fill color, file are relatively static: they can apply to multiple images. The function read_json() reads the values from a JSON file.
  * 
@@ -22,7 +27,6 @@
  */
 typedef struct Settings
 {
-	gint32 max_annotation_length; /**< Maximal length of an annotation. A reasonable value is 256. */
 	gchar balloon_fill_color[8]; /**< Hex value of the fill color including the octothorp. For example, white is `#FFFFFF`.*/
 	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
 	gint64 padding; /**< Padding around the text box. The balloon is drawn around the padding.*/

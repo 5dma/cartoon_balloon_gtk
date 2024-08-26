@@ -87,10 +87,10 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 
 	/* Parse the annotation, placing newlines in places where the string exceeds max_text_width. */
 	gchar *token = strtok(annotation->text_string, " ");
-	g_strlcpy(text_analysis->split_string, token, settings->max_annotation_length);
+	g_strlcpy(text_analysis->split_string, token, MAX_ANNOTATION_LENGTH);
 	while ((token = strtok(NULL, " ")) != NULL) {
-		g_strlcat(text_analysis->split_string, " ", settings->max_annotation_length);
-		g_strlcat(text_analysis->split_string, token, settings->max_annotation_length);
+		g_strlcat(text_analysis->split_string, " ", MAX_ANNOTATION_LENGTH);
+		g_strlcat(text_analysis->split_string, token, MAX_ANNOTATION_LENGTH);
 		text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
 		if (text_metrics[4] > max_text_width) {
 			rightmost_space = g_strrstr(text_analysis->split_string, " ");
