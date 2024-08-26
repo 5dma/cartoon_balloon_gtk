@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <glib.h>
 #include <glib-object.h>
+#include <gtk/gtk.h>
 
 #include "MagickWand/MagickWand.h"
 #include "headers.h"
@@ -35,6 +36,20 @@
  * -# Write the image.
  */
 int main(int argc, char *argv[]) {
+
+
+	GtkApplication *app = gtk_application_new(
+		"net.lautman.SpeechBalloon",
+		G_APPLICATION_FLAGS_NONE);
+
+	g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
+
+	int status = g_application_run(G_APPLICATION(app), argc, argv);
+
+	/* Decrease reference count because assigning it in on_app_activate */
+	g_object_unref(app);
+
+
 
 	Settings * settings = read_json();
 	if (settings == NULL) {
@@ -94,5 +109,5 @@ int main(int argc, char *argv[]) {
 	g_free(settings);
 	g_free(annotation);
 	
-	return 0;
+	return status;
 }

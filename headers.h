@@ -1,5 +1,6 @@
 #include "MagickWand/MagickWand.h"
 #include "glib.h"
+#include <gtk/gtk.h>
 /**
  * @file headers.h
  * @brief C headers.
@@ -95,7 +96,7 @@ typedef struct Theme
 
 } Theme;
 
-
+/* Processing headers */
 Settings *read_json();
 Annotation *read_annotation(Settings *settings);
 void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation);
@@ -106,3 +107,7 @@ void resize_image(MagickWand *m_wand, Settings *settings, Annotation * annotatio
 void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis);
 GHashTable * read_themes(Settings *settings);
 void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Settings **settings);
+
+
+/* GTK headers */
+void app_activate (GtkApplication* app, gpointer  user_data);
