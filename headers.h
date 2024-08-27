@@ -96,6 +96,14 @@ typedef struct Theme
 
 } Theme;
 
+typedef struct UserData
+{
+	Settings * settings;
+	Annotation * annotation;
+	Text_Analysis * text_analysis;
+
+} UserData;
+
 /* Processing headers */
 Settings *read_json();
 Annotation *read_annotation(Settings *settings);
@@ -107,7 +115,7 @@ void resize_image(MagickWand *m_wand, Settings *settings, Annotation * annotatio
 void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis);
 GHashTable * read_themes(Settings *settings);
 void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Settings **settings);
-
+void process_image(Settings * settings, Annotation * annotation);
 
 /* GTK headers */
 void app_activate (GtkApplication* app, gpointer  user_data);

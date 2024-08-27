@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <glib.h>
 #include <glib-object.h>
-#include <gtk/gtk.h>
 
 #include "MagickWand/MagickWand.h"
 #include "headers.h"
@@ -35,40 +34,46 @@
  * -# Draw a path from user-specified point to the speech balloon.
  * -# Write the image.
  */
-int main(int argc, char *argv[]) {
+void process_image(Settings * settings, Annotation * annotation) {
 
 
-	GtkApplication *app = gtk_application_new(
-		"net.lautman.SpeechBalloon",
-		G_APPLICATION_FLAGS_NONE);
+	MagickWandGenesis();
 
-	g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
+	MagickWand *m_wand = NewMagickWand();
 
-	int status = g_application_run(G_APPLICATION(app), argc, argv);
+	MagickBooleanType result = MagickReadImage(m_wand, annotation->original_image_path);
 
-	/* Decrease reference count because assigning it in on_app_activate */
-	g_object_unref(app);
-
-	Settings * settings = read_json();
-	if (settings == NULL) {
-		return 0;
+	if (result == MagickFalse) {
+		g_print("Could not read the image %s. Exiting\n", annotation->original_image_path);
+		return;
 	}
 
-	Annotation * annotation = read_annotation(settings);
-	if (annotation == NULL) {
-		return 0;
-	}
 
-	GHashTable * theme_hash = read_themes(settings);
+	/* Scale the image to a max of 520 pixels wide. */
+	scale_image(m_wand, settings, annotation);
 
-	apply_theme(theme_hash, annotation, &settings);
+	/* Determine height of the annotation, and compute other measurements. */
+	Text_Analysis *text_analysis = analyze_text(m_wand, settings, annotation);
 
-	process_image(settings, annotation);
+	/* Extend the image vertically to accommodate the balloon. */
+	resize_image(m_wand, settings, annotation, text_analysis);
 
-	
-	g_hash_table_destroy(theme_hash);
-	g_free(settings);
-	g_free(annotation);
-	
-	return status;
+	/* Add the balloon. */
+	add_balloon(m_wand, settings, annotation, text_analysis);
+
+	/* Add the text inside the balloon. */
+	add_text(m_wand, settings, annotation, text_analysis);
+
+	/* Add the path to the balloon. */
+	add_path(m_wand, annotation, settings, text_analysis);
+
+	/* Write the new image */
+	MagickWriteImage(m_wand, settings->new_image_path);
+
+	g_print("The new image is at %s\n", settings->new_image_path);
+
+	/* Clean up */
+	DestroyMagickWand(m_wand);
+	MagickWandTerminus();
+	g_free(text_analysis);
 }
