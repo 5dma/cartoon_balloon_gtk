@@ -39,6 +39,9 @@ typedef struct Settings
 	gchar text_color[8]; /**< Hex value of the text color including the octothorp. For example, white is `#FFFFFF`.*/
 	gchar font[256]; /**< Name of the font, provided as the font's full name with spaces replaced by hyphens. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu-Serif-Bold` */
 	gchar new_image_path[256]; /**< Maximal length of the new image's path. A reasonable value is 256. */
+	gchar log_file_path[256]; /**< Path to log file. */
+	FILE * log_file_pointer;
+
 } Settings;
 
 /**
@@ -119,3 +122,7 @@ void process_image(Settings * settings, Annotation * annotation);
 
 /* GTK headers */
 void app_activate (GtkApplication* app, gpointer  user_data);
+
+GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
+FILE * get_log_file_pointer(Settings *settings);
+void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data);

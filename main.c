@@ -1,9 +1,9 @@
+#define G_LOG_USE_STRUCTURED
 #include <stdio.h>
 #include <glib.h>
 #include <glib-object.h>
-#include <gtk/gtk.h>
-
 #include "MagickWand/MagickWand.h"
+#include <gtk/gtk.h>
 #include "headers.h"
 /**
  * @file main.c
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
 	GtkApplication *app = gtk_application_new(
 		"net.lautman.SpeechBalloon",
-		G_APPLICATION_FLAGS_NONE);
+		G_APPLICATION_DEFAULT_FLAGS);
 
 	g_signal_connect(app, "activate", G_CALLBACK(app_activate), NULL);
 
@@ -53,6 +53,8 @@ int main(int argc, char *argv[]) {
 	if (settings == NULL) {
 		return 0;
 	}
+
+	settings->log_file_pointer = get_log_file_pointer(settings);
 
 	Annotation * annotation = read_annotation(settings);
 	if (annotation == NULL) {
@@ -67,6 +69,7 @@ int main(int argc, char *argv[]) {
 
 	
 	g_hash_table_destroy(theme_hash);
+	fclose(settings->log_file_pointer);
 	g_free(settings);
 	g_free(annotation);
 	

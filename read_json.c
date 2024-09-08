@@ -74,6 +74,10 @@ Settings *read_json() {
 
 	json_reader_read_member(reader, "new_image_path");
 	g_strlcpy(settings->new_image_path, json_reader_get_string_value(reader), 256);
+	json_reader_end_member(reader);
+
+	json_reader_read_member(reader, "log_file_path");
+	g_strlcpy(settings->log_file_path, json_reader_get_string_value(reader), 256);
 
 	g_object_unref(parser);
 	g_object_unref(reader);

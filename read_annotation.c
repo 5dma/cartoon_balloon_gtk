@@ -24,6 +24,7 @@ Annotation *read_annotation(Settings *settings)
 	json_parser_load_from_file(parser, ANNOTATION_FILE, &error);
 	if (error)
 	{
+		logger(G_LOG_LEVEL_CRITICAL,"Unable to parse annotation JSON file", settings);
 		g_print("Unable to parse `%s': %s\n", ANNOTATION_FILE, error->message);
 		g_error_free(error);
 		g_object_unref(parser);
