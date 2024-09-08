@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <glib.h>
 #include <glib-object.h>
-#include "MagickWand/MagickWand.h"
-#include <gtk/gtk.h>
 #include "headers.h"
+#include <gtk/gtk.h>
+#include "wand/MagickWand.h"
 /**
  * @file main.c
  * @brief Starts the application.

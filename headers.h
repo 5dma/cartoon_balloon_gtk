@@ -1,4 +1,4 @@
-#include "MagickWand/MagickWand.h"
+#include "wand/MagickWand.h"
 #include "glib.h"
 #include <gtk/gtk.h>
 /**

@@ -2,7 +2,7 @@
 #include <glib.h>
 #include <glib-object.h>
 
-#include "MagickWand/MagickWand.h"
+#include "wand/MagickWand.h"
 #include "headers.h"
 /**
  * @file main.c
