@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "headers.h"
 #include "glib.h"
-#include "MagickWand/MagickWand.h"
+#include "wand/MagickWand.h"
 
 /**
  * @file resize.c
@@ -19,7 +19,7 @@ void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 
 	gint64 new_height = (annotation->new_width * old_height) / old_width;
 
-	MagickResizeImage(m_wand, annotation->new_width, new_height, LanczosFilter);
+	MagickResizeImage(m_wand, annotation->new_width, new_height, 0, LanczosFilter);
 
 	annotation->resize_proportion_x = (float) annotation->new_width / old_width;
 
