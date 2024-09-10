@@ -121,7 +121,7 @@ void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Setting
 void process_image(Settings * settings, Annotation * annotation);
 
 /* GTK headers */
-void app_activate (GtkApplication* app, gpointer  user_data);
+void activate (GtkApplication* app, gpointer  user_data);
 
 GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
 FILE * get_log_file_pointer(Settings *settings);
