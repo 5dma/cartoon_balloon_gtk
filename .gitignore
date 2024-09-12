@@ -4,6 +4,6 @@ balloon.dSYM/*
 .DS_Store
 ._.DS_Store
 *.odt
-*.odg
+*.odg*
 .~lock.specifications.odt#
 doc/
