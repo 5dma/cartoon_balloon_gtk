@@ -125,6 +125,15 @@ void activate(GtkApplication *app, gpointer user_data) {
 	gtk_box_append(GTK_BOX(box_top), status_bar);
 
 
+	gtk_widget_add_css_class (status_bar, "statusbar");
+	GtkCssProvider *provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_path (provider,"/home/abba/programming/c_programs/cartoon_balloon_gtk/styles.css");
+	gtk_style_context_add_provider_for_display (
+				gtk_widget_get_display (GTK_WIDGET (status_bar)),
+				GTK_STYLE_PROVIDER (provider),
+				GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+
 	gtk_window_set_child(GTK_WINDOW(window), box_top);
 
 	gtk_window_present(GTK_WINDOW(window));
