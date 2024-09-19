@@ -1,5 +1,6 @@
 .vscode/
 balloon
+*.o
 balloon.dSYM/*
 .DS_Store
 ._.DS_Store
