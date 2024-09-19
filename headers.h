@@ -123,6 +123,10 @@ void process_image(Settings * settings, Annotation * annotation);
 /* GTK headers */
 void activate (GtkApplication* app, gpointer  user_data);
 
+/* Logger headers */
 GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
 FILE * get_log_file_pointer(Settings *settings);
 void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data);
+
+/* GUI headers */
+GtkWidget * build_box_annotation();

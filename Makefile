@@ -7,7 +7,7 @@ all: main.c
 	`pkg-config --cflags json-glib-1.0` \
 	`pkg-config --cflags gtk4` \
 	`pkg-config --cflags ImageMagick` \
-	$(wildcard *.c) \
+	$(wildcard *.c) $(wildcard build_gui/*.c) \
 	`pkg-config --libs glib-2.0` \
 	`pkg-config --libs json-glib-1.0` \
 	`pkg-config --libs gtk4` \
