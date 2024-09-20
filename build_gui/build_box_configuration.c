@@ -17,10 +17,10 @@ GtkWidget * build_box_configuration() {
 	GtkWidget * lbl_top_margin = gtk_label_new ("Top margin:");
 
 
-	GtkWidget * spin_max_annotation_length = gtk_spin_button_new (adjustment_configuration, 2, 4);
-	GtkWidget * spin_padding = gtk_spin_button_new (adjustment_configuration, 2, 4);
-	GtkWidget * spin_elevation = gtk_spin_button_new (adjustment_configuration, 2, 4);
-	GtkWidget * spin_space = gtk_spin_button_new (adjustment_configuration, 2, 4);	GtkWidget * spin_top_margin = gtk_spin_button_new (adjustment_configuration, 2, 4);
+	GtkWidget * spin_max_annotation_length = gtk_spin_button_new (adjustment_configuration, 2, 0);
+	GtkWidget * spin_padding = gtk_spin_button_new (adjustment_configuration, 2, 0);
+	GtkWidget * spin_elevation = gtk_spin_button_new (adjustment_configuration, 2, 0);
+	GtkWidget * spin_space = gtk_spin_button_new (adjustment_configuration, 2, 0);	GtkWidget * spin_top_margin = gtk_spin_button_new (adjustment_configuration, 2, 0);
 
 	gtk_widget_set_halign (lbl_padding, GTK_ALIGN_START);
 	gtk_widget_set_halign (lbl_elevation, GTK_ALIGN_START);

@@ -37,12 +37,12 @@ GtkWidget * build_box_annotation() {
 	gtk_widget_set_halign (lbl_coordinates_y, GTK_ALIGN_START);
 
 
-	GtkAdjustment * adjustment_coordinates = gtk_adjustment_new (100, 0, 2000, 1, 10, 0);
+	GtkAdjustment * adjustment_coordinates = gtk_adjustment_new (100, 0, 2000, 1, 10, 5);
 
-	GtkWidget * spin_text_bottom_left_x = gtk_spin_button_new (adjustment_coordinates, 2, 4);
-	GtkWidget * spin_text_bottom_left_y = gtk_spin_button_new (adjustment_coordinates, 2, 4);
-	GtkWidget * spin_vertex_x = gtk_spin_button_new (adjustment_coordinates, 2, 4);
-	GtkWidget * spin_vertex_y = gtk_spin_button_new (adjustment_coordinates, 2, 4);
+	GtkWidget * spin_text_bottom_left_x = gtk_spin_button_new (adjustment_coordinates, 2, 0);
+	GtkWidget * spin_text_bottom_left_y = gtk_spin_button_new (adjustment_coordinates, 2, 0);
+	GtkWidget * spin_vertex_x = gtk_spin_button_new (adjustment_coordinates, 2, 0);
+	GtkWidget * spin_vertex_y = gtk_spin_button_new (adjustment_coordinates, 2, 0);
 	GtkWidget * btn_point_text_bottom = gtk_button_new_with_label("Point");
 	GtkWidget * btn_point_vertex = gtk_button_new_with_label("Point");
 
@@ -70,7 +70,7 @@ GtkWidget * build_box_annotation() {
 	gtk_widget_set_halign (lbl_new_width, GTK_ALIGN_START);
 	gtk_widget_set_halign (lbl_theme, GTK_ALIGN_START);
 
-	GtkWidget * spin_new_width = gtk_spin_button_new (adjustment_coordinates, 2, 4);
+	GtkWidget * spin_new_width = gtk_spin_button_new (adjustment_coordinates, 2, 0);
 
 	const char boy[] = "Boy";
 	const char girl[] = "Girl";

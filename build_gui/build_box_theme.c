@@ -36,7 +36,7 @@ GtkWidget * build_box_theme() {
 
 	GtkWidget * entry_font_name = gtk_entry_new();
 	GtkWidget * entry_font_color = gtk_entry_new();
-	GtkWidget * spin_font_size = gtk_spin_button_new (adjustment_font_size, 2, 4);
+	GtkWidget * spin_font_size = gtk_spin_button_new (adjustment_font_size, 2, 0);
 
 	GtkWidget * btn_font_name_picker = gtk_button_new_with_label("Choose…");
 	GtkWidget * btn_font_color_picker = gtk_button_new_with_label("Choose…");
@@ -79,7 +79,7 @@ GtkWidget * build_box_theme() {
 
 	GtkWidget * entry_fill_color = gtk_entry_new();
 	GtkWidget * entry_stroke_color = gtk_entry_new();
-	GtkWidget * spin_stroke_width = gtk_spin_button_new (adjustment_stroke_width, 2, 4);
+	GtkWidget * spin_stroke_width = gtk_spin_button_new (adjustment_stroke_width, 2, 0);
 
 	GtkWidget * btn_balloon_color_picker = gtk_button_new_with_label("Choose…");
 	GtkWidget * btn_stroke_color_picker = gtk_button_new_with_label("Choose…");
