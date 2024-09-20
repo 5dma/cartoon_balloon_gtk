@@ -24,8 +24,9 @@
 }
 
 .box_top {
-	border: 2px thin red;
+	border: 2px red dashed;
 }
+
 .spinner {
 
 }

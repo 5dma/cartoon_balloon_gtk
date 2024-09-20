@@ -40,13 +40,6 @@ int main(int argc, char *argv[]) {
 	GtkApplication *app;
 	int status;
 
-	app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
-	g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
-	status = g_application_run (G_APPLICATION (app), argc, argv);
- 
-	/* Decrease reference count because assigning it in on_app_activate */
-	g_object_unref(app);
-
 	Settings * settings = read_json();
 	if (settings == NULL) {
 		return 0;
@@ -60,6 +53,23 @@ int main(int argc, char *argv[]) {
 	}
 
 	GHashTable * theme_hash = read_themes(settings);
+	
+
+	Gui_Data * gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
+
+	User_Data * user_data = (User_Data *) g_malloc(sizeof(User_Data));
+	user_data->gui_data = gui_data;
+	user_data->annotation = annotation;
+	user_data->settings = settings;
+
+	app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
+	g_signal_connect (app, "activate", G_CALLBACK (activate), user_data);
+	status = g_application_run (G_APPLICATION (app), argc, argv);
+ 
+	/* Decrease reference count because assigning it in on_app_activate */
+	g_object_unref(app);
+
+
 
 	apply_theme(theme_hash, annotation, &settings);
 
@@ -68,8 +78,11 @@ int main(int argc, char *argv[]) {
 	
 	g_hash_table_destroy(theme_hash);
 	fclose(settings->log_file_pointer);
+	g_free(user_data);
+	g_free(gui_data);
 	g_free(settings);
 	g_free(annotation);
+
 	
 	return status;
 }

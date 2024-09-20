@@ -97,15 +97,20 @@ typedef struct Theme
 	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
 } Theme;
 
+typedef struct Gui_Data {
+	GtkWidget * box_top;
+	GtkWidget * box_annotation;
+	GtkWidget * box_theme;
+	GtkCssProvider * provider;
+} Gui_Data;
 
-
-typedef struct UserData
+typedef struct User_Data
 {
 	Settings * settings;
 	Annotation * annotation;
 	Text_Analysis * text_analysis;
-
-} UserData;
+	Gui_Data * gui_data;
+} User_Data;
 
 /* Processing headers */
 Settings *read_json();
