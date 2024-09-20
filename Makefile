@@ -2,7 +2,7 @@ CC = gcc
 
 all: balloon
 
-balloon: add_balloon.o add_text.o build_gui.o build_box_annotation.o logging.o main.o process_image.o read_annotation.o read_json.o read_themes.o resize.o
+balloon: add_balloon.o add_text.o build_gui.o build_box_annotation.o build_box_theme.o logging.o main.o process_image.o read_annotation.o read_json.o read_themes.o resize.o
 	$(CC) -g -Wall -o $@ $^ `pkg-config --libs glib-2.0` `pkg-config --libs json-glib-1.0` `pkg-config --libs gtk4` `pkg-config --libs ImageMagick` `pkg-config --libs MagickWand`
 
 add_balloon.o: add_balloon.c
@@ -37,4 +37,6 @@ resize.o: resize.c
 build_box_annotation.o: build_gui/build_box_annotation.c
 	$(CC) -Wall  -c `pkg-config --cflags ImageMagick` `pkg-config --cflags glib-2.0` `pkg-config --cflags gtk4` $^
 
+build_box_theme.o: build_gui/build_box_theme.c
+	$(CC) -Wall  -c `pkg-config --cflags ImageMagick` `pkg-config --cflags glib-2.0` `pkg-config --cflags gtk4` $^
 

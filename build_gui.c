@@ -42,6 +42,7 @@ void activate(GtkApplication *app, gpointer user_data) {
 	gtk_widget_set_hexpand (box_top, TRUE);
   
 	GtkWidget * box_annotation = build_box_annotation();
+	GtkWidget * box_theme = build_box_theme();
 
 	GtkWidget *status_bar = gtk_entry_new();
 	gtk_entry_set_placeholder_text(GTK_ENTRY(status_bar), "Ready...");
@@ -49,7 +50,8 @@ void activate(GtkApplication *app, gpointer user_data) {
 	gtk_widget_set_hexpand (status_bar, TRUE);
 
 
-	gtk_box_append(GTK_BOX(box_top), box_annotation);
+//	gtk_box_append(GTK_BOX(box_top), box_annotation);
+	gtk_box_append(GTK_BOX(box_top), box_theme);
 
 	gtk_box_append(GTK_BOX(box_top), status_bar);
 

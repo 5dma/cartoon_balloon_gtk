@@ -1,7 +1,6 @@
 #include <gtk/gtk.h>
 
 
-
 GtkWidget * build_box_annotation() {
 
 	/* Build the box containing annotation controls. */

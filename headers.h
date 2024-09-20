@@ -66,7 +66,6 @@ typedef struct Annotation
 	float resize_proportion_y; /**< Proportion the image is resized in the y direction so that it does not exceed the maximal width. (Typically matches `resize_proportion_x`.) */
 	Coordinates text_bottom_left; /**< Position of the text's bottom-left corner on the final image. */
 	Coordinates callout_vertex; /**< Position of the polyline's vertex on the final image. */
-
 } Annotation;
 
 /**
@@ -96,8 +95,9 @@ typedef struct Theme
 	gint64 stroke_width; /**< Stroke width around balloon and polyline.*/
 	gchar balloon_fill_color[8]; /**< Hex value of the fill color including the octothorp. For example, white is `#FFFFFF`.*/
 	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
-
 } Theme;
+
+
 
 typedef struct UserData
 {
@@ -130,3 +130,4 @@ void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data)
 
 /* GUI headers */
 GtkWidget * build_box_annotation();
+GtkWidget * build_box_theme();
