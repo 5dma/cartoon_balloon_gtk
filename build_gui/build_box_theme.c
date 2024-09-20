@@ -132,7 +132,17 @@ GtkWidget * build_box_theme() {
 
 
 	gtk_widget_add_css_class (box_theme, "tab" );
+	gtk_widget_add_css_class (lbl_name, "horizontal_field_label");
+	gtk_widget_add_css_class (lbl_font, "horizontal_field_label");
+	gtk_widget_add_css_class (lbl_color, "horizontal_field_label");
+	gtk_widget_add_css_class (lbl_size, "horizontal_field_label");
 
+	gtk_widget_add_css_class (lbl_fill_color, "horizontal_field_label");
+	gtk_widget_add_css_class (lbl_stroke_color, "horizontal_field_label");
+	gtk_widget_add_css_class (lbl_stroke_width, "horizontal_field_label");
+
+	gtk_widget_add_css_class(grid_text,"grid_coordinates");
+	gtk_widget_add_css_class(grid_balloon ,"grid_coordinates");
 
 	return box_theme;
 
