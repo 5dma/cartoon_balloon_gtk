@@ -144,6 +144,10 @@ GtkWidget * build_box_theme() {
 	gtk_widget_add_css_class(grid_text,"grid_coordinates");
 	gtk_widget_add_css_class(grid_balloon ,"grid_coordinates");
 
+
+
+	gtk_widget_set_visible(box_theme, FALSE);
+
 	return box_theme;
 
 }

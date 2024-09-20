@@ -120,6 +120,9 @@ GtkWidget * build_box_annotation() {
 	gtk_widget_add_css_class(box_width_theme,"grid_coordinates");
 	gtk_widget_add_css_class(grid_text_string_export,"grid_coordinates");
 
+	gtk_widget_set_visible(box_annotation, TRUE);
+
+
 	return box_annotation;
 
 }

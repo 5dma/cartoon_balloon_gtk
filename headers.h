@@ -101,6 +101,7 @@ typedef struct Gui_Data {
 	GtkWidget * box_top;
 	GtkWidget * box_annotation;
 	GtkWidget * box_theme;
+	GtkWidget * box_configuration;
 	GtkCssProvider * provider;
 } Gui_Data;
 
@@ -136,3 +137,4 @@ void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data)
 /* GUI headers */
 GtkWidget * build_box_annotation();
 GtkWidget * build_box_theme();
+GtkWidget * build_box_configuration();

@@ -3,18 +3,26 @@
 #include "headers.h"
 
 void show_annotation_tab(GtkWidget *widget, gpointer data) {
-
 	Gui_Data *gui_data = (Gui_Data *)data;
 
 	gtk_css_provider_load_from_path(gui_data->provider, "/home/abba/programming/c_programs/cartoon_balloon_gtk/styles.css");
-	gtk_widget_set_visible (gui_data->box_annotation, TRUE);
-	gtk_widget_set_visible (gui_data->box_theme, FALSE);
+	gtk_widget_set_visible(gui_data->box_annotation, TRUE);
+	gtk_widget_set_visible(gui_data->box_theme, FALSE);
+	gtk_widget_set_visible(gui_data->box_configuration, FALSE);
 }
 
 void show_theme_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
-	gtk_widget_set_visible (gui_data->box_annotation, FALSE);
-	gtk_widget_set_visible (gui_data->box_theme, TRUE);
+	gtk_widget_set_visible(gui_data->box_annotation, FALSE);
+	gtk_widget_set_visible(gui_data->box_theme, TRUE);
+	gtk_widget_set_visible(gui_data->box_configuration, FALSE);
+}
+
+void show_configuration_tab(GtkWidget *widget, gpointer data) {
+	Gui_Data *gui_data = (Gui_Data *)data;
+	gtk_widget_set_visible(gui_data->box_annotation, FALSE);
+	gtk_widget_set_visible(gui_data->box_theme, FALSE);
+	gtk_widget_set_visible(gui_data->box_configuration, TRUE);
 }
 
 void activate(GtkApplication *app, gpointer data) {
@@ -33,6 +41,7 @@ void activate(GtkApplication *app, gpointer data) {
 
 	g_signal_connect(btn_annotation, "clicked", G_CALLBACK(show_annotation_tab), user_data->gui_data);
 	g_signal_connect(btn_theme, "clicked", G_CALLBACK(show_theme_tab), user_data->gui_data);
+	g_signal_connect(btn_configuration, "clicked", G_CALLBACK(show_configuration_tab), user_data->gui_data);
 
 	GtkWidget *header_bar = gtk_header_bar_new();
 
@@ -48,11 +57,12 @@ void activate(GtkApplication *app, gpointer data) {
 
 	GtkWidget *box_annotation = build_box_annotation();
 	GtkWidget *box_theme = build_box_theme();
+	GtkWidget *box_configuration = build_box_configuration();
 
 	user_data->gui_data->box_annotation = box_annotation;
 	user_data->gui_data->box_theme = box_theme;
+	user_data->gui_data->box_configuration = box_configuration;
 	user_data->gui_data->box_top = box_top;
-
 
 	GtkWidget *status_bar = gtk_entry_new();
 	gtk_entry_set_placeholder_text(GTK_ENTRY(status_bar), "Ready...");
@@ -61,6 +71,7 @@ void activate(GtkApplication *app, gpointer data) {
 
 	gtk_box_append(GTK_BOX(box_top), box_annotation);
 	gtk_box_append(GTK_BOX(box_top), box_theme);
+	gtk_box_append(GTK_BOX(box_top), box_configuration);
 
 	gtk_box_append(GTK_BOX(box_top), status_bar);
 
