@@ -1,9 +1,14 @@
 #include <gtk/gtk.h>
+/**
+ * @file build_box_annotation.c
+ * @brief Builds the GUI tab `box_annotation`.
+ */
 
-
+/**
+ * Builds the box containing annotation controls, and returns the associated widget.
+ */
 GtkWidget * build_box_annotation() {
 
-	/* Build the box containing annotation controls. */
 	GtkWidget * box_annotation  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	GtkWidget * grid_annotation = gtk_grid_new ();
 

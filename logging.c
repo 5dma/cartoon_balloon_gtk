@@ -1,10 +1,19 @@
 #include <glib.h>
 #include <stdio.h>
 #include "headers.h"
+/**
+   \brief Maximal size of the possible literals for log levels `ERROR`, `CRITICAL`, etc. Required for performing `g_strlcpy` into the containing log message.
+*/
 #define LOG_LEVEL_LENGTH 50
 
+/**
+ * @file logging.c
+ * @brief Functions for logging.
+ */
 
-
+/**
+Receives a log level and text message, and outputs them along with a time stamp to the log file.
+ */
 void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data) {
 	Settings * settings = (Settings *) user_data;
 
@@ -46,6 +55,9 @@ void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data)
 	g_date_time_unref(date_time);
 }
 
+/**
+Opens the log file and returns the pointer.
+ */
 FILE * get_log_file_pointer(Settings * settings) {
 	FILE * file_ptr = fopen (settings ->log_file_path, "a");
 	if (file_ptr == NULL) {

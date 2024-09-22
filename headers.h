@@ -40,7 +40,7 @@ typedef struct Settings
 	gchar font[256]; /**< Name of the font, provided as the font's full name with spaces replaced by hyphens. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu-Serif-Bold` */
 	gchar new_image_path[256]; /**< Maximal length of the new image's path. A reasonable value is 256. */
 	gchar log_file_path[256]; /**< Path to log file. */
-	FILE * log_file_pointer;
+	FILE * log_file_pointer; /**< Address of the log file's handle. */
 
 } Settings;
 
@@ -97,20 +97,26 @@ typedef struct Theme
 	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
 } Theme;
 
+/**
+ * Structure holding settings in the GUI.
+ */
 typedef struct Gui_Data {
-	GtkWidget * box_top;
-	GtkWidget * box_annotation;
-	GtkWidget * box_theme;
-	GtkWidget * box_configuration;
-	GtkCssProvider * provider;
+	GtkWidget * box_top; /**< Address of the box_top widget. */
+	GtkWidget * box_annotation; /**< Address of the box_annotation widget. */
+	GtkWidget * box_theme; /**< Address of the box_theme widget. */
+	GtkWidget * box_configuration; /**< Address of the box_configuration widget. */
+	GtkCssProvider * provider; /**< Address of the `GtkCssProvider` instance. */
 } Gui_Data;
 
+/**
+ * Parent structure for passing all settings between callbacks.
+ */
 typedef struct User_Data
 {
-	Settings * settings;
-	Annotation * annotation;
-	Text_Analysis * text_analysis;
-	Gui_Data * gui_data;
+	Settings * settings; /**< Address of the settings structure. */
+	Annotation * annotation; /**< Address of the annotation structure. */
+	Text_Analysis * text_analysis; /**< Address of the text_analysis structure. */
+	Gui_Data * gui_data; /**< Address of the gui_data structure. */
 } User_Data;
 
 /* Processing headers */
@@ -130,7 +136,6 @@ void process_image(Settings * settings, Annotation * annotation);
 void activate (GtkApplication* app, gpointer  user_data);
 
 /* Logger headers */
-GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
 FILE * get_log_file_pointer(Settings *settings);
 void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data);
 

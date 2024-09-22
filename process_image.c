@@ -5,27 +5,13 @@
 #include "wand/MagickWand.h"
 #include "headers.h"
 /**
- * @file main.c
- * @brief Starts the application.
+ * @file process_image.c
+ * @brief Processes the image based on the current settings for annotation and configuration.
  */
 
-/*! \mainpage Speech Balloon
- *
- * This GTK application is a small graphics editor for adding speech balloons to images. 
- *
- * \section motivation Motivation
- * Full-feature graphics editors, such as GIMP or LibreOffice Draw, have the functionality for adding speech balloons. For someone doing a lot of this graphical work, there are many steps involved and the repetitive effort can become a burden. This small application reduces the number of steps and corresponding time to add speech balloons.
- * 
- * \section architecture Architecture
- * This application runs on GTK and incorporates commands from the ImageMagick C API.
- * 
- * \section documentation Documentation
- * To generate this code documentation, run `doxygen Doxyfile`. The output is in the `doc/html/` directory of this source code.
- *
-*/
 
 /**
- * Starts the program and makes function calls representing a drawing process with the following steps:
+ * Makes function calls representing a drawing process with the following steps:
  * -# Read in the image
  * -# Scale the image to the maximum width specified by the user.
  * -# Determine properties of the text, such as its final bounding box.

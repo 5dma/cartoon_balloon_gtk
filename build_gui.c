@@ -1,7 +1,16 @@
 #include <gtk/gtk.h>
-
 #include "headers.h"
 
+
+/**
+ * @file build_gui.c
+ * @brief Contains functions for building the GUI.
+ */
+
+
+/**
+Fires when user clicks the **Annotation** button, and displays the controls in the annotations tab.
+ */
 void show_annotation_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
 
@@ -11,6 +20,9 @@ void show_annotation_tab(GtkWidget *widget, gpointer data) {
 	gtk_widget_set_visible(gui_data->box_configuration, FALSE);
 }
 
+/**
+Fires when user clicks the **Theme** button, and displays the controls in the theme tab.
+ */
 void show_theme_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
 	gtk_widget_set_visible(gui_data->box_annotation, FALSE);
@@ -18,6 +30,9 @@ void show_theme_tab(GtkWidget *widget, gpointer data) {
 	gtk_widget_set_visible(gui_data->box_configuration, FALSE);
 }
 
+/**
+Fires when user clicks the **Configuration** button, and displays the controls in the configuration tab.
+ */
 void show_configuration_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
 	gtk_widget_set_visible(gui_data->box_annotation, FALSE);
@@ -25,6 +40,10 @@ void show_configuration_tab(GtkWidget *widget, gpointer data) {
 	gtk_widget_set_visible(gui_data->box_configuration, TRUE);
 }
 
+
+/**
+Parent function for building the GTK GUI.
+ */
 void activate(GtkApplication *app, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
 

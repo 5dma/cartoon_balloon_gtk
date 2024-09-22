@@ -1,6 +1,12 @@
 #include <gtk/gtk.h>
+/**
+ * @file build_box_configuration.c
+ * @brief Builds the GUI tab `box_configuration`.
+ */
 
-
+/**
+ * Builds the box containing configuration controls, and returns the associated widget.
+ */
 GtkWidget * build_box_configuration() {
 
 	/* Build the box containing configuration controls. */

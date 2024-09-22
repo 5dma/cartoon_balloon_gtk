@@ -1,6 +1,12 @@
 #include <gtk/gtk.h>
+/**
+ * @file build_box_theme.c
+ * @brief Builds the GUI tab `box_theme`.
+ */
 
-
+/**
+ * Builds the box containing theme controls, and returns the associated widget.
+ */
 GtkWidget * build_box_theme() {
 
 	/* Build the box containing theme controls. */
