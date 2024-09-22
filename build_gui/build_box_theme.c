@@ -37,6 +37,7 @@ GtkWidget * build_box_theme() {
 	GtkWidget * entry_font_name = gtk_entry_new();
 	GtkWidget * entry_font_color = gtk_entry_new();
 	GtkWidget * spin_font_size = gtk_spin_button_new (adjustment_font_size, 2, 0);
+	
 
 	GtkWidget * btn_font_name_picker = gtk_button_new_with_label("Choose…");
 	GtkWidget * btn_font_color_picker = gtk_button_new_with_label("Choose…");

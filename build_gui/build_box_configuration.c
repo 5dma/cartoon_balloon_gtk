@@ -72,6 +72,8 @@ GtkWidget * build_box_configuration() {
 	gtk_widget_add_css_class (lbl_space, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_top_margin, "horizontal_field_label");
 
+	gtk_editable_set_max_width_chars (GTK_EDITABLE(spin_max_annotation_length), 5);
+
 	
 	gtk_widget_add_css_class(grid_configuration,"grid_coordinates");
 	gtk_widget_set_visible(box_configuration, FALSE);
