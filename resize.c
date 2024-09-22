@@ -19,7 +19,7 @@ void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 
 	gint64 new_height = (annotation->new_width * old_height) / old_width;
 
-	MagickResizeImage(m_wand, annotation->new_width, new_height, 0, LanczosFilter);
+	MagickResizeImage(m_wand, annotation->new_width, new_height, LanczosFilter, 0);
 
 	annotation->resize_proportion_x = (float) annotation->new_width / old_width;
 

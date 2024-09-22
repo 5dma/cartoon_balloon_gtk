@@ -3,9 +3,11 @@ Adds speech balloons to images.
 
 # Library dependencies
 
-* On Ubuntu, need to remove the standard GraphicsMagick and ImageMagick, and compile from source. See https://imagemagick.org/script/install-source.php
-* glib-2.0
-* json-glib-1.0
+As of Ubuntu 24.04, install the following packages
+
+* libmagick++-6-headers
+* libjson-glib-dev
+* glib-2.0 
 
 
 # Compiling
@@ -16,3 +18,11 @@ Adds speech balloons to images.
 
 1. Configure settings in `annotation.json` and `configuration.json`.
 2. `./balloon`
+
+# Memory check
+
+`valgrind --leak-check=full  --show-leak-kinds=all  --track-origins=yes --verbose --gen-suppressions=yes --log-file=/tmp/valgrind-out.txt  ./balloon`
+
+# GTK widget factory
+
+`gtk4-widget-factory`

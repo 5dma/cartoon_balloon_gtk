@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <glib.h>
 #include <glib-object.h>
-#include "headers.h"
-#include <gtk/gtk.h>
+
 #include "wand/MagickWand.h"
+#include "headers.h"
 /**
  * @file main.c
  * @brief Starts the application.
@@ -34,54 +34,46 @@
  * -# Draw a path from user-specified point to the speech balloon.
  * -# Write the image.
  */
-int main(int argc, char *argv[]) {
+void process_image(Settings * settings, Annotation * annotation) {
 
-	GtkApplication *app;
-	int status;
 
-	Settings * settings = read_json();
-	if (settings == NULL) {
-		return 0;
+	MagickWandGenesis();
+
+	MagickWand *m_wand = NewMagickWand();
+
+	MagickBooleanType result = MagickReadImage(m_wand, annotation->original_image_path);
+
+	if (result == MagickFalse) {
+		g_print("Could not read the image %s. Exiting\n", annotation->original_image_path);
+		return;
 	}
 
-	settings->log_file_pointer = get_log_file_pointer(settings);
 
-	Annotation * annotation = read_annotation(settings);
-	if (annotation == NULL) {
-		return 0;
-	}
+	/* Scale the image to a max of 520 pixels wide. */
+	scale_image(m_wand, settings, annotation);
 
-	GHashTable * theme_hash = read_themes(settings);
-	
+	/* Determine height of the annotation, and compute other measurements. */
+	Text_Analysis *text_analysis = analyze_text(m_wand, settings, annotation);
 
-	Gui_Data * gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
+	/* Extend the image vertically to accommodate the balloon. */
+	resize_image(m_wand, settings, annotation, text_analysis);
 
-	User_Data * user_data = (User_Data *) g_malloc(sizeof(User_Data));
-	user_data->gui_data = gui_data;
-	user_data->annotation = annotation;
-	user_data->settings = settings;
+	/* Add the balloon. */
+	add_balloon(m_wand, settings, annotation, text_analysis);
 
-	app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
-	g_signal_connect (app, "activate", G_CALLBACK (activate), user_data);
-	status = g_application_run (G_APPLICATION (app), argc, argv);
- 
-	/* Decrease reference count because assigning it in on_app_activate */
-	g_object_unref(app);
+	/* Add the text inside the balloon. */
+	add_text(m_wand, settings, annotation, text_analysis);
 
+	/* Add the path to the balloon. */
+	add_path(m_wand, annotation, settings, text_analysis);
 
+	/* Write the new image */
+	MagickWriteImage(m_wand, settings->new_image_path);
 
-	apply_theme(theme_hash, annotation, &settings);
+	g_print("The new image is at %s\n", settings->new_image_path);
 
-	process_image(settings, annotation);
-
-	
-	g_hash_table_destroy(theme_hash);
-	fclose(settings->log_file_pointer);
-	g_free(user_data);
-	g_free(gui_data);
-	g_free(settings);
-	g_free(annotation);
-
-	
-	return status;
+	/* Clean up */
+	DestroyMagickWand(m_wand);
+	MagickWandTerminus();
+	g_free(text_analysis);
 }

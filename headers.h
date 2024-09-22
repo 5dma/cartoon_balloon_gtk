@@ -1,5 +1,6 @@
 #include "wand/MagickWand.h"
 #include "glib.h"
+#include <gtk/gtk.h>
 /**
  * @file headers.h
  * @brief C headers.
@@ -38,6 +39,9 @@ typedef struct Settings
 	gchar text_color[8]; /**< Hex value of the text color including the octothorp. For example, white is `#FFFFFF`.*/
 	gchar font[256]; /**< Name of the font, provided as the font's full name with spaces replaced by hyphens. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu-Serif-Bold` */
 	gchar new_image_path[256]; /**< Maximal length of the new image's path. A reasonable value is 256. */
+	gchar log_file_path[256]; /**< Path to log file. */
+	FILE * log_file_pointer;
+
 } Settings;
 
 /**
@@ -62,7 +66,6 @@ typedef struct Annotation
 	float resize_proportion_y; /**< Proportion the image is resized in the y direction so that it does not exceed the maximal width. (Typically matches `resize_proportion_x`.) */
 	Coordinates text_bottom_left; /**< Position of the text's bottom-left corner on the final image. */
 	Coordinates callout_vertex; /**< Position of the polyline's vertex on the final image. */
-
 } Annotation;
 
 /**
@@ -92,10 +95,25 @@ typedef struct Theme
 	gint64 stroke_width; /**< Stroke width around balloon and polyline.*/
 	gchar balloon_fill_color[8]; /**< Hex value of the fill color including the octothorp. For example, white is `#FFFFFF`.*/
 	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
-
 } Theme;
 
+typedef struct Gui_Data {
+	GtkWidget * box_top;
+	GtkWidget * box_annotation;
+	GtkWidget * box_theme;
+	GtkWidget * box_configuration;
+	GtkCssProvider * provider;
+} Gui_Data;
 
+typedef struct User_Data
+{
+	Settings * settings;
+	Annotation * annotation;
+	Text_Analysis * text_analysis;
+	Gui_Data * gui_data;
+} User_Data;
+
+/* Processing headers */
 Settings *read_json();
 Annotation *read_annotation(Settings *settings);
 void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation);
@@ -106,3 +124,17 @@ void resize_image(MagickWand *m_wand, Settings *settings, Annotation * annotatio
 void add_path(MagickWand *m_wand, Annotation *annotation, Settings *settings, Text_Analysis *text_analysis);
 GHashTable * read_themes(Settings *settings);
 void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Settings **settings);
+void process_image(Settings * settings, Annotation * annotation);
+
+/* GTK headers */
+void activate (GtkApplication* app, gpointer  user_data);
+
+/* Logger headers */
+GLogWriterOutput logWriter(GLogLevelFlags log_level, const GLogField *fields, size_t n_fields, void *user_data);
+FILE * get_log_file_pointer(Settings *settings);
+void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data);
+
+/* GUI headers */
+GtkWidget * build_box_annotation();
+GtkWidget * build_box_theme();
+GtkWidget * build_box_configuration();
