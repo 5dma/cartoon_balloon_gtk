@@ -1,5 +1,5 @@
 CC = gcc
-OBJFILES = add_balloon.o add_text.o build_gui.o build_box_annotation.o build_box_theme.o build_box_configuration.o logging.o main.o process_image.o read_annotation.o read_json.o read_themes.o resize.o
+OBJFILES = add_balloon.o add_text.o build_gui.o build_box_annotation.o build_box_theme.o build_box_configuration.o logging.o main.o process_image.o read_annotation.o read_json.o read_themes.o resize.o initialize_gui.o memory_management.o
 CFLAGS = -g -Wall
 
 all: balloon
@@ -44,6 +44,14 @@ build_box_theme.o: build_gui/build_box_theme.c
 
 build_box_configuration.o: build_gui/build_box_configuration.c
 	$(CC) $(CFLAGS) -c `pkg-config --cflags ImageMagick` `pkg-config --cflags glib-2.0` `pkg-config --cflags gtk4` $^
+
+
+initialize_gui.o: build_gui/initialize_gui.c
+	$(CC) $(CFLAGS) -c `pkg-config --cflags ImageMagick` `pkg-config --cflags glib-2.0` `pkg-config --cflags gtk4` $^
+
+memory_management.o: memory_management.c
+	$(CC) $(CFLAGS) -c `pkg-config --cflags ImageMagick` `pkg-config --cflags glib-2.0` `pkg-config --cflags gtk4` $^
+
 
 .PHONY: clean
 clean:
