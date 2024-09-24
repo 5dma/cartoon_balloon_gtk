@@ -15,13 +15,6 @@ int main() {
 	const int space = 10;
 	const double line_width = 4;
 
-	const int balloon_midpoint = canvas_width / 2;
-	const int vertex_start_x = balloon_midpoint - space;
-	const int vertex_start_y = balloon_bottom - elevation;
-	const int vertex_center_x = balloon_midpoint -  2 * space;
-	const int vertex_center_y = balloon_bottom + 4 * elevation;
-	const int vertex_end_x = balloon_midpoint + space;
-	const int vertex_end_y = balloon_bottom - elevation;
 
 	double top_left_x = margin;
 	double top_left_y = margin;
@@ -32,6 +25,17 @@ int main() {
 	double bottom_left_x = margin;
 	double bottom_left_y = balloon_bottom;
 
+
+	const int balloon_midpoint_x = canvas_width / 2;
+	const int balloon_midpoint_y = (int) (((bottom_left_y - top_left_y ) / 2) + margin);
+	const int vertex_start_x = balloon_midpoint_x - space;
+	const int vertex_start_y = balloon_bottom - elevation;
+	const int vertex_center_x = balloon_midpoint_x -  2 * space;
+	const int vertex_center_y = balloon_bottom + 4 * elevation;
+	const int vertex_end_x = balloon_midpoint_x + space;
+	const int vertex_end_y = balloon_bottom - elevation;
+
+	/* Create a surface with the balloon, and draw the balloon. */
 	cairo_surface_t * surface_balloon = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
 	cairo_t * cr_balloon = cairo_create(surface_balloon);
 
@@ -49,6 +53,8 @@ int main() {
 	cairo_set_source_rgb (cr_balloon, scaled_rgb(178),scaled_rgb(192),scaled_rgb(255));
 	cairo_fill(cr_balloon);
 
+	/* Create a surface with the vertex, and draw the vertex. */
+
 	cairo_surface_t * surface_vertex = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
 	cairo_t * cr_vertex = cairo_create(surface_vertex);
 	cairo_set_line_width (cr_vertex, line_width);
@@ -61,13 +67,28 @@ int main() {
 	cairo_set_source_rgb (cr_vertex, scaled_rgb(178),scaled_rgb(192),scaled_rgb(255));
 	cairo_fill(cr_vertex);
 
+	/* Create a surface with the text, and draw the text. */
+
+	cairo_surface_t * surface_text = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
+	cairo_t * cr_text = cairo_create(surface_text);
+
+    cairo_select_font_face(cr_text, "DejaVu Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+    cairo_set_font_size(cr_text, 15);
+	cairo_set_source_rgb (cr_text, scaled_rgb(12),scaled_rgb(0), scaled_rgb(210));
+    cairo_move_to(cr_text, balloon_midpoint_x - 25, balloon_midpoint_y + 5);
+    cairo_show_text(cr_text, "Barf!");
+
+	/* Create top-level surface. */
 	cairo_surface_t * surface_top = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
 	cairo_t * cr_top = cairo_create(surface_top);
 
+	/* Layer previous surfaces on the top-level surface. */
 	cairo_set_operator(cr_top, CAIRO_OPERATOR_OVER);
 	cairo_set_source_surface(cr_top, surface_balloon, 0, 0);
 	cairo_paint(cr_top);
 	cairo_set_source_surface(cr_top, surface_vertex, 0, 0);
+	cairo_paint(cr_top);
+	cairo_set_source_surface(cr_top, surface_text, 0, 0);
 	cairo_paint(cr_top);
 
 	cairo_status_t status = cairo_surface_write_to_png (surface_top, "/tmp/trash.png");
