@@ -11,7 +11,7 @@
 /**
 Scales the original image to no wider than the user-specified width found in `annotation->new_width`.
  */
-void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
+void scale_image(MagickWand *m_wand, Annotation *annotation)
 {
 
 	gint64 old_width = MagickGetImageWidth(m_wand);
@@ -32,14 +32,14 @@ void scale_image(MagickWand *m_wand, Settings *settings, Annotation *annotation)
 /**
   Resizes the image vertically so that it can accommodate any overflow from the text, balloon, padding, and top margin.
  */
-void resize_image(MagickWand *m_wand, Settings *settings, Annotation * annotation, Text_Analysis * text_analysis) {
+void resize_image(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis) {
 
 	text_analysis->overflow = \
 		text_analysis->bottom_offset - \
 		text_analysis->text_height - \
-		settings->padding - \
-		settings->stroke_width -\
-		settings->top_margin;
+		configuration->padding - \
+		theme->stroke_width -\
+		configuration->top_margin;
 
 	unsigned long current_image_height = MagickGetImageHeight(m_wand);
 

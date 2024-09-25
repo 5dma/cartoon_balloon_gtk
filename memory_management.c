@@ -14,9 +14,9 @@ Allocates heap memory for the User_Data structure.
 User_Data * allocate_structures()
 {
 	User_Data * user_data = (User_Data *) g_malloc(sizeof(User_Data));
-	user_data->gui_data = (Gui_Controls *) g_malloc(sizeof(Gui_Controls));
+	user_data->gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
 
-	user_data->gui_data->configuration_controls = (Configuration *) g_malloc(sizeof(Configuration));
+	//user_data->gui_data->configuration_controls = (Configuration *) g_malloc(sizeof(Configuration));
 
  return user_data; 
 }

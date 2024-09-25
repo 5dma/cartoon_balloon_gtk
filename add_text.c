@@ -13,19 +13,19 @@
 
   The ImageMagic command <a href="https://imagemagick.org/api/magick-image.php#MagickAnnotateImage">MagickAnnotateImage</a> requires points for placing the text.  See the specification for detail about how those points are computed.
  */
-void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Text_Analysis *text_analysis) {
+void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis) {
 	
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
 
 	/* Set up pixel and drawing wands for adding the text. */
-	PixelSetColor(p_wand, settings->balloon_fill_color);
-	PixelSetColor(p_wand, settings->text_color);
+	PixelSetColor(p_wand, theme->balloon_fill_color);
+	PixelSetColor(p_wand, theme->text_color);
 	PixelSetAlpha(p_wand, 1.0);
 	DrawSetFillColor(d_wand, p_wand);
 	DrawSetGravity(d_wand, NorthWestGravity);
-	DrawSetFontSize(d_wand, settings->font_size);
-	DrawSetFont(d_wand,settings->font);
+	DrawSetFontSize(d_wand, theme->font_size);
+	DrawSetFont(d_wand,theme->font);
 
 
 	//DrawSetStrokeColor(d_wand, p_wand);
@@ -55,7 +55,7 @@ void add_text(MagickWand *m_wand, Settings *settings, Annotation *annotation, Te
  * - Compute the size of the balloon.
  * - Resize as necessary the image upward to contain the balloon.
  */
-Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *annotation) {
+Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation) {
 	
 	Text_Analysis *text_analysis;
 	text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
@@ -73,13 +73,13 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 	/* Determine the maximal width of the text. */
 	gint64 max_text_width = annotation->new_width - \
 		text_analysis->left_offset - \
-		settings->padding * 2 - \
-		settings->stroke_width * 2;
+		configuration->padding * 2 - \
+		theme->stroke_width * 2;
 
 	/* Set up wand for drawing text. */
 	DrawingWand *d_wand = NewDrawingWand();
-	DrawSetFont(d_wand, settings->font);
-	DrawSetFontSize(d_wand, settings->font_size);
+	DrawSetFont(d_wand, theme->font);
+	DrawSetFontSize(d_wand, theme->font_size);
 
 
 	gdouble *text_metrics;
@@ -87,10 +87,10 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Settings *settings, Annotation *
 
 	/* Parse the annotation, placing newlines in places where the string exceeds max_text_width. */
 	gchar *token = strtok(annotation->text_string, " ");
-	g_strlcpy(text_analysis->split_string, token, MAX_ANNOTATION_LENGTH);
+	g_strlcpy(text_analysis->split_string, token, configuration->max_annotation_length);
 	while ((token = strtok(NULL, " ")) != NULL) {
-		g_strlcat(text_analysis->split_string, " ", MAX_ANNOTATION_LENGTH);
-		g_strlcat(text_analysis->split_string, token, MAX_ANNOTATION_LENGTH);
+		g_strlcat(text_analysis->split_string, " ", configuration->max_annotation_length);
+		g_strlcat(text_analysis->split_string, token, configuration->max_annotation_length);
 		text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
 		if (text_metrics[4] > max_text_width) {
 			rightmost_space = g_strrstr(text_analysis->split_string, " ");

@@ -39,27 +39,14 @@ int main(int argc, char *argv[]) {
 	GtkApplication *app;
 	int status;
 
-	Settings * settings = read_json();
-	if (settings == NULL) {
-		return 0;
-	}
-
-	settings->log_file_pointer = get_log_file_pointer(settings);
-
-	Annotation * annotation = read_annotation(settings);
-	if (annotation == NULL) {
-		return 0;
-	}
-
-	GHashTable * theme_hash = read_themes(settings);
-	
-
-	Gui_Data * gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
 
 	User_Data * user_data = (User_Data *) g_malloc(sizeof(User_Data));
-	user_data->gui_data = gui_data;
-	user_data->annotation = annotation;
-	user_data->settings = settings;
+
+	read_configuration(user_data);
+	read_annotation(user_data);
+	read_themes(user_data);
+
+	Gui_Data * gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
 
 	app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
 	g_signal_connect (app, "activate", G_CALLBACK (activate), user_data);
@@ -70,18 +57,22 @@ int main(int argc, char *argv[]) {
 
 
 
-	apply_theme(theme_hash, annotation, &settings);
+	//apply_theme(theme_hash, annotation, &settings);
 
-	process_image(settings, annotation);
+	process_image(user_data->configuration, user_data->theme_hash, user_data->annotation);
 
+		/* Clean up */
 	
-	g_hash_table_destroy(theme_hash);
-	fclose(settings->log_file_pointer);
-	g_free(user_data);
-	g_free(gui_data);
-	g_free(settings);
-	g_free(annotation);
+	g_object_unref(user_data->parser);
+	g_object_unref(user_data->reader);
 
+	g_hash_table_destroy(user_data->theme_hash);
+	fclose(user_data->configuration->log_file_pointer);
+	g_free(gui_data);
+	g_free(user_data->configuration);
+	g_free(user_data->annotation);
+	g_free(user_data);
+	
 	
 	return status;
 }

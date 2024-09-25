@@ -15,9 +15,9 @@
 Receives a log level and text message, and outputs them along with a time stamp to the log file.
  */
 void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data) {
-	Settings * settings = (Settings *) user_data;
+	Configuration * configuration = (Configuration *) user_data;
 
-	if (settings->log_file_pointer == NULL) {
+	if (configuration->log_file_pointer == NULL) {
 		return;
 	}
 
@@ -49,8 +49,8 @@ void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data)
 
     GDateTime *date_time = g_date_time_new_now_local();
     gchar *date_time_string = g_date_time_format(date_time, "%H:%M:%S");
-	fprintf (settings->log_file_pointer, "%-8s %s %s\n", my_log_level, date_time_string, message);
-	fflush (settings->log_file_pointer);
+	fprintf (configuration->log_file_pointer, "%-8s %s %s\n", my_log_level, date_time_string, message);
+	fflush (configuration->log_file_pointer);
 	g_free(date_time_string);
 	g_date_time_unref(date_time);
 }
@@ -58,8 +58,8 @@ void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data)
 /**
 Opens the log file and returns the pointer.
  */
-FILE * get_log_file_pointer(Settings * settings) {
-	FILE * file_ptr = fopen (settings ->log_file_path, "a");
+FILE * get_log_file_pointer(Configuration * configuration) {
+	FILE * file_ptr = fopen (configuration ->log_file_path, "a");
 	if (file_ptr == NULL) {
 		g_print("Could not open log file, so no messages are logged\n");
 	}
