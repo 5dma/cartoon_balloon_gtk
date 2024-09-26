@@ -64,6 +64,10 @@ void read_configuration(User_Data * user_data) {
 	g_strlcpy(configuration->log_file_path, json_reader_get_string_value(reader), 256);
 	json_reader_end_member(reader);
 
+	json_reader_read_member(reader, "new_image_path");
+	g_strlcpy(configuration->new_image_path, json_reader_get_string_value(reader), 256);
+	json_reader_end_member(reader);
+
 	json_reader_end_member(reader); /* configuration stanza */
 
 	configuration->log_file_pointer = get_log_file_pointer(configuration);
