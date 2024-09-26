@@ -46,6 +46,8 @@ int main(int argc, char *argv[]) {
 	read_annotation(user_data);
 	read_themes(user_data);
 
+	logger(G_LOG_LEVEL_INFO, "Started", user_data);
+
 	user_data->gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
 
 	app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);

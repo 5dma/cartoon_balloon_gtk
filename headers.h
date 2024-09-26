@@ -11,7 +11,7 @@
 /**
    \brief Path to the application's configuration file.
 */
-#define CONFIG_FILE "/home/abba/.cartoon_balloon/configuration.json"
+#define CONFIG_FILE "/home/abba/.cartoon_balloon/settings.json"
 
 /**
    \brief Maximal length of a file path.
@@ -132,7 +132,7 @@ void activate (GtkApplication* app, gpointer  user_data);
 
 /* Logger headers */
 FILE * get_log_file_pointer(Configuration *configuration);
-void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data);
+void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data);
 
 /* GUI headers */
 GtkWidget * build_box_annotation();

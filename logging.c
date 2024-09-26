@@ -14,10 +14,11 @@
 /**
 Receives a log level and text message, and outputs them along with a time stamp to the log file.
  */
-void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data) {
-	Configuration * configuration = (Configuration *) user_data;
+void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data) {
+	
+	FILE *log_file_pointer = user_data->configuration->log_file_pointer;
 
-	if (configuration->log_file_pointer == NULL) {
+	if (log_file_pointer == NULL) {
 		return;
 	}
 
@@ -49,8 +50,8 @@ void logger(GLogLevelFlags log_level, const gchar * message, gpointer user_data)
 
     GDateTime *date_time = g_date_time_new_now_local();
     gchar *date_time_string = g_date_time_format(date_time, "%H:%M:%S");
-	fprintf (configuration->log_file_pointer, "%-8s %s %s\n", my_log_level, date_time_string, message);
-	fflush (configuration->log_file_pointer);
+	fprintf (log_file_pointer, "%-8s %s %s\n", my_log_level, date_time_string, message);
+	fflush (log_file_pointer);
 	g_free(date_time_string);
 	g_date_time_unref(date_time);
 }

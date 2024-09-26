@@ -11,7 +11,7 @@
  */
 
 /**
-Reads the configuration file into a `Settings` struct. The settings in this configuration file are relatively static: they can apply to multiple images. 
+Reads the configuration file into a `Settings` struct. The settings in this configuration file are relatively static: they can apply to multiple images. Also opens the log file.
  */
 void read_configuration(User_Data * user_data) {
 	JsonParser *parser;
@@ -37,8 +37,6 @@ void read_configuration(User_Data * user_data) {
 
 	user_data->parser = parser;
 	user_data->reader = reader;
-
-	configuration->log_file_pointer = get_log_file_pointer(configuration);
 
 	success = json_reader_read_member(reader, "configuration");
 
@@ -67,5 +65,7 @@ void read_configuration(User_Data * user_data) {
 	json_reader_end_member(reader);
 
 	json_reader_end_member(reader); /* configuration stanza */
-	
+
+	configuration->log_file_pointer = get_log_file_pointer(configuration);
+
 }
