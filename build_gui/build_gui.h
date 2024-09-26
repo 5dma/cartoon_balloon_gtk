@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
 #include "../headers.h"
 /**
- * @file build_gu.h
+ * @file build_gui.h
  * @brief GUI headers.
  */
 

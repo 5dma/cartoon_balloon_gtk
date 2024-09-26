@@ -95,7 +95,7 @@ typedef struct Gui_Data {
 	GtkWidget * box_annotation; /**< Address of the box_annotation widget. */
 	GtkWidget * box_theme; /**< Address of the box_theme widget. */
 	GtkWidget * box_configuration; /**< Address of the box_configuration widget. */
-	GtkWidget *spin_max_annotation_length;
+	GtkWidget *spin_max_annotation_length; /**< Address of the spin_max_annotation_length in the configuration tab. */
 	GtkCssProvider * provider; /**< Address of the `GtkCssProvider` instance. */
 } Gui_Data;
 

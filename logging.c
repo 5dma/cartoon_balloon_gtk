@@ -67,11 +67,54 @@ FILE * get_log_file_pointer(Configuration * configuration) {
 	return file_ptr;
 
 }
+/**
+* Constructs a log message describing a theme.
+*/
+void print_theme(gpointer key, gpointer value, gpointer user_data) {
 
+	GStrvBuilder *message_builder = (GStrvBuilder *) user_data;
+	gchar *theme_name = (gchar *) key;
+	Theme *theme = (Theme *) value;
+
+	gchar *current_line;
+	current_line = g_strdup_printf ("  %s:", theme_name);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+	
+	current_line = g_strdup_printf ("%-23s: %s", "    text_color:", theme->text_color);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+	
+	current_line = g_strdup_printf ("%-23s: %s", "    font:", theme->font);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+	
+	current_line = g_strdup_printf ("%-23s: %ld", "    font_size:", theme->font_size);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %ld", "    stroke_width:", theme->stroke_width);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %s", "    balloon_fill_color:", theme->balloon_fill_color);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %s", "    balloon_stroke_color:", theme->balloon_stroke_color);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+}
+
+/**
+Writes to the log file the current settings.
+ */
 void log_configuration_values(User_Data *user_data) {
 	Configuration *configuration = user_data->configuration;
 	GStrvBuilder *message_builder = g_strv_builder_new ();
 	g_strv_builder_add (message_builder,"Read settings values:");
+	
+	/* Writes configuration settigngs. */
 	g_strv_builder_add (message_builder,"Configuration:");
 
 	gchar *current_line;
@@ -103,9 +146,10 @@ void log_configuration_values(User_Data *user_data) {
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
+	/* Writes annotation settigngs. */
 
 	Annotation *annotation = user_data->annotation;
-	g_strv_builder_add (message_builder,"Annotation:");
+	g_strv_builder_add (message_builder,"\nAnnotation:");
 
 	current_line = g_strdup_printf ("%-23s: %s", "  input_image", annotation->input_image);
 	g_strv_builder_add (message_builder,current_line);
@@ -119,7 +163,6 @@ void log_configuration_values(User_Data *user_data) {
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-
 	current_line = g_strdup_printf ("%-23s: %ld", "  new width", annotation->new_width);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
@@ -132,9 +175,18 @@ void log_configuration_values(User_Data *user_data) {
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
+	/* Writes theme settings. */
+
+	GHashTable *theme_hash = user_data->theme_hash;
+	g_strv_builder_add (message_builder,"\nThemes:");
+	g_hash_table_foreach (theme_hash,  print_theme, message_builder);
+
+	/* Complete the message and send to the logger */
 	GStrv message_vector = g_strv_builder_end (message_builder);
 	gchar *final_message = g_strjoinv("\n", message_vector);
 	logger(G_LOG_LEVEL_INFO,final_message, user_data);
+	
+	/* Cleanup */
 	g_free(final_message);
 	g_strv_builder_unref(message_builder);
 }

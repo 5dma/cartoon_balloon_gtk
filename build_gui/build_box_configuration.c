@@ -5,8 +5,8 @@
  */
 
 /**
- * Builds the box containing configuration controls, and returns the associated widget.
- */
+* Builds the box containing configuration controls, and returns the associated widget.
+*/
 GtkWidget * build_box_configuration() {
 
 	/* Build the box containing configuration controls. */

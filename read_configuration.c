@@ -6,7 +6,7 @@
 #include "headers.h"
 
 /**
- * @file read_json.c
+ * @file read_configuration.c
  * @brief Reads the application's configuration file.
  */
 
