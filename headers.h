@@ -99,9 +99,9 @@ typedef struct Gui_Data_Configuration {
  * Structure holding settings in the GUI.
  */
 typedef struct Gui_Data {
-	GtkWidget * box_top; /**< Address of the box_top widget. */
-	GtkWidget * box_annotation; /**< Address of the box_annotation widget. */
-	GtkWidget * box_theme; /**< Address of the box_theme widget. */
+	GtkWidget *box_top; /**< Address of the box_top widget. */
+	GtkWidget *box_annotation; /**< Address of the box_annotation widget. */
+	GtkWidget *box_theme; /**< Address of the box_theme widget. */
 	Gui_Data_Configuration gui_data_configuration; /**< Structure containing pointers to controls in the Configuration tab. */
 	GtkCssProvider * provider; /**< Address of the `GtkCssProvider` instance. */
 } Gui_Data;
@@ -145,5 +145,5 @@ void log_configuration_values(User_Data *user_data);
 /* GUI headers */
 GtkWidget * build_box_annotation();
 GtkWidget * build_box_theme();
-GtkWidget * build_box_configuration();
+GtkWidget * build_box_configuration(Gui_Data *gui_data);
 void initialize_gui(User_Data *user_data);

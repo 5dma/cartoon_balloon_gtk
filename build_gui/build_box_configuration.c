@@ -9,7 +9,7 @@
 /**
 * Builds the box containing configuration controls, and returns the associated widget.
 */
-GtkWidget * build_box_configuration() {
+GtkWidget * build_box_configuration(Gui_Data *gui_data) {
 
 	/* Build the box containing configuration controls. */
 	GtkWidget * box_configuration  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -85,6 +85,8 @@ GtkWidget * build_box_configuration() {
 	
 	gtk_widget_add_css_class(grid_configuration,"grid_coordinates");
 	gtk_widget_set_visible(box_configuration, FALSE);
+
+	gui_data->gui_data_configuration.spin_max_annotation_length = spin_max_annotation_length;
 
 	return box_configuration;
 

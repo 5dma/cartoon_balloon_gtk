@@ -46,6 +46,7 @@ Parent function for building the GTK GUI.
  */
 void activate(GtkApplication *app, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
+	user_data->gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
 
 	user_data->gui_data->provider = gtk_css_provider_new();
 	gtk_css_provider_load_from_path(user_data->gui_data->provider, "/home/abba/programming/c_programs/cartoon_balloon_gtk/styles.css");
@@ -76,11 +77,12 @@ void activate(GtkApplication *app, gpointer data) {
 
 	GtkWidget *box_annotation = build_box_annotation();
 	GtkWidget *box_theme = build_box_theme();
-	GtkWidget *box_configuration = build_box_configuration();
+	GtkWidget *box_configuration = build_box_configuration(user_data->gui_data);
 
 	user_data->gui_data->box_annotation = box_annotation;
 	user_data->gui_data->box_theme = box_theme;
 	user_data->gui_data->gui_data_configuration.box_configuration = box_configuration;
+
 	user_data->gui_data->box_top = box_top;
 
 	GtkWidget *status_bar = gtk_entry_new();

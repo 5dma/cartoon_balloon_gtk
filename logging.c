@@ -81,27 +81,27 @@ void print_theme(gpointer key, gpointer value, gpointer user_data) {
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 	
-	current_line = g_strdup_printf ("%-23s: %s", "    text_color:", theme->text_color);
+	current_line = g_strdup_printf ("%-23s: %s", "    text_color", theme->text_color);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 	
-	current_line = g_strdup_printf ("%-23s: %s", "    font:", theme->font);
+	current_line = g_strdup_printf ("%-23s: %s", "    font", theme->font);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 	
-	current_line = g_strdup_printf ("%-23s: %ld", "    font_size:", theme->font_size);
+	current_line = g_strdup_printf ("%-23s: %ld", "    font_size", theme->font_size);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %ld", "    stroke_width:", theme->stroke_width);
+	current_line = g_strdup_printf ("%-23s: %ld", "    stroke_width", theme->stroke_width);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %s", "    balloon_fill_color:", theme->balloon_fill_color);
+	current_line = g_strdup_printf ("%-23s: %s", "    balloon_fill_color", theme->balloon_fill_color);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %s", "    balloon_stroke_color:", theme->balloon_stroke_color);
+	current_line = g_strdup_printf ("%-23s: %s", "    balloon_stroke_color", theme->balloon_stroke_color);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 }

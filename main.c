@@ -39,7 +39,6 @@ int main(int argc, char *argv[]) {
 	GtkApplication *app;
 	int status;
 
-
 	User_Data * user_data = (User_Data *) g_malloc(sizeof(User_Data));
 
 	read_configuration(user_data);
@@ -49,7 +48,6 @@ int main(int argc, char *argv[]) {
 	logger(G_LOG_LEVEL_INFO, "Started", user_data);
 	log_configuration_values(user_data);
 
-	user_data->gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
 
 	app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
 	g_signal_connect (app, "activate", G_CALLBACK (activate), user_data);
@@ -57,8 +55,6 @@ int main(int argc, char *argv[]) {
  
 	/* Decrease reference count because assigning it in on_app_activate */
 	g_object_unref(app);
-
-
 
 	//apply_theme(theme_hash, annotation, &settings);
 

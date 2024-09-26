@@ -11,9 +11,9 @@
  */
 void initialize_gui(User_Data *user_data) {
 	Gui_Data * gui_data = user_data->gui_data;
-	Gui_Data_Configuration gui_data_configuration = gui_data->gui_data_configuration;
+	Gui_Data_Configuration gui_data_configuration = (gui_data->gui_data_configuration);
 	g_print("Got before");
-	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration.spin_max_annotation_length), 100);
+	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration.spin_max_annotation_length), user_data->configuration->max_annotation_length);
 	g_print("Got here");
 
 }
