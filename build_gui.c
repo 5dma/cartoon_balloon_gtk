@@ -15,7 +15,7 @@ void show_annotation_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
 
 	gtk_css_provider_load_from_path(gui_data->provider, "/home/abba/programming/c_programs/cartoon_balloon_gtk/styles.css");
-	gtk_widget_set_visible(gui_data->box_annotation, TRUE);
+	gtk_widget_set_visible(gui_data->gui_data_annotation.box_annotation , TRUE);
 	gtk_widget_set_visible(gui_data->box_theme, FALSE);
 	gtk_widget_set_visible(gui_data->gui_data_configuration.box_configuration, FALSE);
 }
@@ -25,7 +25,7 @@ Fires when user clicks the **Theme** button, and displays the controls in the th
  */
 void show_theme_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
-	gtk_widget_set_visible(gui_data->box_annotation, FALSE);
+	gtk_widget_set_visible(gui_data->gui_data_annotation.box_annotation, FALSE);
 	gtk_widget_set_visible(gui_data->box_theme, TRUE);
 	gtk_widget_set_visible(gui_data->gui_data_configuration.box_configuration, FALSE);
 }
@@ -35,7 +35,7 @@ Fires when user clicks the **Configuration** button, and displays the controls i
  */
 void show_configuration_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
-	gtk_widget_set_visible(gui_data->box_annotation, FALSE);
+	gtk_widget_set_visible(gui_data->gui_data_annotation.box_annotation, FALSE);
 	gtk_widget_set_visible(gui_data->box_theme, FALSE);
 	gtk_widget_set_visible(gui_data->gui_data_configuration.box_configuration, TRUE);
 }
@@ -75,11 +75,11 @@ void activate(GtkApplication *app, gpointer data) {
 	gtk_widget_set_valign(box_top, GTK_ALIGN_CENTER);
 	gtk_widget_set_hexpand(box_top, TRUE);
 
-	GtkWidget *box_annotation = build_box_annotation();
+	GtkWidget *box_annotation = build_box_annotation(user_data->gui_data);
 	GtkWidget *box_theme = build_box_theme();
 	GtkWidget *box_configuration = build_box_configuration(user_data->gui_data);
 
-	user_data->gui_data->box_annotation = box_annotation;
+	user_data->gui_data->gui_data_annotation.box_annotation = box_annotation;
 	user_data->gui_data->box_theme = box_theme;
 	user_data->gui_data->gui_data_configuration.box_configuration = box_configuration;
 

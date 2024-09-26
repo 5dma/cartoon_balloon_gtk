@@ -54,7 +54,7 @@ typedef struct Annotation
 	Coordinates text_bottom_left; /**< Position of the text's bottom-left corner on the final image. */
 	Coordinates vertex; /**< Position of the polyline's vertex on the final image. */
 	gint64 new_width; /**< Maximal width of the resulting image. For Twitter, 520 is a good value. */
-	gchar text_string[256];  /**< Maximal length of the text. A reasonable value is 256. */
+	gchar text_string[256];  /**< Maximal length of the text in the balloon. A reasonable value is 256. */
 	gchar theme[256];  /**< Theme to apply to the text and balloon.  */
 	float resize_proportion_x; /**< Proportion the image is resized in the x direction so that it does not exceed the maximal width. */
 	float resize_proportion_y; /**< Proportion the image is resized in the y direction so that it does not exceed the maximal width. (Typically matches `resize_proportion_x`.) */
@@ -89,7 +89,9 @@ typedef struct Theme
 	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
 } Theme;
 
-
+/**
+ * Structure for holdiding pointers to widgets in the Configuration tab.
+ */
 typedef struct Gui_Data_Configuration {
 	GtkWidget *box_configuration; /**< Address of the box_configuration widget. */
 	GtkWidget *spin_max_annotation_length; /**< Address of spin_max_annotation_length in the configuration tab. */
@@ -100,13 +102,28 @@ typedef struct Gui_Data_Configuration {
 } Gui_Data_Configuration;
 
 /**
+ * Structure for holdiding pointers to widgets in the Annotation tab.
+ */
+typedef struct Gui_Data_Annotation {
+	GtkWidget *box_annotation; /**< Address of the box_annotation widget. */
+	GtkWidget *entry_input_image; /**< Address of entry_input_image in the box_annotation tab. */
+	GtkWidget *spin_text_bottom_left_x; /**< Address of spin_text_bottom_left_x in the box_annotation tab. */
+	GtkWidget *spin_text_bottom_left_y; /**< Address of spin_text_bottom_left_y in the box_annotation tab. */
+	GtkWidget *spin_vertex_x; /**< Address of spin_vertex_x in the box_annotation tab. */
+	GtkWidget *spin_vertex_y; /**< Address of spin_vertex_y in the box_annotation tab. */
+	GtkWidget *spin_new_width; /**< Address of spin_new_width in the box_annotation tab. */
+	GtkWidget *dropdown_theme; /**< Address of theme in the box_annotation tab. */
+	GtkWidget *entry_text_string; /**< Address of the entry_text_string in the box_annotaton tab. */
+} Gui_Data_Annotation;
+
+/**
  * Structure holding settings in the GUI.
  */
 typedef struct Gui_Data {
 	GtkWidget *box_top; /**< Address of the box_top widget. */
-	GtkWidget *box_annotation; /**< Address of the box_annotation widget. */
 	GtkWidget *box_theme; /**< Address of the box_theme widget. */
 	Gui_Data_Configuration gui_data_configuration; /**< Structure containing pointers to controls in the Configuration tab. */
+	Gui_Data_Annotation gui_data_annotation; /**< Structure containing pointers to controls in the Annotation tab. */
 	GtkCssProvider * provider; /**< Address of the `GtkCssProvider` instance. */
 } Gui_Data;
 
@@ -147,7 +164,7 @@ void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data
 void log_configuration_values(User_Data *user_data);
 
 /* GUI headers */
-GtkWidget * build_box_annotation();
+GtkWidget * build_box_annotation(Gui_Data *gui_data);
 GtkWidget * build_box_theme();
 GtkWidget * build_box_configuration(Gui_Data *gui_data);
 void initialize_gui(User_Data *user_data);
