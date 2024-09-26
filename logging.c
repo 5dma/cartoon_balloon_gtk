@@ -69,13 +69,72 @@ FILE * get_log_file_pointer(Configuration * configuration) {
 }
 
 void log_configuration_values(User_Data *user_data) {
-	const int key_field_length = 21;
-	g_autoptr(GStrvBuilder) configuration_message = g_strv_builder_new ();
-	g_strv_builder_add (configuration_message,"Read settings values:");
-	g_strv_builder_add (configuration_message,"Configuration:");
-	g_auto(GStrv) final_message = g_strv_builder_end (configuration_message);
-	gchar *final_barf = g_strjoinv("\n", final_message);
-	//final_barf = g_strjoin("\n", "OMG", "BARF", NULL);
+	Configuration *configuration = user_data->configuration;
+	GStrvBuilder *message_builder = g_strv_builder_new ();
+	g_strv_builder_add (message_builder,"Read settings values:");
+	g_strv_builder_add (message_builder,"Configuration:");
 
-	logger(G_LOG_LEVEL_INFO,final_barf, user_data);
+	gchar *current_line;
+	current_line = g_strdup_printf ("%-23s: %ld", "  max_annotation_length", configuration->max_annotation_length);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %ld", "  padding", configuration->padding);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %ld", "  elevation", configuration->elevation);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %ld", "  space", configuration->space);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %ld", "  top_margin", configuration->top_margin);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %s", "  log_file_path", configuration->log_file_path);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %s", "  new_image_path", configuration->new_image_path);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+
+	Annotation *annotation = user_data->annotation;
+	g_strv_builder_add (message_builder,"Annotation:");
+
+	current_line = g_strdup_printf ("%-23s: %s", "  input_image", annotation->input_image);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: x: %ld, y: %ld", "  text_bottom_left",annotation->text_bottom_left.x, annotation->text_bottom_left.y);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: x: %ld, y: %ld", "  vertex",annotation->vertex.x, annotation->vertex.y);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+
+	current_line = g_strdup_printf ("%-23s: %ld", "  new width", annotation->new_width);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %s", "  text_string", annotation->text_string);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	current_line = g_strdup_printf ("%-23s: %s", "  theme", annotation->theme);
+	g_strv_builder_add (message_builder,current_line);
+	g_free(current_line);
+
+	GStrv message_vector = g_strv_builder_end (message_builder);
+	gchar *final_message = g_strjoinv("\n", message_vector);
+	logger(G_LOG_LEVEL_INFO,final_message, user_data);
+	g_free(final_message);
+	g_strv_builder_unref(message_builder);
 }
