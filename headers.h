@@ -92,7 +92,11 @@ typedef struct Theme
 
 typedef struct Gui_Data_Configuration {
 	GtkWidget *box_configuration; /**< Address of the box_configuration widget. */
-	GtkWidget *spin_max_annotation_length; /**< Address of the spin_max_annotation_length in the configuration tab. */
+	GtkWidget *spin_max_annotation_length; /**< Address of spin_max_annotation_length in the configuration tab. */
+	GtkWidget *spin_padding; /**< Address of padding in the configuration tab. */
+	GtkWidget *spin_elevation; /**< Address of elevation in the configuration tab. */
+	GtkWidget *spin_space; /**< Address of space in the configuration tab. */
+	GtkWidget *spin_top_margin; /**< Address of top_margin in the configuration tab. */
 } Gui_Data_Configuration;
 
 /**
