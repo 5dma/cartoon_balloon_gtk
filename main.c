@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 	read_annotation(user_data);
 	read_themes(user_data);
 
-	Gui_Data * gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
+	user_data->gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
 
 	app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
 	g_signal_connect (app, "activate", G_CALLBACK (activate), user_data);
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
 
 	g_hash_table_destroy(user_data->theme_hash);
 	fclose(user_data->configuration->log_file_pointer);
-	g_free(gui_data);
+	g_free(user_data->gui_data);
 	g_free(user_data->configuration);
 	g_free(user_data->annotation);
 	g_free(user_data);
