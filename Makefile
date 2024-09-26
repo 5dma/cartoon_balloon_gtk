@@ -7,34 +7,34 @@ all: balloon
 balloon: $(OBJFILES)
 	$(CC) -o $@ $^ `pkg-config --libs glib-2.0` `pkg-config --libs json-glib-1.0` `pkg-config --libs gtk4` `pkg-config --libs ImageMagick` `pkg-config --libs MagickWand`
 
-add_balloon.o: add_balloon.c
+add_balloon.o: add_balloon.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
-add_text.o: add_text.c
+add_text.o: add_text.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
-build_gui.o: build_gui.c
+build_gui.o: build_gui.c headers.h
 	$(CC) $(CFLAGS)  -c $^
 
-logging.o: logging.c
+logging.o: logging.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
-main.o: main.c
+main.o: main.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
-process_image.o: process_image.c
+process_image.o: process_image.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
-read_annotation.o: read_annotation.c
+read_annotation.o: read_annotation.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
-read_configuration.o: read_configuration.c
+read_configuration.o: read_configuration.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
-read_themes.o: read_themes.c
+read_themes.o: read_themes.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
-resize.o: resize.c
+resize.o: resize.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
 build_box_annotation.o: build_gui/build_box_annotation.c
@@ -50,7 +50,7 @@ build_box_configuration.o: build_gui/build_box_configuration.c
 initialize_gui.o: build_gui/initialize_gui.c
 	$(CC) $(CFLAGS) -c $^
 
-memory_management.o: memory_management.c
+memory_management.o: memory_management.c headers.h
 	$(CC) $(CFLAGS) -c $^
 
 

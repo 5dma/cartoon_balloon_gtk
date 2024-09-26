@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
 	read_themes(user_data);
 
 	logger(G_LOG_LEVEL_INFO, "Started", user_data);
+	log_configuration_values(user_data);
 
 	user_data->gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
 

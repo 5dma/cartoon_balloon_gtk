@@ -67,3 +67,15 @@ FILE * get_log_file_pointer(Configuration * configuration) {
 	return file_ptr;
 
 }
+
+void log_configuration_values(User_Data *user_data) {
+	const int key_field_length = 21;
+	g_autoptr(GStrvBuilder) configuration_message = g_strv_builder_new ();
+	g_strv_builder_add (configuration_message,"Read settings values:");
+	g_strv_builder_add (configuration_message,"Configuration:");
+	g_auto(GStrv) final_message = g_strv_builder_end (configuration_message);
+	gchar *final_barf = g_strjoinv("\n", final_message);
+	//final_barf = g_strjoin("\n", "OMG", "BARF", NULL);
+
+	logger(G_LOG_LEVEL_INFO,final_barf, user_data);
+}

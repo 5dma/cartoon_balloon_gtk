@@ -19,7 +19,6 @@ void read_annotation(User_Data * user_data)
 	user_data->annotation = (Annotation *)g_malloc(sizeof(Annotation));
 	Annotation * annotation = user_data->annotation;
 
-	user_data->reader = json_reader_new(json_parser_get_root(user_data->parser));
 	JsonReader * reader = user_data->reader;
 
 	json_reader_read_member(reader, "annotation");

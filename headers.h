@@ -133,6 +133,7 @@ void activate (GtkApplication* app, gpointer  user_data);
 /* Logger headers */
 FILE * get_log_file_pointer(Configuration *configuration);
 void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data);
+void log_configuration_values(User_Data *user_data);
 
 /* GUI headers */
 GtkWidget * build_box_annotation();

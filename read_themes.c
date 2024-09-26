@@ -18,7 +18,6 @@ void read_themes(User_Data *user_data)
 
 	user_data->theme_hash  = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, g_free);
 
-	user_data->reader = json_reader_new(json_parser_get_root(user_data->parser));
 	JsonReader *reader = user_data->reader;
 	
 	GHashTable* theme_hash = user_data->theme_hash;
