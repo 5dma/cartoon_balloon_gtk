@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include "../headers.h"
 /**
  * @file build_box_annotation.c
  * @brief Builds the GUI tab `box_annotation`.

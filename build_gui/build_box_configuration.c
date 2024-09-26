@@ -1,4 +1,6 @@
 #include <gtk/gtk.h>
+#include "../headers.h"
+
 /**
  * @file build_box_configuration.c
  * @brief Builds the GUI tab `box_configuration`.

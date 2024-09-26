@@ -3,6 +3,8 @@
 #include <gtk/gtk.h>
 #include <json-glib/json-glib.h>
 
+
+
 /**
  * @file headers.h
  * @brief C headers.
@@ -87,6 +89,12 @@ typedef struct Theme
 	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
 } Theme;
 
+
+typedef struct Gui_Data_Configuration {
+	GtkWidget *box_configuration; /**< Address of the box_configuration widget. */
+	GtkWidget *spin_max_annotation_length; /**< Address of the spin_max_annotation_length in the configuration tab. */
+} Gui_Data_Configuration;
+
 /**
  * Structure holding settings in the GUI.
  */
@@ -94,8 +102,7 @@ typedef struct Gui_Data {
 	GtkWidget * box_top; /**< Address of the box_top widget. */
 	GtkWidget * box_annotation; /**< Address of the box_annotation widget. */
 	GtkWidget * box_theme; /**< Address of the box_theme widget. */
-	GtkWidget * box_configuration; /**< Address of the box_configuration widget. */
-	GtkWidget *spin_max_annotation_length; /**< Address of the spin_max_annotation_length in the configuration tab. */
+	Gui_Data_Configuration gui_data_configuration; /**< Structure containing pointers to controls in the Configuration tab. */
 	GtkCssProvider * provider; /**< Address of the `GtkCssProvider` instance. */
 } Gui_Data;
 
@@ -139,3 +146,4 @@ void log_configuration_values(User_Data *user_data);
 GtkWidget * build_box_annotation();
 GtkWidget * build_box_theme();
 GtkWidget * build_box_configuration();
+void initialize_gui(User_Data *user_data);

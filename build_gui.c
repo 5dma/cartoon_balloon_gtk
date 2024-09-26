@@ -17,7 +17,7 @@ void show_annotation_tab(GtkWidget *widget, gpointer data) {
 	gtk_css_provider_load_from_path(gui_data->provider, "/home/abba/programming/c_programs/cartoon_balloon_gtk/styles.css");
 	gtk_widget_set_visible(gui_data->box_annotation, TRUE);
 	gtk_widget_set_visible(gui_data->box_theme, FALSE);
-	gtk_widget_set_visible(gui_data->box_configuration, FALSE);
+	gtk_widget_set_visible(gui_data->gui_data_configuration.box_configuration, FALSE);
 }
 
 /**
@@ -27,7 +27,7 @@ void show_theme_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
 	gtk_widget_set_visible(gui_data->box_annotation, FALSE);
 	gtk_widget_set_visible(gui_data->box_theme, TRUE);
-	gtk_widget_set_visible(gui_data->box_configuration, FALSE);
+	gtk_widget_set_visible(gui_data->gui_data_configuration.box_configuration, FALSE);
 }
 
 /**
@@ -37,7 +37,7 @@ void show_configuration_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
 	gtk_widget_set_visible(gui_data->box_annotation, FALSE);
 	gtk_widget_set_visible(gui_data->box_theme, FALSE);
-	gtk_widget_set_visible(gui_data->box_configuration, TRUE);
+	gtk_widget_set_visible(gui_data->gui_data_configuration.box_configuration, TRUE);
 }
 
 
@@ -80,7 +80,7 @@ void activate(GtkApplication *app, gpointer data) {
 
 	user_data->gui_data->box_annotation = box_annotation;
 	user_data->gui_data->box_theme = box_theme;
-	user_data->gui_data->box_configuration = box_configuration;
+	user_data->gui_data->gui_data_configuration.box_configuration = box_configuration;
 	user_data->gui_data->box_top = box_top;
 
 	GtkWidget *status_bar = gtk_entry_new();
@@ -111,6 +111,9 @@ void activate(GtkApplication *app, gpointer data) {
 	gtk_widget_add_css_class(btn_theme, "headerbutton");
 	gtk_widget_add_css_class(btn_configuration, "headerbutton");
 	gtk_widget_add_css_class(status_bar, "statusbar");
+
+	/* Apply values read from settings.json to the GUI. */
+	initialize_gui(user_data);
 
 	gtk_window_present(GTK_WINDOW(window));
 }
