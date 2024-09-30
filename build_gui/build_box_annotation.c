@@ -88,11 +88,7 @@ GtkWidget * build_box_annotation(Gui_Data *gui_data) {
 	GtkAdjustment * adjustment_new_width = gtk_adjustment_new (100, 0, 2000, 1, 10, 5);
 	GtkWidget * spin_new_width = gtk_spin_button_new (adjustment_new_width, 2, 0);
 
-	const char boy[] = "Boy";
-	const char girl[] = "Girl";
-	const char * theme_names[] = {boy, girl, NULL};
- 	GtkWidget * dropdown_theme = gtk_drop_down_new_from_strings (theme_names);
-
+	GtkWidget * dropdown_theme = gtk_drop_down_new (NULL, NULL);
 
 	/* Controls for text string and export button. */
 

@@ -102,7 +102,7 @@ typedef struct Gui_Data_Configuration {
 } Gui_Data_Configuration;
 
 /**
- * Structure for holdiding pointers to widgets in the Annotation tab.
+ * Structure for holding pointers to widgets in the Annotation tab.
  */
 typedef struct Gui_Data_Annotation {
 	GtkWidget *box_annotation; /**< Address of the box_annotation widget. */
@@ -117,6 +117,20 @@ typedef struct Gui_Data_Annotation {
 } Gui_Data_Annotation;
 
 /**
+ * Structure for holding pointers to widgets in the Themes tab.
+ */
+typedef struct Gui_Data_Theme {
+	GtkWidget *dropdown_theme; /**< Address of the dropdown_theme widget. */
+	GtkWidget *entry_font_name; /**< Address of the entry_font_name widget. */
+	GtkWidget *entry_font_color; /**< Address of the entry_font_color widget. */
+	GtkWidget *spin_font_size; /**< Address of the spin_font_size widget. */
+	GtkWidget *entry_fill_color; /**< Address of the entry_fill_color widget. */
+	GtkWidget *entry_stroke_color; /**< Address of the entry_stroke_color widget. */
+	GtkWidget *spin_stroke_width; /**< Address of the spin_stroke_width widget. */
+} Gui_Data_Theme;
+
+
+/**
  * Structure holding settings in the GUI.
  */
 typedef struct Gui_Data {
@@ -124,6 +138,7 @@ typedef struct Gui_Data {
 	GtkWidget *box_theme; /**< Address of the box_theme widget. */
 	Gui_Data_Configuration gui_data_configuration; /**< Structure containing pointers to controls in the Configuration tab. */
 	Gui_Data_Annotation gui_data_annotation; /**< Structure containing pointers to controls in the Annotation tab. */
+	Gui_Data_Theme gui_data_theme; /**< Structure containing pointers to controls in the Themes tab. */
 	GtkCssProvider * provider; /**< Address of the `GtkCssProvider` instance. */
 } Gui_Data;
 
@@ -165,6 +180,6 @@ void log_configuration_values(User_Data *user_data);
 
 /* GUI headers */
 GtkWidget * build_box_annotation(Gui_Data *gui_data);
-GtkWidget * build_box_theme();
+GtkWidget * build_box_theme(Gui_Data *gui_data);
 GtkWidget * build_box_configuration(Gui_Data *gui_data);
 void initialize_gui(User_Data *user_data);

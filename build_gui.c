@@ -56,7 +56,7 @@ void activate(GtkApplication *app, gpointer data) {
 	gtk_window_set_default_size(GTK_WINDOW(window), 640, 575);
 
 	GtkWidget *btn_annotation = gtk_button_new_with_label("Annotation");
-	GtkWidget *btn_theme = gtk_button_new_with_label("Theme");
+	GtkWidget *btn_theme = gtk_button_new_with_label("Themes");
 	GtkWidget *btn_configuration = gtk_button_new_with_label("Configuration");
 
 	g_signal_connect(btn_annotation, "clicked", G_CALLBACK(show_annotation_tab), user_data->gui_data);
@@ -76,7 +76,7 @@ void activate(GtkApplication *app, gpointer data) {
 	gtk_widget_set_hexpand(box_top, TRUE);
 
 	GtkWidget *box_annotation = build_box_annotation(user_data->gui_data);
-	GtkWidget *box_theme = build_box_theme();
+	GtkWidget *box_theme = build_box_theme(user_data->gui_data);
 	GtkWidget *box_configuration = build_box_configuration(user_data->gui_data);
 
 	user_data->gui_data->gui_data_annotation.box_annotation = box_annotation;
