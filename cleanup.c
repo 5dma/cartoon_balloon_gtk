@@ -16,6 +16,11 @@ void cleanup(User_Data *user_data) {
 
 	g_hash_table_destroy(user_data->theme_hash);
 	fclose(user_data->configuration->log_file_pointer);
+
+	g_free(user_data->gui_data->gui_data_configuration);
+	g_free(user_data->gui_data->gui_data_annotation);
+	g_free(user_data->gui_data->gui_data_theme);
+	
 	g_free(user_data->gui_data);
 	g_free(user_data->configuration);
 	g_free(user_data->annotation);

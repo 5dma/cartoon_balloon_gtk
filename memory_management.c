@@ -11,12 +11,13 @@
 /**
 Allocates heap memory for the User_Data structure.
  */
-User_Data * allocate_structures()
+User_Data * allocate_structures(void)
 {
 	User_Data * user_data = (User_Data *) g_malloc(sizeof(User_Data));
 	user_data->gui_data = (Gui_Data *) g_malloc(sizeof(Gui_Data));
-
-	//user_data->gui_data->configuration_controls = (Configuration *) g_malloc(sizeof(Configuration));
-
+	user_data->gui_data->gui_data_configuration = (Gui_Data_Configuration *) g_malloc(sizeof(Gui_Data_Configuration));
+	user_data->gui_data->gui_data_annotation = (Gui_Data_Annotation *) g_malloc(sizeof(Gui_Data_Annotation));
+	user_data->gui_data->gui_data_theme = (Gui_Data_Theme *) g_malloc(sizeof(Gui_Data_Theme));
+	
  return user_data; 
 }

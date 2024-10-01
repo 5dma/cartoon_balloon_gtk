@@ -143,14 +143,16 @@ GtkWidget * build_box_annotation(Gui_Data *gui_data) {
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_new_width), 1.0);
 
 
-	gui_data->gui_data_annotation.entry_input_image = entry_input_image;
-	gui_data->gui_data_annotation.spin_text_bottom_left_x = spin_text_bottom_left_x;
-	gui_data->gui_data_annotation.spin_text_bottom_left_y = spin_text_bottom_left_y;
-	gui_data->gui_data_annotation.spin_vertex_x = spin_vertex_x;
-	gui_data->gui_data_annotation.spin_vertex_y = spin_vertex_y;
-	gui_data->gui_data_annotation.spin_new_width = spin_new_width;
-	gui_data->gui_data_annotation.dropdown_theme = dropdown_theme;
-	gui_data->gui_data_annotation.entry_text_string = entry_text_string;
+	gui_data->gui_data_annotation->btn_annotation = btn_annotation;
+	gui_data->gui_data_annotation->entry_input_image = entry_input_image;
+	gui_data->gui_data_annotation->btn_file_open = btn_file_open;
+	gui_data->gui_data_annotation->spin_text_bottom_left_x = spin_text_bottom_left_x;
+	gui_data->gui_data_annotation->spin_text_bottom_left_y = spin_text_bottom_left_y;
+	gui_data->gui_data_annotation->spin_vertex_x = spin_vertex_x;
+	gui_data->gui_data_annotation->spin_vertex_y = spin_vertex_y;
+	gui_data->gui_data_annotation->spin_new_width = spin_new_width;
+	gui_data->gui_data_annotation->dropdown_theme = dropdown_theme;
+	gui_data->gui_data_annotation->entry_text_string = entry_text_string;
 
 	gtk_widget_set_visible(box_annotation, TRUE);
 

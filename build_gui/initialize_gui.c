@@ -13,16 +13,16 @@ void initialize_gui(User_Data *user_data) {
 	Gui_Data * gui_data = user_data->gui_data;
 
 	/* Initialize the controls in the Configuration tab. */
-	Gui_Data_Configuration gui_data_configuration = gui_data->gui_data_configuration;
-	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration.spin_max_annotation_length), user_data->configuration->max_annotation_length);
-	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration.spin_padding), user_data->configuration->padding);
-	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration.spin_elevation), user_data->configuration->elevation);
-	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration.spin_space), user_data->configuration->space);
-	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration.spin_top_margin), user_data->configuration->top_margin);
+	Gui_Data_Configuration *gui_data_configuration = gui_data->gui_data_configuration;
+	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration->spin_max_annotation_length), user_data->configuration->max_annotation_length);
+	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration->spin_padding), user_data->configuration->padding);
+	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration->spin_elevation), user_data->configuration->elevation);
+	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration->spin_space), user_data->configuration->space);
+	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration->spin_top_margin), user_data->configuration->top_margin);
 
 
 	/* Initialize the controls in the Annotation tab. */
-	Gui_Data_Annotation *gui_data_annotation = &(gui_data->gui_data_annotation);
+	Gui_Data_Annotation *gui_data_annotation = gui_data->gui_data_annotation;
 
 	GtkEntryBuffer *temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_annotation->entry_input_image));
 	gtk_entry_buffer_set_text (temp_buffer, user_data->annotation->input_image, -1);
@@ -48,7 +48,7 @@ void initialize_gui(User_Data *user_data) {
 
 	/* Initialize the controls in the Theme tab. */
 
-	Gui_Data_Theme *gui_data_theme = &(gui_data->gui_data_theme);
+	Gui_Data_Theme *gui_data_theme = gui_data->gui_data_theme;
 
 	gtk_drop_down_set_model ( GTK_DROP_DOWN(gui_data_theme->dropdown_theme), G_LIST_MODEL(stringlist));
 	gtk_drop_down_set_selected (GTK_DROP_DOWN( gui_data_theme->dropdown_theme), 0); 

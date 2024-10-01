@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 	GtkApplication *app;
 	int status;
 
-	User_Data * user_data = (User_Data *) g_malloc(sizeof(User_Data));
+	User_Data *user_data = allocate_structures();
 
 	read_configuration(user_data);
 	read_annotation(user_data);

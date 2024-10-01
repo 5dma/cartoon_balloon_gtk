@@ -136,9 +136,9 @@ typedef struct Gui_Data_Theme {
 typedef struct Gui_Data {
 	GtkWidget *box_top; /**< Address of the box_top widget. */
 	GtkWidget *box_theme; /**< Address of the box_theme widget. */
-	Gui_Data_Configuration gui_data_configuration; /**< Structure containing pointers to controls in the Configuration tab. */
-	Gui_Data_Annotation gui_data_annotation; /**< Structure containing pointers to controls in the Annotation tab. */
-	Gui_Data_Theme gui_data_theme; /**< Structure containing pointers to controls in the Themes tab. */
+	Gui_Data_Configuration *gui_data_configuration; /**< Structure containing pointers to controls in the Configuration tab. */
+	Gui_Data_Annotation *gui_data_annotation; /**< Structure containing pointers to controls in the Annotation tab. */
+	Gui_Data_Theme *gui_data_theme; /**< Structure containing pointers to controls in the Themes tab. */
 	GtkCssProvider * provider; /**< Address of the `GtkCssProvider` instance. */
 } Gui_Data;
 
@@ -173,6 +173,7 @@ void process_image(Configuration *configuration, GHashTable *theme_hash, Annotat
 /* GTK headers */
 void activate (GtkApplication* app, gpointer  user_data);
 
+
 /* Logger headers */
 FILE * get_log_file_pointer(Configuration *configuration);
 void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data);
@@ -184,5 +185,9 @@ GtkWidget * build_box_theme(Gui_Data *gui_data);
 GtkWidget * build_box_configuration(Gui_Data *gui_data);
 void initialize_gui(User_Data *user_data);
 
-/* Cleanup header */
+/* Controller (callback) headers*/
+void build_controllers_annotation(User_Data *user_data);
+
+/* Memory management headers */
+User_Data * allocate_structures(void);
 void cleanup(User_Data *user_data);

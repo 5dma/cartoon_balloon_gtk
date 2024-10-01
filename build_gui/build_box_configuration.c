@@ -97,11 +97,11 @@ GtkWidget * build_box_configuration(Gui_Data *gui_data) {
 	gtk_widget_add_css_class(grid_configuration,"grid_coordinates");
 	gtk_widget_set_visible(box_configuration, FALSE);
 
-	gui_data->gui_data_configuration.spin_max_annotation_length = spin_max_annotation_length;
-	gui_data->gui_data_configuration.spin_padding = spin_padding;
-	gui_data->gui_data_configuration.spin_elevation = spin_elevation;
-	gui_data->gui_data_configuration.spin_space = spin_space;
-	gui_data->gui_data_configuration.spin_top_margin = spin_top_margin;
+	gui_data->gui_data_configuration->spin_max_annotation_length = spin_max_annotation_length;
+	gui_data->gui_data_configuration->spin_padding = spin_padding;
+	gui_data->gui_data_configuration->spin_elevation = spin_elevation;
+	gui_data->gui_data_configuration->spin_space = spin_space;
+	gui_data->gui_data_configuration->spin_top_margin = spin_top_margin;
 
 
 	return box_configuration;
