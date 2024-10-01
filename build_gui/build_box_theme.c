@@ -18,10 +18,7 @@ GtkWidget * build_box_theme(Gui_Data *gui_data) {
 
 	GtkWidget * lbl_name = gtk_label_new ("Name:");
 
-	const char boy[] = "Boy";
-	const char girl[] = "Girl";
-	const char * theme_names[] = {boy, girl, NULL};
- 	GtkWidget * dropdown_theme = gtk_drop_down_new_from_strings (theme_names);
+	GtkWidget * dropdown_theme = gtk_drop_down_new (NULL, NULL);
 
 	GtkWidget * box_theme_selector  = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	
