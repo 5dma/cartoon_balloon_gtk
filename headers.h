@@ -183,3 +183,6 @@ GtkWidget * build_box_annotation(Gui_Data *gui_data);
 GtkWidget * build_box_theme(Gui_Data *gui_data);
 GtkWidget * build_box_configuration(Gui_Data *gui_data);
 void initialize_gui(User_Data *user_data);
+
+/* Cleanup header */
+void cleanup(User_Data *user_data);

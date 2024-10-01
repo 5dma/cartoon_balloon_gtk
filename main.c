@@ -60,17 +60,7 @@ int main(int argc, char *argv[]) {
 
 	process_image(user_data->configuration, user_data->theme_hash, user_data->annotation);
 
-		/* Clean up */
-	
-	g_object_unref(user_data->parser);
-	g_object_unref(user_data->reader);
-
-	g_hash_table_destroy(user_data->theme_hash);
-	fclose(user_data->configuration->log_file_pointer);
-	g_free(user_data->gui_data);
-	g_free(user_data->configuration);
-	g_free(user_data->annotation);
-	g_free(user_data);
+	cleanup(user_data);
 	
 	
 	return status;
