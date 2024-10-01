@@ -86,9 +86,14 @@ GtkWidget * build_box_configuration(Gui_Data *gui_data) {
 	gtk_widget_add_css_class (lbl_space, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_top_margin, "horizontal_field_label");
 
+	gtk_editable_set_alignment(GTK_EDITABLE(spin_max_annotation_length), 1.0);
+	gtk_editable_set_alignment(GTK_EDITABLE(spin_padding), 1.0);
+	gtk_editable_set_alignment(GTK_EDITABLE(spin_elevation), 1.0);
+	gtk_editable_set_alignment(GTK_EDITABLE(spin_space), 1.0);
+	gtk_editable_set_alignment(GTK_EDITABLE(spin_top_margin), 1.0);
+
 	gtk_editable_set_max_width_chars (GTK_EDITABLE(spin_max_annotation_length), 5);
 
-	
 	gtk_widget_add_css_class(grid_configuration,"grid_coordinates");
 	gtk_widget_set_visible(box_configuration, FALSE);
 

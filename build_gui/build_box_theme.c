@@ -153,6 +153,9 @@ GtkWidget * build_box_theme(Gui_Data *gui_data) {
 	gtk_widget_add_css_class(grid_text,"grid_coordinates");
 	gtk_widget_add_css_class(grid_balloon ,"grid_coordinates");
 
+	gtk_editable_set_alignment(GTK_EDITABLE(spin_font_size), 1.0);
+	gtk_editable_set_alignment(GTK_EDITABLE(spin_stroke_width), 1.0);
+
 	gtk_widget_set_visible(box_theme, FALSE);
 
 	gui_data->gui_data_theme.dropdown_theme = dropdown_theme;

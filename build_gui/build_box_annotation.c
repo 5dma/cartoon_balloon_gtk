@@ -136,6 +136,13 @@ GtkWidget * build_box_annotation(Gui_Data *gui_data) {
 	gtk_widget_add_css_class(box_width_theme,"grid_coordinates");
 	gtk_widget_add_css_class(grid_text_string_export,"grid_coordinates");
 
+	gtk_editable_set_alignment (GTK_EDITABLE(spin_text_bottom_left_x), 1.0);
+	gtk_editable_set_alignment (GTK_EDITABLE(spin_text_bottom_left_y), 1.0);
+	gtk_editable_set_alignment (GTK_EDITABLE(spin_vertex_x), 1.0); 
+	gtk_editable_set_alignment (GTK_EDITABLE(spin_vertex_y), 1.0);
+	gtk_editable_set_alignment(GTK_EDITABLE(spin_new_width), 1.0);
+
+
 	gui_data->gui_data_annotation.entry_input_image = entry_input_image;
 	gui_data->gui_data_annotation.spin_text_bottom_left_x = spin_text_bottom_left_x;
 	gui_data->gui_data_annotation.spin_text_bottom_left_y = spin_text_bottom_left_y;
