@@ -105,8 +105,10 @@ typedef struct Gui_Data_Configuration {
  * Structure for holding pointers to widgets in the Annotation tab.
  */
 typedef struct Gui_Data_Annotation {
+	GtkWidget *btn_annotation; /**< Address of the btn_annotation. */
 	GtkWidget *box_annotation; /**< Address of the box_annotation widget. */
 	GtkWidget *entry_input_image; /**< Address of entry_input_image in the box_annotation tab. */
+	GtkWidget *btn_file_open;  /**< Address of btn_file_open in the box_annotation tab. */
 	GtkWidget *spin_text_bottom_left_x; /**< Address of spin_text_bottom_left_x in the box_annotation tab. */
 	GtkWidget *spin_text_bottom_left_y; /**< Address of spin_text_bottom_left_y in the box_annotation tab. */
 	GtkWidget *spin_vertex_x; /**< Address of spin_vertex_x in the box_annotation tab. */
@@ -114,6 +116,7 @@ typedef struct Gui_Data_Annotation {
 	GtkWidget *spin_new_width; /**< Address of spin_new_width in the box_annotation tab. */
 	GtkWidget *dropdown_theme; /**< Address of theme in the box_annotation tab. */
 	GtkWidget *entry_text_string; /**< Address of the entry_text_string in the box_annotaton tab. */
+	GtkWidget *picture_preview;  /**< Address of the picture_preview in the box_annotaton tab. */
 } Gui_Data_Annotation;
 
 /**

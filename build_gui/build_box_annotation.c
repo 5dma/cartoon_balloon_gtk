@@ -10,6 +10,9 @@
  */
 GtkWidget * build_box_annotation(Gui_Data *gui_data) {
 
+	/* Appears in the top button bar*/
+	GtkWidget *btn_annotation = gtk_button_new_with_label("Annotation");
+
 	GtkWidget * box_annotation  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	GtkWidget * grid_annotation = gtk_grid_new ();
 
@@ -26,7 +29,7 @@ GtkWidget * build_box_annotation(Gui_Data *gui_data) {
 
 	GtkWidget * btn_file_open = gtk_button_new_with_label ("Browse…");
 
-	GCancellable * file_open_cancel = g_cancellable_new ();
+	//GCancellable * file_open_cancel = g_cancellable_new ();
 	GtkFileDialog * file_open_dialog = gtk_file_dialog_new ();
 
 	gtk_grid_attach ( GTK_GRID(grid_annotation), lbl_input_image, 0, 0, 2, 1);
@@ -153,6 +156,7 @@ GtkWidget * build_box_annotation(Gui_Data *gui_data) {
 	gui_data->gui_data_annotation->spin_new_width = spin_new_width;
 	gui_data->gui_data_annotation->dropdown_theme = dropdown_theme;
 	gui_data->gui_data_annotation->entry_text_string = entry_text_string;
+	gui_data->gui_data_annotation->picture_preview = picture_preview;
 
 	gtk_widget_set_visible(box_annotation, TRUE);
 
