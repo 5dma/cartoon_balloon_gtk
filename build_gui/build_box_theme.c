@@ -9,7 +9,7 @@
 /**
  * Builds the box containing theme controls, and returns the associated widget.
  */
-GtkWidget * build_box_theme(Gui_Data *gui_data) {
+GtkWidget * build_box_theme(User_Data *user_data) {
 
 	/* Build the box containing theme controls. */
 	GtkWidget * box_theme  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -155,14 +155,14 @@ GtkWidget * build_box_theme(Gui_Data *gui_data) {
 
 	gtk_widget_set_visible(box_theme, FALSE);
 
-	gui_data->gui_data_theme->dropdown_theme = dropdown_theme;
-	gui_data->gui_data_theme->entry_font_name = entry_font_name;
-	gui_data->gui_data_theme->entry_font_color = entry_font_color;
-	gui_data->gui_data_theme->entry_fill_color = entry_fill_color;
-	gui_data->gui_data_theme->spin_font_size = spin_font_size;
-	gui_data->gui_data_theme->entry_font_color = entry_font_color;
-	gui_data->gui_data_theme->entry_stroke_color = entry_stroke_color;
-	gui_data->gui_data_theme->spin_stroke_width = spin_stroke_width;
+	user_data->gui_data->gui_data_theme->dropdown_theme = dropdown_theme;
+	user_data->gui_data->gui_data_theme->entry_font_name = entry_font_name;
+	user_data->gui_data->gui_data_theme->entry_font_color = entry_font_color;
+	user_data->gui_data->gui_data_theme->entry_fill_color = entry_fill_color;
+	user_data->gui_data->gui_data_theme->spin_font_size = spin_font_size;
+	user_data->gui_data->gui_data_theme->entry_font_color = entry_font_color;
+	user_data->gui_data->gui_data_theme->entry_stroke_color = entry_stroke_color;
+	user_data->gui_data->gui_data_theme->spin_stroke_width = spin_stroke_width;
 
 	return box_theme;
 

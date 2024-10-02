@@ -27,7 +27,6 @@ void show_configuration_tab(GtkWidget *widget, gpointer data) {
 	gtk_widget_set_visible(gui_data->gui_data_configuration->box_configuration, TRUE);
 }
 
-
 /**
 Parent function for building the GTK GUI.
  */
@@ -40,7 +39,6 @@ void activate(GtkApplication *app, gpointer data) {
 	GtkWidget *window = gtk_application_window_new(app);
 	gtk_window_set_title(GTK_WINDOW(window), "Speech Balloon");
 	gtk_window_set_default_size(GTK_WINDOW(window), 640, 575);
-
 
 	GtkWidget *btn_theme = gtk_button_new_with_label("Themes");
 	GtkWidget *btn_configuration = gtk_button_new_with_label("Configuration");
@@ -56,9 +54,9 @@ void activate(GtkApplication *app, gpointer data) {
 	gtk_widget_set_valign(box_top, GTK_ALIGN_CENTER);
 	gtk_widget_set_hexpand(box_top, TRUE);
 
-	GtkWidget *box_annotation = build_box_annotation(user_data->gui_data);
-	GtkWidget *box_theme = build_box_theme(user_data->gui_data);
-	GtkWidget *box_configuration = build_box_configuration(user_data->gui_data);
+	GtkWidget *box_annotation = build_box_annotation(user_data);
+	GtkWidget *box_theme = build_box_theme(user_data);
+	GtkWidget *box_configuration = build_box_configuration(user_data);
 
 	user_data->gui_data->gui_data_annotation->box_annotation = box_annotation;
 	user_data->gui_data->box_theme = box_theme;
@@ -101,7 +99,10 @@ void activate(GtkApplication *app, gpointer data) {
 	gtk_widget_add_css_class(status_bar, "statusbar");
 
 	/* Assign callbacks to controls */
+	build_controllers_window(user_data);
 	build_controllers_annotation(user_data);
+
+	user_data->gui_data->window = window;
 
 	/* Apply values read from settings.json to the GUI. */
 	initialize_gui(user_data);

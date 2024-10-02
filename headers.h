@@ -137,6 +137,7 @@ typedef struct Gui_Data_Theme {
  * Structure holding settings in the GUI.
  */
 typedef struct Gui_Data {
+	GtkWidget *window;  /**< Address of the application window. */
 	GtkWidget *box_top; /**< Address of the box_top widget. */
 	GtkWidget *box_theme; /**< Address of the box_theme widget. */
 	Gui_Data_Configuration *gui_data_configuration; /**< Structure containing pointers to controls in the Configuration tab. */
@@ -183,13 +184,14 @@ void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data
 void log_configuration_values(User_Data *user_data);
 
 /* GUI headers */
-GtkWidget * build_box_annotation(Gui_Data *gui_data);
-GtkWidget * build_box_theme(Gui_Data *gui_data);
-GtkWidget * build_box_configuration(Gui_Data *gui_data);
+GtkWidget * build_box_annotation(User_Data *user_data);
+GtkWidget * build_box_theme(User_Data *user_data);
+GtkWidget * build_box_configuration(User_Data *user_data);
 void initialize_gui(User_Data *user_data);
 
 /* Controller (callback) headers*/
 void build_controllers_annotation(User_Data *user_data);
+void build_controllers_window(User_Data *user_data);
 
 /* Memory management headers */
 User_Data * allocate_structures(void);
