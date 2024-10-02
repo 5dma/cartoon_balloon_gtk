@@ -9,32 +9,32 @@
 /**
 * Builds the box containing configuration controls, and returns the associated widget.
 */
-GtkWidget * build_box_configuration(Gui_Data *gui_data) {
+GtkWidget *build_box_configuration(Gui_Data *gui_data) {
 
 	/* Build the box containing configuration controls. */
-	GtkWidget * box_configuration  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+	GtkWidget *box_configuration  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
 	/* Controls for configuring the theme. */
 
-	GtkAdjustment * adjustment_max_annotation_length = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
-	GtkAdjustment * adjustment_padding = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
-	GtkAdjustment * adjustment_elevation = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
-	GtkAdjustment * adjustment_space = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
-	GtkAdjustment * adjustment_top_margin = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
+	GtkAdjustment *adjustment_max_annotation_length = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
+	GtkAdjustment *adjustment_padding = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
+	GtkAdjustment *adjustment_elevation = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
+	GtkAdjustment *adjustment_space = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
+	GtkAdjustment *adjustment_top_margin = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
 
 
-	GtkWidget * lbl_max_annotation_length = gtk_label_new ("Maximal annotation length:");
-	GtkWidget * lbl_padding = gtk_label_new ("Padding:");
-	GtkWidget * lbl_elevation = gtk_label_new ("Elevation:");
-	GtkWidget * lbl_space = gtk_label_new ("Space:");
-	GtkWidget * lbl_top_margin = gtk_label_new ("Top margin:");
+	GtkWidget *lbl_max_annotation_length = gtk_label_new ("Maximal annotation length:");
+	GtkWidget *lbl_padding = gtk_label_new ("Padding:");
+	GtkWidget *lbl_elevation = gtk_label_new ("Elevation:");
+	GtkWidget *lbl_space = gtk_label_new ("Space:");
+	GtkWidget *lbl_top_margin = gtk_label_new ("Top margin:");
 
 
-	GtkWidget * spin_max_annotation_length = gtk_spin_button_new (adjustment_max_annotation_length, 2, 0);
-	GtkWidget * spin_padding = gtk_spin_button_new (adjustment_padding, 2, 0);
-	GtkWidget * spin_elevation = gtk_spin_button_new (adjustment_elevation, 2, 0);
-	GtkWidget * spin_space = gtk_spin_button_new (adjustment_space, 2, 0);
-	GtkWidget * spin_top_margin = gtk_spin_button_new (adjustment_top_margin, 2, 0);
+	GtkWidget *spin_max_annotation_length = gtk_spin_button_new (adjustment_max_annotation_length, 2, 0);
+	GtkWidget *spin_padding = gtk_spin_button_new (adjustment_padding, 2, 0);
+	GtkWidget *spin_elevation = gtk_spin_button_new (adjustment_elevation, 2, 0);
+	GtkWidget *spin_space = gtk_spin_button_new (adjustment_space, 2, 0);
+	GtkWidget *spin_top_margin = gtk_spin_button_new (adjustment_top_margin, 2, 0);
 
 	gtk_widget_set_halign (lbl_padding, GTK_ALIGN_START);
 	gtk_widget_set_halign (lbl_elevation, GTK_ALIGN_START);
@@ -45,7 +45,7 @@ GtkWidget * build_box_configuration(Gui_Data *gui_data) {
 
 	/* Grid for styling the text */
 	
-	GtkWidget * grid_configuration = gtk_grid_new ();
+	GtkWidget *grid_configuration = gtk_grid_new ();
 
 	/* Row 0*/
 	gtk_grid_attach ( GTK_GRID(grid_configuration), lbl_max_annotation_length, 0, 0, 1, 1);
@@ -70,7 +70,7 @@ GtkWidget * build_box_configuration(Gui_Data *gui_data) {
 
 	
 	/* Controls for saving the configuration */
-	GtkWidget * btn_save = gtk_button_new_with_label("Save");
+	GtkWidget *btn_save = gtk_button_new_with_label("Save");
 	gtk_widget_set_hexpand (btn_save, FALSE);
 	gtk_widget_set_halign (btn_save, GTK_ALIGN_START);
 
