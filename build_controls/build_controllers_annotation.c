@@ -50,6 +50,39 @@ static void on_open_response (GObject *source, GAsyncResult *result, gpointer da
 
 }
 
+void on_mouse_enter_image(GtkEventControllerMotion* self, gdouble x,  gdouble y, gpointer data) {
+	//GdkCursor *cursor_crosshair = gdk_cursor_new_from_name ("crosshair", NULL );
+	// g_object_unref(cursor_crosshair);
+	g_print("ENTERED  IMAGE at %f %f\n", x, y);
+
+/* 
+	GdkEventType event_type = gdk_event_get_event_type (
+  GdkEvent* event
+) */
+
+}
+
+void on_mouse_leave_image(GtkEventControllerMotion* self, gdouble x,  gdouble y, gpointer data) {
+	//GdkCursor *cursor_crosshair = gdk_cursor_new_from_name ("crosshair", NULL );
+	// g_object_unref(cursor_crosshair);
+	g_print("LEFT  IMAGE\n");
+/* 
+	GdkEventType event_type = gdk_event_get_event_type (
+  GdkEvent* event
+) */
+
+}
+
+void on_mouse_motion_image(GtkEventControllerMotion* self, gdouble x,  gdouble y, gpointer data) {
+	//GdkCursor *cursor_crosshair = gdk_cursor_new_from_name ("crosshair", NULL );
+	// g_object_unref(cursor_crosshair);
+		g_print("TRAVERSING IMAGE AT %f %f\n", x, y);
+/* 
+	GdkEventType event_type = gdk_event_get_event_type (
+  GdkEvent* event
+) */
+
+}
 
 void select_input_file(GtkWidget *widget, gpointer data) {
 	g_print("Got here\n");
@@ -62,6 +95,7 @@ void select_input_file(GtkWidget *widget, gpointer data) {
 	g_object_unref(cancellable);
 	g_print("Got there\n");
 }
+
 /**
 Assigns callbacks to controls in the Annotation tab
  */
@@ -71,5 +105,14 @@ void build_controllers_annotation(User_Data *user_data) {
 	
 	g_signal_connect(gui_data_annotation->btn_annotation, "clicked", G_CALLBACK(show_annotation_tab), user_data->gui_data);
 	g_signal_connect(user_data->gui_data->gui_data_annotation->btn_file_open, "clicked", G_CALLBACK(select_input_file), user_data);
+
+	/* Add motion controller to picture preview */
+	GtkEventController *eventMouseMotion = gtk_event_controller_motion_new ();
+	gtk_event_controller_set_propagation_phase(eventMouseMotion, GTK_PHASE_CAPTURE);
+	g_signal_connect(eventMouseMotion, "enter", G_CALLBACK( on_mouse_enter_image ), user_data->gui_data->gui_data_annotation->picture_preview);
+	g_signal_connect(eventMouseMotion, "leave", G_CALLBACK( on_mouse_leave_image ), user_data->gui_data->gui_data_annotation->picture_preview);
+	g_signal_connect(eventMouseMotion, "motion", G_CALLBACK( on_mouse_motion_image ), user_data->gui_data->gui_data_annotation->picture_preview);
+	gtk_widget_add_controller (user_data->gui_data->gui_data_annotation->picture_preview, GTK_EVENT_CONTROLLER (eventMouseMotion));
+	
 
 }
