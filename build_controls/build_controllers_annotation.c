@@ -2,13 +2,13 @@
 
 
 /**
- * @file build_controls_annotation.c
+ * @file build_controllers_annotation.c
  * @brief Contains functions for adding callbacks to controls.
  */
 
 
 /**
-Fires when user clicks the **Annotation** button, and displays the controls in the annotations tab.
+Fired when user clicks the **Annotation** button, and displays the controls in the annotations tab.
  */
 void show_annotation_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
@@ -19,6 +19,13 @@ void show_annotation_tab(GtkWidget *widget, gpointer data) {
 	gtk_widget_set_visible(gui_data->gui_data_configuration->box_configuration, FALSE);
 }
 
+/**
+This function is fired when the user selects a file in the file open dialog box. The processing includes the following:
+* - Storing the path of the selected file.
+* - Displaying the path in the GUI.
+* - Displaying the file in the picture preview widget.
+* - Storing the image's width and height.
+*/
 static void on_open_response (GObject *source, GAsyncResult *result, gpointer data)
 {
 
@@ -28,7 +35,6 @@ static void on_open_response (GObject *source, GAsyncResult *result, gpointer da
 	GFile *file = gtk_file_dialog_open_finish (dialog, result, NULL);
 
   if (file != NULL) {
-
 
 	gchar  *file_name = g_file_get_parse_name (file);
 	g_strlcpy(user_data->annotation->input_image, g_file_get_parse_name (file), MAX_PATH_LENGTH);
@@ -46,7 +52,10 @@ static void on_open_response (GObject *source, GAsyncResult *result, gpointer da
 }
 
 /**
-Determines the dimensions of the widget containing the image preview. See on_mouse_motion_image().
+Determines the bounding box of the image in the preview. When the mouse enters the preview widget, we know the following measurements:
+* - The dimensions of the preview widget.
+* - The dimensions of the original image.
+* The image in the preview is a scaled version of the original image. It is scaled by the ratio of the preview widget's height divided by the original image's height. This ratio provides enough information to image preview's bounding box. This bounding box is used in on_mouse_motion_image().
  */
 void on_mouse_enter_image(GtkEventControllerMotion* self, gdouble x,  gdouble y, gpointer data) {
 	//GdkCursor *cursor_crosshair = gdk_cursor_new_from_name ("crosshair", NULL );
@@ -77,7 +86,9 @@ void on_mouse_enter_image(GtkEventControllerMotion* self, gdouble x,  gdouble y,
 }
 
 /**
-This function is fired when there is mouse motion on the widget containing the image preview. 
+This function is fired when there is mouse motion on the widget containing the image preview. This function has two purposes:
+* - Changing the cursor to a crosshair as the mouse hovers over the image preview. When outside the image preview, the cursor changes back to the default.
+* - Update the value of the spin boxes, depending on the depressed **Point** button.
  */
 void on_mouse_motion_image(GtkEventControllerMotion* self, gdouble x,  gdouble y, gpointer data) {
 
@@ -88,7 +99,6 @@ void on_mouse_motion_image(GtkEventControllerMotion* self, gdouble x,  gdouble y
 	if ((x >= annotation->coordinates_scaled_image_top_left.x) &&
 	(x <= annotation->coordinates_scaled_image_bottom_right.x)) {
 		gtk_widget_set_cursor (gui_data_annotation->picture_preview, user_data->annotation->crosshair_cursor);
-
 		gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x), (int) x - annotation->coordinates_scaled_image_top_left.x);
 		gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y), (int) y);
 	} else {
@@ -96,7 +106,9 @@ void on_mouse_motion_image(GtkEventControllerMotion* self, gdouble x,  gdouble y
 	}
 }
 
-
+/**
+This function is fired when the user clicks the Browse button to select an image.
+ */
 void select_input_file(GtkWidget *widget, gpointer data) {
 	
 	GCancellable *cancellable = g_cancellable_new ();
@@ -108,7 +120,7 @@ void select_input_file(GtkWidget *widget, gpointer data) {
 }
 
 /**
-Assigns callbacks to controls in the Annotation tab
+Assigns callbacks to controls in the Annotation tab.
  */
 void build_controllers_annotation(User_Data *user_data) {
 
@@ -124,6 +136,5 @@ void build_controllers_annotation(User_Data *user_data) {
 	g_signal_connect(eventMouseMotion, "enter", G_CALLBACK( on_mouse_enter_image ), user_data);
 	g_signal_connect(eventMouseMotion, "motion", G_CALLBACK( on_mouse_motion_image ), user_data);
 	gtk_widget_add_controller (picture_preview, GTK_EVENT_CONTROLLER (eventMouseMotion));
-	
 
 }
