@@ -13,6 +13,7 @@ void cleanup(User_Data *user_data) {
 
 	g_object_unref(user_data->parser);
 	g_object_unref(user_data->reader);
+	g_object_unref(user_data->annotation->crosshair_cursor);
 
 	g_hash_table_destroy(user_data->theme_hash);
 	fclose(user_data->configuration->log_file_pointer);

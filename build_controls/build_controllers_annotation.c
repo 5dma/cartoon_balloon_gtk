@@ -45,38 +45,51 @@ static void on_open_response (GObject *source, GAsyncResult *result, gpointer da
 
 }
 
+/**
+Determines the dimensions of the widget containing the image preview. See on_mouse_motion_image().
+ */
 void on_mouse_enter_image(GtkEventControllerMotion* self, gdouble x,  gdouble y, gpointer data) {
 	//GdkCursor *cursor_crosshair = gdk_cursor_new_from_name ("crosshair", NULL );
 	// g_object_unref(cursor_crosshair);
-	g_print("ENTERED  IMAGE at %f %f\n", x, y);
+	User_Data *user_data = (User_Data *)data;
+	GtkWidget *picture_preview = user_data->gui_data->gui_data_annotation->picture_preview;
+	Dimensions *dimensions_picture_preview_widget = &(user_data->annotation->dimensions_picture_preview_widget);
 
-/* 
-	GdkEventType event_type = gdk_event_get_event_type (
-  GdkEvent* event
-) */
+	dimensions_picture_preview_widget->width = gtk_widget_get_width (picture_preview);
+	dimensions_picture_preview_widget->height = gtk_widget_get_height (picture_preview);
+
+
+	Annotation *annotation = user_data->annotation;
+	Dimensions image_preview;
+
+	image_preview.height = dimensions_picture_preview_widget->height;
+	image_preview.width = ( 
+		(float) annotation->dimensions_original_image.width / 
+		annotation->dimensions_original_image.height) * 
+		dimensions_picture_preview_widget->height;
+
+	annotation->coordinates_scaled_image_top_left.x =  (dimensions_picture_preview_widget->width  - image_preview.width) / 2;
+	annotation->coordinates_scaled_image_top_left.y = 0;
+
+	annotation->coordinates_scaled_image_bottom_right.x = annotation->coordinates_scaled_image_top_left.x + image_preview.width;
+	annotation->coordinates_scaled_image_bottom_right.y = image_preview.height;
 
 }
 
-void on_mouse_leave_image(GtkEventControllerMotion* self, gdouble x,  gdouble y, gpointer data) {
-	//GdkCursor *cursor_crosshair = gdk_cursor_new_from_name ("crosshair", NULL );
-	// g_object_unref(cursor_crosshair);
-	g_print("LEFT  IMAGE\n");
-/* 
-	GdkEventType event_type = gdk_event_get_event_type (
-  GdkEvent* event
-) */
-
-}
-
+/**
+This function is fired when there is mouse motion on the widget containing the image preview. 
+ */
 void on_mouse_motion_image(GtkEventControllerMotion* self, gdouble x,  gdouble y, gpointer data) {
-	//GdkCursor *cursor_crosshair = gdk_cursor_new_from_name ("crosshair", NULL );
-	// g_object_unref(cursor_crosshair);
-		g_print("TRAVERSING IMAGE AT %f %f\n", x, y);
-/* 
-	GdkEventType event_type = gdk_event_get_event_type (
-  GdkEvent* event
-) */
 
+	User_Data *user_data = (User_Data *)data;
+	Annotation *annotation = user_data->annotation;
+
+	if ((x >= annotation->coordinates_scaled_image_top_left.x) &&
+	(x <= annotation->coordinates_scaled_image_bottom_right.x)) {
+		gtk_widget_set_cursor (user_data->gui_data->gui_data_annotation->picture_preview, user_data->annotation->crosshair_cursor);
+	} else {
+		gtk_widget_set_cursor (user_data->gui_data->gui_data_annotation->picture_preview, NULL);
+	}
 }
 
 void select_input_file(GtkWidget *widget, gpointer data) {
@@ -105,9 +118,8 @@ void build_controllers_annotation(User_Data *user_data) {
 	/* Add motion controller to picture preview */
 	GtkEventController *eventMouseMotion = gtk_event_controller_motion_new ();
 	gtk_event_controller_set_propagation_phase(eventMouseMotion, GTK_PHASE_CAPTURE);
-	g_signal_connect(eventMouseMotion, "enter", G_CALLBACK( on_mouse_enter_image ), picture_preview);
-	g_signal_connect(eventMouseMotion, "leave", G_CALLBACK( on_mouse_leave_image ), picture_preview);
-	g_signal_connect(eventMouseMotion, "motion", G_CALLBACK( on_mouse_motion_image ), picture_preview);
+	g_signal_connect(eventMouseMotion, "enter", G_CALLBACK( on_mouse_enter_image ), user_data);
+	g_signal_connect(eventMouseMotion, "motion", G_CALLBACK( on_mouse_motion_image ), user_data);
 	gtk_widget_add_controller (picture_preview, GTK_EVENT_CONTROLLER (eventMouseMotion));
 	
 

@@ -64,5 +64,6 @@ void read_annotation(User_Data * user_data)
 
 	annotation->resize_proportion_x = 0;
 	annotation->resize_proportion_y = 0;
+	annotation->crosshair_cursor = gdk_cursor_new_from_name ("crosshair", NULL );
 
 }

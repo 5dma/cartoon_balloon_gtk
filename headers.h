@@ -68,7 +68,11 @@ typedef struct Annotation
 	gchar theme[256];  /**< Theme to apply to the text and balloon.  */
 	float resize_proportion_x; /**< Proportion the image is resized in the x direction so that it does not exceed the maximal width. */
 	float resize_proportion_y; /**< Proportion the image is resized in the y direction so that it does not exceed the maximal width. (Typically matches `resize_proportion_x`.) */
-	Dimensions preview_dimensions;
+	Dimensions dimensions_picture_preview_widget; /**< Dimensions of the widget containing the displayed image.) */
+	Dimensions dimensions_original_image; /**< Dimensions of the actual image (not scaled). */
+	Coordinates coordinates_scaled_image_top_left; /**< Coordinates of the top-left corner of the image inside inside the preview widget. */
+	Coordinates coordinates_scaled_image_bottom_right; /**< Coordinates of the bottom-right corner of the image inside inside the preview widget. */
+	GdkCursor *crosshair_cursor; /**< Pointer to a crosshair cursor. */
 } Annotation;
 
 /**
