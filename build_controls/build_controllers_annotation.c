@@ -83,17 +83,21 @@ void on_mouse_motion_image(GtkEventControllerMotion* self, gdouble x,  gdouble y
 
 	User_Data *user_data = (User_Data *)data;
 	Annotation *annotation = user_data->annotation;
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
 
 	if ((x >= annotation->coordinates_scaled_image_top_left.x) &&
 	(x <= annotation->coordinates_scaled_image_bottom_right.x)) {
-		gtk_widget_set_cursor (user_data->gui_data->gui_data_annotation->picture_preview, user_data->annotation->crosshair_cursor);
+		gtk_widget_set_cursor (gui_data_annotation->picture_preview, user_data->annotation->crosshair_cursor);
+
+		gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x), (int) x - annotation->coordinates_scaled_image_top_left.x);
+		gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y), (int) y);
 	} else {
 		gtk_widget_set_cursor (user_data->gui_data->gui_data_annotation->picture_preview, NULL);
 	}
 }
 
+
 void select_input_file(GtkWidget *widget, gpointer data) {
-	g_print("Got here\n");
 	
 	GCancellable *cancellable = g_cancellable_new ();
 	GtkFileDialog *file_dialog = gtk_file_dialog_new();
@@ -101,7 +105,6 @@ void select_input_file(GtkWidget *widget, gpointer data) {
 	gtk_file_dialog_open (file_dialog, NULL, cancellable, on_open_response, data);
 	g_object_unref(file_dialog);
 	g_object_unref(cancellable);
-	g_print("Got there\n");
 }
 
 /**
