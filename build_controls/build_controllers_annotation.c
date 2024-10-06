@@ -38,12 +38,7 @@ static void on_open_response (GObject *source, GAsyncResult *result, gpointer da
 
 	gtk_picture_set_file (GTK_PICTURE(user_data->gui_data->gui_data_annotation->picture_preview), file);
 
-
-	GError *error;
-	const GdkPixbuf *pb = gdk_pixbuf_new_from_file ( g_file_get_parse_name (file),  &error);
-	GdkPixbufFormat *pbformat = gdk_pixbuf_get_file_info ( g_file_get_parse_name (file), &(user_data->annotation->preview_dimensions.width), &(user_data->annotation->preview_dimensions.height));
-
-	
+	GdkPixbufFormat *pbformat = gdk_pixbuf_get_file_info ( g_file_get_parse_name (file), &(user_data->annotation->dimensions_original_image.width), &(user_data->annotation->dimensions_original_image.height));
 
 	g_free(file_name);
   }
