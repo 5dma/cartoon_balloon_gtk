@@ -41,9 +41,9 @@ static void on_open_response (GObject *source, GAsyncResult *result, gpointer da
 
 	GError *error;
 	const GdkPixbuf *pb = gdk_pixbuf_new_from_file ( g_file_get_parse_name (file),  &error);
-	gint width;
-	gint height;
-	GdkPixbufFormat *pbformat = gdk_pixbuf_get_file_info ( g_file_get_parse_name (file), &width, &height);
+	GdkPixbufFormat *pbformat = gdk_pixbuf_get_file_info ( g_file_get_parse_name (file), &(user_data->annotation->preview_dimensions.width), &(user_data->annotation->preview_dimensions.height));
+
+	
 
 	g_free(file_name);
   }
@@ -102,6 +102,7 @@ Assigns callbacks to controls in the Annotation tab
 void build_controllers_annotation(User_Data *user_data) {
 
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
+	GtkWidget *picture_preview = user_data->gui_data->gui_data_annotation->picture_preview;
 	
 	g_signal_connect(gui_data_annotation->btn_annotation, "clicked", G_CALLBACK(show_annotation_tab), user_data->gui_data);
 	g_signal_connect(user_data->gui_data->gui_data_annotation->btn_file_open, "clicked", G_CALLBACK(select_input_file), user_data);
@@ -109,10 +110,10 @@ void build_controllers_annotation(User_Data *user_data) {
 	/* Add motion controller to picture preview */
 	GtkEventController *eventMouseMotion = gtk_event_controller_motion_new ();
 	gtk_event_controller_set_propagation_phase(eventMouseMotion, GTK_PHASE_CAPTURE);
-	g_signal_connect(eventMouseMotion, "enter", G_CALLBACK( on_mouse_enter_image ), user_data->gui_data->gui_data_annotation->picture_preview);
-	g_signal_connect(eventMouseMotion, "leave", G_CALLBACK( on_mouse_leave_image ), user_data->gui_data->gui_data_annotation->picture_preview);
-	g_signal_connect(eventMouseMotion, "motion", G_CALLBACK( on_mouse_motion_image ), user_data->gui_data->gui_data_annotation->picture_preview);
-	gtk_widget_add_controller (user_data->gui_data->gui_data_annotation->picture_preview, GTK_EVENT_CONTROLLER (eventMouseMotion));
+	g_signal_connect(eventMouseMotion, "enter", G_CALLBACK( on_mouse_enter_image ), picture_preview);
+	g_signal_connect(eventMouseMotion, "leave", G_CALLBACK( on_mouse_leave_image ), picture_preview);
+	g_signal_connect(eventMouseMotion, "motion", G_CALLBACK( on_mouse_motion_image ), picture_preview);
+	gtk_widget_add_controller (picture_preview, GTK_EVENT_CONTROLLER (eventMouseMotion));
 	
 
 }

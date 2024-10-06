@@ -46,6 +46,16 @@ typedef struct Coordinates
 } Coordinates;
 
 /**
+ * Structure representing dimensions of an object, such as a graphic or a drawing.
+ */
+typedef struct Dimensions
+{
+	gint width; /**< width. */
+	gint height; /**< height. */
+} Dimensions;
+
+
+/**
  * Structure containing user-defined information about the positioning of the text and polyline on the final image.
  */
 typedef struct Annotation
@@ -58,6 +68,7 @@ typedef struct Annotation
 	gchar theme[256];  /**< Theme to apply to the text and balloon.  */
 	float resize_proportion_x; /**< Proportion the image is resized in the x direction so that it does not exceed the maximal width. */
 	float resize_proportion_y; /**< Proportion the image is resized in the y direction so that it does not exceed the maximal width. (Typically matches `resize_proportion_x`.) */
+	Dimensions preview_dimensions;
 } Annotation;
 
 /**
@@ -90,7 +101,7 @@ typedef struct Theme
 } Theme;
 
 /**
- * Structure for holdiding pointers to widgets in the Configuration tab.
+ * Structure for holding pointers to widgets in the Configuration tab.
  */
 typedef struct Gui_Data_Configuration {
 	GtkWidget *box_configuration; /**< Address of the box_configuration widget. */
