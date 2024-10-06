@@ -29,6 +29,8 @@ static void on_open_response (GObject *source, GAsyncResult *result, gpointer da
 
   if (file != NULL) {
 
+
+	gchar  *file_name = g_file_get_parse_name (file);
 	g_strlcpy(user_data->annotation->input_image, g_file_get_parse_name (file), MAX_PATH_LENGTH);
 	GtkEntryBuffer *file_name_buffer = gtk_entry_get_buffer (GTK_ENTRY (user_data->gui_data->gui_data_annotation->entry_input_image));
 
@@ -36,7 +38,16 @@ static void on_open_response (GObject *source, GAsyncResult *result, gpointer da
 
 	gtk_picture_set_file (GTK_PICTURE(user_data->gui_data->gui_data_annotation->picture_preview), file);
 
+
+	GError *error;
+	const GdkPixbuf *pb = gdk_pixbuf_new_from_file ( g_file_get_parse_name (file),  &error);
+	gint width;
+	gint height;
+	GdkPixbufFormat *pbformat = gdk_pixbuf_get_file_info ( g_file_get_parse_name (file), &width, &height);
+
+	g_free(file_name);
   }
+
 }
 
 

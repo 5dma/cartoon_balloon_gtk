@@ -98,11 +98,13 @@ void activate(GtkApplication *app, gpointer data) {
 	gtk_widget_add_css_class(btn_configuration, "headerbutton");
 	gtk_widget_add_css_class(status_bar, "statusbar");
 
+	user_data->gui_data->window = window;
+
 	/* Assign callbacks to controls */
 	build_controllers_window(user_data);
 	build_controllers_annotation(user_data);
 
-	user_data->gui_data->window = window;
+
 
 	/* Apply values read from settings.json to the GUI. */
 	initialize_gui(user_data);
