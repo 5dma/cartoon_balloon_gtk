@@ -64,6 +64,9 @@ GtkWidget * build_box_annotation(User_Data *user_data) {
 	GtkWidget * btn_point_text_bottom = gtk_button_new_with_label("Point");
 	GtkWidget * btn_point_vertex = gtk_button_new_with_label("Point");
 
+	gtk_widget_set_halign (btn_point_text_bottom, GTK_ALIGN_START);
+
+
 	/* Row 0*/
 	gtk_grid_attach ( GTK_GRID(grid_coordinates), lbl_text_bottom_left, 1, 0, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_coordinates), lbl_vertex, 2, 0, 1, 1);
@@ -129,11 +132,16 @@ GtkWidget * build_box_annotation(User_Data *user_data) {
 
 	gtk_widget_add_css_class (box_annotation, "tab" );
 
+	
+	gtk_widget_add_css_class (lbl_text_bottom_left, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_coordinates_x, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_coordinates_y, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_new_width, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_theme, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_theme, "horizontal_field_label_interior");
+
+	gtk_widget_add_css_class (spin_text_bottom_left_x, "horizontal_field_label");
+	gtk_widget_add_css_class (spin_text_bottom_left_y, "horizontal_field_label");
 
 	gtk_widget_add_css_class(grid_coordinates,"grid_coordinates");
 	gtk_widget_add_css_class(box_width_theme,"grid_coordinates");

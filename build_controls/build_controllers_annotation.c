@@ -13,7 +13,7 @@ Fired when user clicks the **Annotation** button, and displays the controls in t
 void show_annotation_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
 
-	//gtk_css_provider_load_from_path(gui_data->provider, "/home/abba/programming/c_programs/cartoon_balloon_gtk/styles.css");
+	gtk_css_provider_load_from_path(gui_data->provider, "/home/abba/programming/c_programs/cartoon_balloon_gtk/styles.css");
 	gtk_widget_set_visible(gui_data->gui_data_annotation->box_annotation , TRUE);
 	gtk_widget_set_visible(gui_data->box_theme, FALSE);
 	gtk_widget_set_visible(gui_data->gui_data_configuration->box_configuration, FALSE);
@@ -128,7 +128,8 @@ void build_controllers_annotation(User_Data *user_data) {
 	GtkWidget *picture_preview = user_data->gui_data->gui_data_annotation->picture_preview;
 	
 	g_signal_connect(gui_data_annotation->btn_annotation, "clicked", G_CALLBACK(show_annotation_tab), user_data->gui_data);
-	g_signal_connect(user_data->gui_data->gui_data_annotation->btn_file_open, "clicked", G_CALLBACK(select_input_file), user_data);
+	g_signal_connect(gui_data_annotation->btn_file_open, "clicked", G_CALLBACK(select_input_file), user_data);
+	g_signal_connect(gui_data_annotation->btn_file_open, "clicked", G_CALLBACK(select_input_file), user_data);
 
 	/* Add motion controller to picture preview */
 	GtkEventController *eventMouseMotion = gtk_event_controller_motion_new ();
