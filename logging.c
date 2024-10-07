@@ -59,8 +59,8 @@ void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data
 /**
 Opens the log file and returns the pointer.
  */
-FILE * get_log_file_pointer(Configuration * configuration) {
-	FILE * file_ptr = fopen (configuration ->log_file_path, "a");
+FILE *get_log_file_pointer(Configuration *configuration) {
+	FILE *file_ptr = fopen (configuration ->log_file_path, "a");
 	if (file_ptr == NULL) {
 		g_print("Could not open log file, so no messages are logged\n");
 	}

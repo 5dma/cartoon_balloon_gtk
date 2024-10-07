@@ -13,7 +13,7 @@
 /**
 Reads the configuration file into a `Settings` struct. The settings in this configuration file are relatively static: they can apply to multiple images. Also opens the log file.
  */
-void read_configuration(User_Data * user_data) {
+void read_configuration(User_Data *user_data) {
 	JsonParser *parser;
 	GError *error;
 
@@ -28,7 +28,7 @@ void read_configuration(User_Data * user_data) {
 		return;
 	}
 	user_data->configuration = (Configuration *)g_malloc(sizeof(Configuration));
-	Configuration * configuration = user_data->configuration;
+	Configuration *configuration = user_data->configuration;
 
 	JsonReader *reader;
 	reader = json_reader_new(json_parser_get_root(parser));

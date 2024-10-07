@@ -30,7 +30,7 @@ void read_themes(User_Data *user_data)
 	gint number_of_themes = json_reader_count_elements (reader);
 
 	for (gint i = 0; i<number_of_themes; i++) {
-		Theme * theme = (Theme *)g_malloc(sizeof(Theme));
+		Theme *theme = (Theme *)g_malloc(sizeof(Theme));
 		success = json_reader_read_element (reader, i);
 		success = json_reader_read_member(reader, "name");
 		g_strlcpy(theme->name, json_reader_get_string_value(reader), 100);

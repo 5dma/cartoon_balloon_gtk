@@ -13,13 +13,13 @@
 /**
 Reads the configuration file into an `Annotation` struct. The settings in this configuration file, such as the annotation text, are one-off: they can apply to only the current image. 
  */
-void read_annotation(User_Data * user_data)
+void read_annotation(User_Data *user_data)
 {
 
 	user_data->annotation = (Annotation *)g_malloc(sizeof(Annotation));
-	Annotation * annotation = user_data->annotation;
+	Annotation *annotation = user_data->annotation;
 
-	JsonReader * reader = user_data->reader;
+	JsonReader *reader = user_data->reader;
 
 	json_reader_read_member(reader, "annotation");
 

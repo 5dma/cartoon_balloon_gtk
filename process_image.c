@@ -34,7 +34,7 @@ void process_image(Configuration *configuration, GHashTable *theme_hash, Annotat
 		return;
 	}
 
-	Theme * theme = (Theme *) g_hash_table_lookup (theme_hash, "boy");
+	Theme *theme = (Theme *) g_hash_table_lookup (theme_hash, "boy");
 
 
 	/* Scale the image to a max of 520 pixels wide. */

@@ -33,7 +33,7 @@ typedef struct Configuration {
 	gint64 top_margin; /**< Top margin, measured from the top of the image to the top of the balloon.*/
 	gchar new_image_path[256]; /**< Maximal length of the new image's path. A reasonable value is 256. */
 	gchar log_file_path[256]; /**< Path to log file. */
-	FILE * log_file_pointer; /**< Address of the log file's handle. */
+	FILE *log_file_pointer; /**< Address of the log file's handle. */
 } Configuration;
 
 /**
@@ -166,42 +166,42 @@ typedef struct Gui_Data {
  */
 typedef struct User_Data
 {
-	Configuration * configuration; /**< Address of the settings structure. */
-	Annotation * annotation; /**< Address of the annotation structure. */
-	GHashTable * theme_hash; /**< Hash table of themes, keyed by theme name. */
-	Text_Analysis * text_analysis; /**< Address of the text_analysis structure. */
-	Gui_Data * gui_data; /**< Address of the gui_data structure. */
+	Configuration *configuration; /**< Address of the settings structure. */
+	Annotation *annotation; /**< Address of the annotation structure. */
+	GHashTable *theme_hash; /**< Hash table of themes, keyed by theme name. */
+	Text_Analysis *text_analysis; /**< Address of the text_analysis structure. */
+	Gui_Data *gui_data; /**< Address of the gui_data structure. */
 	JsonParser *parser; /**< Address of a JSON parser. */
 	JsonReader *reader; /**< Address of a JSON reader. */
 
 } User_Data;
 
 /* Processing headers */
-void read_configuration(User_Data * user_data);
-void read_annotation(User_Data * user_data);
-void read_themes(User_Data * user_data);
+void read_configuration(User_Data *user_data);
+void read_annotation(User_Data *user_data);
+void read_themes(User_Data *user_data);
 void scale_image(MagickWand *m_wand, Annotation *annotation);
 void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis);
 void add_balloon(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis);
-Text_Analysis * analyze_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation);
+Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation);
 void resize_image(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
 void add_path(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
-void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Configuration **configuration);
+void apply_theme(GHashTable *theme_hash, const Annotation *annotation, Configuration **configuration);
 void process_image(Configuration *configuration, GHashTable *theme_hash, Annotation *annotation);
 
 /* GTK headers */
-void activate (GtkApplication* app, gpointer  user_data);
+void activate (GtkApplication*app, gpointer  user_data);
 
 
 /* Logger headers */
-FILE * get_log_file_pointer(Configuration *configuration);
+FILE *get_log_file_pointer(Configuration *configuration);
 void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data);
 void log_configuration_values(User_Data *user_data);
 
 /* GUI headers */
-GtkWidget * build_box_annotation(User_Data *user_data);
-GtkWidget * build_box_theme(User_Data *user_data);
-GtkWidget * build_box_configuration(User_Data *user_data);
+GtkWidget *build_box_annotation(User_Data *user_data);
+GtkWidget *build_box_theme(User_Data *user_data);
+GtkWidget *build_box_configuration(User_Data *user_data);
 void initialize_gui(User_Data *user_data);
 
 /* Controller (callback) headers*/
@@ -209,5 +209,5 @@ void build_controllers_annotation(User_Data *user_data);
 void build_controllers_window(User_Data *user_data);
 
 /* Memory management headers */
-User_Data * allocate_structures(void);
+User_Data *allocate_structures(void);
 void cleanup(User_Data *user_data);

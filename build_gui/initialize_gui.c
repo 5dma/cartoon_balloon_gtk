@@ -10,7 +10,7 @@
  * Initializes the GUI from the settings read from disk.
  */
 void initialize_gui(User_Data *user_data) {
-	Gui_Data * gui_data = user_data->gui_data;
+	Gui_Data *gui_data = user_data->gui_data;
 
 	/* Initialize the controls in the Configuration tab. */
 	Gui_Data_Configuration *gui_data_configuration = gui_data->gui_data_configuration;

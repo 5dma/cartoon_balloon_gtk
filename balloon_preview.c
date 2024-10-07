@@ -36,8 +36,8 @@ int main() {
 	const int vertex_end_y = balloon_bottom - elevation;
 
 	/* Create a surface with the balloon, and draw the balloon. */
-	cairo_surface_t * surface_balloon = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
-	cairo_t * cr_balloon = cairo_create(surface_balloon);
+	cairo_surface_t *surface_balloon = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
+	cairo_t *cr_balloon = cairo_create(surface_balloon);
 
 	cairo_new_path(cr_balloon);
 	cairo_move_to(cr_balloon,top_left_x, top_left_y);
@@ -55,8 +55,8 @@ int main() {
 
 	/* Create a surface with the vertex, and draw the vertex. */
 
-	cairo_surface_t * surface_vertex = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
-	cairo_t * cr_vertex = cairo_create(surface_vertex);
+	cairo_surface_t *surface_vertex = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
+	cairo_t *cr_vertex = cairo_create(surface_vertex);
 	cairo_set_line_width (cr_vertex, line_width);
 	cairo_set_source_rgb (cr_vertex, scaled_rgb(12),scaled_rgb(0), scaled_rgb(210));
 	cairo_set_antialias(cr_vertex, CAIRO_ANTIALIAS_NONE);
@@ -69,8 +69,8 @@ int main() {
 
 	/* Create a surface with the text, and draw the text. */
 
-	cairo_surface_t * surface_text = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
-	cairo_t * cr_text = cairo_create(surface_text);
+	cairo_surface_t *surface_text = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
+	cairo_t *cr_text = cairo_create(surface_text);
 
     cairo_select_font_face(cr_text, "DejaVu Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
     cairo_set_font_size(cr_text, 15);
@@ -79,8 +79,8 @@ int main() {
     cairo_show_text(cr_text, "Barf!");
 
 	/* Create top-level surface. */
-	cairo_surface_t * surface_top = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
-	cairo_t * cr_top = cairo_create(surface_top);
+	cairo_surface_t *surface_top = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, canvas_width, canvas_height);
+	cairo_t *cr_top = cairo_create(surface_top);
 
 	/* Layer previous surfaces on the top-level surface. */
 	cairo_set_operator(cr_top, CAIRO_OPERATOR_OVER);
