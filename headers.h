@@ -73,6 +73,8 @@ typedef struct Annotation
 	Coordinates coordinates_scaled_image_top_left; /**< Coordinates of the top-left corner of the image inside inside the preview widget. */
 	Coordinates coordinates_scaled_image_bottom_right; /**< Coordinates of the bottom-right corner of the image inside inside the preview widget. */
 	GdkCursor *crosshair_cursor; /**< Pointer to a crosshair cursor. */
+	gboolean is_selecting_vertex_point; /**< Indicates user is selecting a vertex point on the image preview. */
+	gboolean is_selecting_text_bottom_left_point; /**< Indicates user is selecting a text_bottom_left point on the image preview. */
 } Annotation;
 
 /**
@@ -128,6 +130,8 @@ typedef struct Gui_Data_Annotation {
 	GtkWidget *spin_text_bottom_left_y; /**< Address of spin_text_bottom_left_y in the box_annotation tab. */
 	GtkWidget *spin_vertex_x; /**< Address of spin_vertex_x in the box_annotation tab. */
 	GtkWidget *spin_vertex_y; /**< Address of spin_vertex_y in the box_annotation tab. */
+	GtkWidget *btn_point_vertex; /**< Address of btn_point_vertex in the box_annotation tab. */
+	GtkWidget *btn_point_text_bottom;  /**< Address of btn_point_text_bottom in the box_annotation tab. */
 	GtkWidget *spin_new_width; /**< Address of spin_new_width in the box_annotation tab. */
 	GtkWidget *dropdown_theme; /**< Address of theme in the box_annotation tab. */
 	GtkWidget *entry_text_string; /**< Address of the entry_text_string in the box_annotaton tab. */

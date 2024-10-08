@@ -64,4 +64,4 @@ build_controllers_window.o: build_controls/build_controllers_window.c headers.h
 
 .PHONY: clean
 clean:
-	rm -f $(OBJFILES)
+	rm -f $(OBJFILES) headers.h.gch

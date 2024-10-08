@@ -26,7 +26,6 @@ void initialize_gui(User_Data *user_data) {
 
 	GtkEntryBuffer *temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_annotation->entry_input_image));
 	gtk_entry_buffer_set_text (temp_buffer, user_data->annotation->input_image, -1);
-
 	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x), user_data->annotation->text_bottom_left.x);
 	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y), user_data->annotation->text_bottom_left.y);
 	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x), user_data->annotation->vertex.x);

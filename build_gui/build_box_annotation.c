@@ -162,6 +162,7 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	user_data->gui_data->gui_data_annotation->spin_vertex_x = spin_vertex_x;
 	user_data->gui_data->gui_data_annotation->spin_vertex_y = spin_vertex_y;
 	user_data->gui_data->gui_data_annotation->btn_point_vertex = btn_point_vertex;
+	user_data->gui_data->gui_data_annotation->btn_point_text_bottom = btn_point_text_bottom;
 	user_data->gui_data->gui_data_annotation->spin_new_width = spin_new_width;
 	user_data->gui_data->gui_data_annotation->dropdown_theme = dropdown_theme;
 	user_data->gui_data->gui_data_annotation->entry_text_string = entry_text_string;

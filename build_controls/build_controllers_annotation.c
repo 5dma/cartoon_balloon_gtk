@@ -106,6 +106,23 @@ void on_mouse_motion_image(GtkEventControllerMotion* self, gdouble x,  gdouble y
 	}
 }
 
+void on_btn_vertex_clicked(GtkWidget *widget, gpointer data) {
+	g_print("Button A clicked\n");
+	User_Data *user_data = (User_Data *)data;
+	user_data->annotation->is_selecting_vertex_point = TRUE;
+	user_data->annotation->is_selecting_text_bottom_left_point = FALSE;
+
+}
+
+void on_btn_text_bottom_clicked(GtkWidget *widget, gpointer data) {
+	g_print("Button B clicked\n");
+	User_Data *user_data = (User_Data *)data;
+	user_data->annotation->is_selecting_vertex_point = FALSE;
+	user_data->annotation->is_selecting_text_bottom_left_point = TRUE;
+
+}
+
+
 /**
 This function is fired when the user clicks the Browse button to select an image.
  */
@@ -129,7 +146,9 @@ void build_controllers_annotation(User_Data *user_data) {
 	
 	g_signal_connect(gui_data_annotation->btn_annotation, "clicked", G_CALLBACK(show_annotation_tab), user_data->gui_data);
 	g_signal_connect(gui_data_annotation->btn_file_open, "clicked", G_CALLBACK(select_input_file), user_data);
-	g_signal_connect(gui_data_annotation->btn_file_open, "clicked", G_CALLBACK(select_input_file), user_data);
+	
+	g_signal_connect(gui_data_annotation->btn_point_vertex, "clicked", G_CALLBACK(on_btn_vertex_clicked), user_data);
+	g_signal_connect(gui_data_annotation->btn_point_text_bottom, "clicked", G_CALLBACK(on_btn_text_bottom_clicked), user_data);
 
 	/* Add motion controller to picture preview */
 	GtkEventController *eventMouseMotion = gtk_event_controller_motion_new ();
