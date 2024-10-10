@@ -34,11 +34,17 @@ void process_image(User_Data *user_data) {
 	MagickBooleanType result = MagickReadImage(m_wand, annotation->input_image);
 
 	if (result == MagickFalse) {
+		logger(G_LOG_LEVEL_ERROR, "Could not read the image in annotation->image. Exiting.", user_data);
 		g_print("Could not read the image %s. Exiting\n", annotation->input_image);
 		return;
 	}
 
-	Theme *theme = (Theme *) g_hash_table_lookup (theme_hash, "boy");
+	/* Get the name of the selected theme on the annotations tab. */
+	guint selected_item = gtk_drop_down_get_selected (GTK_DROP_DOWN(user_data->gui_data->gui_data_annotation->dropdown_theme));
+
+	GListModel *model_theme = gtk_drop_down_get_model (GTK_DROP_DOWN(user_data->gui_data->gui_data_annotation->dropdown_theme));
+	const char *selected_theme_name = gtk_string_list_get_string ( GTK_STRING_LIST(model_theme), selected_item);
+	Theme *theme = (Theme *) g_hash_table_lookup (theme_hash, selected_theme_name);
 
 
 	/* Scale the image to a max of 520 pixels wide. */
