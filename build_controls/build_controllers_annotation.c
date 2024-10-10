@@ -114,20 +114,53 @@ void on_mouse_motion_image(GtkEventControllerMotion* self, gdouble x,  gdouble y
 	}
 }
 
-void preview_clicked(GtkGestureClick* self, gint n_press, gdouble x, gdouble y, gpointer user_data) {
-//user_data->annotation->dimensions_picture_preview_widget
-	g_print("Clicked on image\n");
+
+/**
+This function is fired when the mouse is clicked on the preview.
+* -If the user is pointing to the text bottom left, then the clicked point is stored as the text bottom left.
+* - If the user is pointing to the vertex, then the clicked point is stored as the vertex.
+* - In either case, prepare a log message.
+ */
+void preview_clicked(GtkGestureClick* self, gint n_press, gdouble x, gdouble y, gpointer data) {
+	User_Data *user_data = (User_Data *)data;
+	Annotation *annotation = user_data->annotation;
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
+	gchar log_message[256];
+
+	/* If pointing to text bottom left, save the value appearing in the appropriate spin boxes. */
+	if ((annotation->is_selecting_vertex_point == FALSE) &&
+		(annotation->is_selecting_text_bottom_left_point = TRUE)) {
+			annotation->text_bottom_left.x = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x));
+			annotation->text_bottom_left.y = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y));
+
+			g_snprintf (log_message, MAX_INPUT,"Text bottom left clicked at x: %ld, y: %ld", annotation->text_bottom_left.x, annotation->text_bottom_left.y);
+
+	/* If pointing to the vertex, save the value appearing in the appropriate spin boxes. */
+	} else if ((annotation->is_selecting_vertex_point == TRUE) &&
+		(annotation->is_selecting_text_bottom_left_point == FALSE)) {
+
+			annotation->vertex.x= (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x));
+			annotation->vertex.y = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y));
+
+
+			g_snprintf (log_message, MAX_INPUT,"Vertex clicked at x: %ld, y: %ld", annotation->vertex.x, annotation->vertex.y);
+	}
+	logger(G_LOG_LEVEL_INFO, log_message,user_data );
 }
 
+/**
+ * This function is fired when the user clicks on the **Point** button for pointing to the vertex.
+ */
 void on_btn_vertex_clicked(GtkWidget *widget, gpointer data) {
-	g_print("Button A clicked\n");
 	User_Data *user_data = (User_Data *)data;
 	user_data->annotation->is_selecting_vertex_point = TRUE;
 	user_data->annotation->is_selecting_text_bottom_left_point = FALSE;
 }
 
+/**
+ * This function is fired when the user clicks on the **Point** button for pointing to the text bottom left.
+ */
 void on_btn_text_bottom_clicked(GtkWidget *widget, gpointer data) {
-	g_print("Button B clicked\n");
 	User_Data *user_data = (User_Data *)data;
 	user_data->annotation->is_selecting_vertex_point = FALSE;
 	user_data->annotation->is_selecting_text_bottom_left_point = TRUE;
