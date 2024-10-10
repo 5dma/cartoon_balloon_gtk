@@ -21,7 +21,7 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_widget_set_halign (lbl_input_image, GTK_ALIGN_START);
 
 
-	GtkEntryBuffer *buffer_input_image = gtk_entry_buffer_new ("I will barf", -1);
+	GtkEntryBuffer *buffer_input_image = gtk_entry_buffer_new (NULL, -1);
 	GtkWidget *entry_input_image = gtk_entry_new();
 	gtk_entry_set_buffer (GTK_ENTRY(entry_input_image), buffer_input_image);
 
@@ -118,7 +118,7 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 
 
 	/* Controls for the picture preview */
-	GtkWidget *picture_preview = gtk_picture_new_for_filename ("/home/abba/Ronen_Letters/graphic_quotes/knesset.png");
+	GtkWidget *picture_preview = gtk_picture_new_for_filename (user_data->annotation->input_image);
 
 	gtk_box_append(GTK_BOX(box_annotation), grid_annotation);
 	gtk_box_append(GTK_BOX(box_annotation), grid_coordinates);

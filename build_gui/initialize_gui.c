@@ -33,6 +33,7 @@ void initialize_gui(User_Data *user_data) {
 	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width), user_data->annotation->new_width);
 
 
+	temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_annotation->entry_text_string));
 	gtk_entry_buffer_set_text (temp_buffer, user_data->annotation->text_string, -1);
 
 	guint hash_size;
