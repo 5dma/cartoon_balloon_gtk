@@ -167,6 +167,7 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	user_data->gui_data->gui_data_annotation->spin_new_width = spin_new_width;
 	user_data->gui_data->gui_data_annotation->dropdown_theme = dropdown_theme;
 	user_data->gui_data->gui_data_annotation->entry_text_string = entry_text_string;
+	user_data->gui_data->gui_data_annotation->btn_export = btn_export;
 	user_data->gui_data->gui_data_annotation->picture_preview = picture_preview;
 
 	gtk_widget_set_visible(box_annotation, TRUE);
