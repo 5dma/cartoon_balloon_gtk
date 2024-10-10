@@ -99,11 +99,24 @@ void on_mouse_motion_image(GtkEventControllerMotion* self, gdouble x,  gdouble y
 	if ((x >= annotation->coordinates_scaled_image_top_left.x) &&
 	(x <= annotation->coordinates_scaled_image_bottom_right.x)) {
 		gtk_widget_set_cursor (gui_data_annotation->picture_preview, user_data->annotation->crosshair_cursor);
+
+		if (annotation->is_selecting_vertex_point) {
+
 		gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x), (int) x - annotation->coordinates_scaled_image_top_left.x);
 		gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y), (int) y);
+		} else if (annotation->is_selecting_text_bottom_left_point)
+		{
+			gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x), (int) x - annotation->coordinates_scaled_image_top_left.x);
+			gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y), (int) y);
+		}
 	} else {
 		gtk_widget_set_cursor (user_data->gui_data->gui_data_annotation->picture_preview, NULL);
 	}
+}
+
+void preview_clicked(GtkGestureClick* self, gint n_press, gdouble x, gdouble y, gpointer user_data) {
+//user_data->annotation->dimensions_picture_preview_widget
+	g_print("Clicked on image\n");
 }
 
 void on_btn_vertex_clicked(GtkWidget *widget, gpointer data) {
@@ -111,7 +124,6 @@ void on_btn_vertex_clicked(GtkWidget *widget, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
 	user_data->annotation->is_selecting_vertex_point = TRUE;
 	user_data->annotation->is_selecting_text_bottom_left_point = FALSE;
-
 }
 
 void on_btn_text_bottom_clicked(GtkWidget *widget, gpointer data) {
@@ -119,7 +131,6 @@ void on_btn_text_bottom_clicked(GtkWidget *widget, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
 	user_data->annotation->is_selecting_vertex_point = FALSE;
 	user_data->annotation->is_selecting_text_bottom_left_point = TRUE;
-
 }
 
 
@@ -150,6 +161,7 @@ void build_controllers_annotation(User_Data *user_data) {
 	g_signal_connect(gui_data_annotation->btn_point_vertex, "clicked", G_CALLBACK(on_btn_vertex_clicked), user_data);
 	g_signal_connect(gui_data_annotation->btn_point_text_bottom, "clicked", G_CALLBACK(on_btn_text_bottom_clicked), user_data);
 
+
 	/* Add motion controller to picture preview */
 	GtkEventController *eventMouseMotion = gtk_event_controller_motion_new ();
 	gtk_event_controller_set_propagation_phase(eventMouseMotion, GTK_PHASE_CAPTURE);
@@ -157,4 +169,9 @@ void build_controllers_annotation(User_Data *user_data) {
 	g_signal_connect(eventMouseMotion, "motion", G_CALLBACK( on_mouse_motion_image ), user_data);
 	gtk_widget_add_controller (picture_preview, GTK_EVENT_CONTROLLER (eventMouseMotion));
 
+
+	/* Add gesture controller (mouse clicked) to picture preview */
+	GtkGesture *gesture_click_preview = gtk_gesture_click_new ();
+	g_signal_connect(gesture_click_preview, "pressed", G_CALLBACK (preview_clicked), user_data);
+	gtk_widget_add_controller (picture_preview, GTK_EVENT_CONTROLLER (gesture_click_preview));
 }

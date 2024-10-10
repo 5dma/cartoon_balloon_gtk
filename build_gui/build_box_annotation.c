@@ -116,14 +116,15 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_box_append(GTK_BOX(box_width_theme), lbl_theme);
 	gtk_box_append(GTK_BOX(box_width_theme), dropdown_theme);
 
-	GtkWidget*picture_preview = gtk_picture_new_for_filename ("/home/abba/Ronen_Letters/graphic_quotes/knesset.png");
+
+	/* Controls for the picture preview */
+	GtkWidget *picture_preview = gtk_picture_new_for_filename ("/home/abba/Ronen_Letters/graphic_quotes/knesset.png");
 
 	gtk_box_append(GTK_BOX(box_annotation), grid_annotation);
 	gtk_box_append(GTK_BOX(box_annotation), grid_coordinates);
 	gtk_box_append(GTK_BOX(box_annotation), box_width_theme);
 	gtk_box_append(GTK_BOX(box_annotation), grid_text_string_export);
 	gtk_box_append(GTK_BOX(box_annotation), picture_preview);
-
 
 	GtkWidget *status_bar = gtk_entry_new();
 	gtk_entry_set_placeholder_text(GTK_ENTRY(status_bar), "Ready...");
