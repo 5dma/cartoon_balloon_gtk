@@ -146,6 +146,7 @@ void preview_clicked(GtkGestureClick* self, gint n_press, gdouble x, gdouble y, 
 			g_snprintf (log_message, MAX_INPUT,"Vertex clicked at x: %ld, y: %ld", annotation->vertex.x, annotation->vertex.y);
 	}
 	logger(G_LOG_LEVEL_INFO, log_message,user_data );
+	
 }
 
 /**
@@ -223,5 +224,5 @@ void build_controllers_annotation(User_Data *user_data) {
 
 
 	/* Add clicked signal to export the annotated image */
-	g_signal_connect(gui_data_annotation->btn_export, "clicked", G_CALLBACK(launch_processing), user_data->gui_data);
+	g_signal_connect(gui_data_annotation->btn_export, "clicked", G_CALLBACK(launch_processing), user_data);
 }
