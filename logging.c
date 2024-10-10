@@ -190,3 +190,20 @@ void log_configuration_values(User_Data *user_data) {
 	g_free(final_message);
 	g_strv_builder_unref(message_builder);
 }
+
+
+void memory_addresses(const gchar *intro, User_Data *user_data) {
+
+	gchar message[1000];
+	gchar detail[900];
+
+	gsize barf = g_strlcpy (message, intro, 1000);
+
+
+g_snprintf (detail, 900,"user_data: %p\nuser_data->gui_data: %p\n user_data->gui_data_gui_annotation_data: %p\nuser_data->gui_data->gui_data_annotation->spin_vertex_y: %p", user_data, user_data->gui_data, user_data->gui_data->gui_data_annotation, user_data->gui_data->gui_data_annotation->spin_vertex_y);
+
+	barf = g_strlcat (message, detail, 1000);
+
+logger(G_LOG_LEVEL_DEBUG, message, user_data);
+
+}

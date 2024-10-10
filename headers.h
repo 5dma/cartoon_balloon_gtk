@@ -135,6 +135,7 @@ typedef struct Gui_Data_Annotation {
 	GtkWidget *spin_new_width; /**< Address of spin_new_width in the box_annotation tab. */
 	GtkWidget *dropdown_theme; /**< Address of theme in the box_annotation tab. */
 	GtkWidget *entry_text_string; /**< Address of the entry_text_string in the box_annotaton tab. */
+	GtkWidget *btn_export; /**< Address of btn_export in the box_annotation tab. */
 	GtkWidget *picture_preview;  /**< Address of the picture_preview in the box_annotaton tab. */
 } Gui_Data_Annotation;
 
@@ -201,6 +202,7 @@ void activate (GtkApplication*app, gpointer  user_data);
 FILE *get_log_file_pointer(Configuration *configuration);
 void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data);
 void log_configuration_values(User_Data *user_data);
+void memory_addresses(const gchar *intro, User_Data *user_data);
 
 /* GUI headers */
 GtkWidget *build_box_annotation(User_Data *user_data);
