@@ -192,7 +192,7 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Th
 void resize_image(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
 void add_path(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
 void apply_theme(GHashTable *theme_hash, const Annotation *annotation, Configuration **configuration);
-void process_image(Configuration *configuration, GHashTable *theme_hash, Annotation *annotation);
+void process_image(User_Data *user_data);
 
 /* GTK headers */
 void activate (GtkApplication*app, gpointer  user_data);

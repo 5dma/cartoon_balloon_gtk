@@ -20,7 +20,11 @@
  * -# Draw a path from user-specified point to the speech balloon.
  * -# Write the image.
  */
-void process_image(Configuration *configuration, GHashTable *theme_hash, Annotation *annotation) {
+void process_image(User_Data *user_data) {
+
+	Configuration *configuration = user_data->configuration;
+	GHashTable *theme_hash = user_data->theme_hash;
+	Annotation *annotation = user_data->annotation;
 
 
 	MagickWandGenesis();
