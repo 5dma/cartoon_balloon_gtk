@@ -57,9 +57,6 @@ int main(int argc, char *argv[]) {
 	g_object_unref(app);
 
 	//apply_theme(theme_hash, annotation, &settings);
-
-	process_image(user_data->configuration, user_data->theme_hash, user_data->annotation);
-
 	cleanup(user_data);
 	
 	
