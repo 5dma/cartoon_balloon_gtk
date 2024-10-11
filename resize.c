@@ -14,18 +14,19 @@ Scales the original image to no wider than the user-specified width found in `an
 void scale_image(MagickWand *m_wand, Annotation *annotation)
 {
 
+	MagickWriteImage(m_wand, "/tmp/pre_pre_scaled.jpg");
+
 	gint64 old_width = MagickGetImageWidth(m_wand);
 	gint64 old_height = MagickGetImageHeight(m_wand);
 
 	gint64 new_height = (annotation->new_width * old_height) / old_width;
-
-	MagickResizeImage(m_wand, annotation->new_width, new_height, LanczosFilter, 0);
+ 
+	/* Previously used the LanczosFilter and similar, I got only black images. Need to find the best filter. See the available filters at /usr/include/ImageMagick-6/Magick++/Include.h */
+	MagickResizeImage(m_wand, annotation->new_width, new_height, BoxFilter, 0);
 
 	annotation->resize_proportion_x = (float) annotation->new_width / old_width;
 
 	annotation->resize_proportion_y = (float) new_height / old_height;
-
-	//g_print("Resize proportions\n  x: %f, y: %f\n", annotation->resize_proportion_x, annotation->resize_proportion_y);
 }
 
 
