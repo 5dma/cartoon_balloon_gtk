@@ -95,7 +95,9 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Th
 	gchar *rightmost_space;
 
 	/* Parse the annotation, placing newlines in places where the string exceeds max_text_width. */
-	gchar *token = strtok(annotation->text_string, " ");
+	gchar *text_string_copy = g_strdup (annotation->text_string);
+
+	gchar *token = strtok(text_string_copy, " ");
 	g_strlcpy(text_analysis->split_string, token, configuration->max_annotation_length);
 	while ((token = strtok(NULL, " ")) != NULL) {
 		g_strlcat(text_analysis->split_string, " ", configuration->max_annotation_length);
@@ -107,6 +109,8 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Th
 		}
 		RelinquishMagickMemory(text_metrics);
 	}
+
+	g_free(text_string_copy);
 
 	/* Save the text's height and width. These will be used to determine the balloon's height and width. */
 	text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);

@@ -46,7 +46,7 @@ void process_image(User_Data *user_data) {
 	const char *selected_theme_name = gtk_string_list_get_string ( GTK_STRING_LIST(model_theme), selected_item);
 	Theme *theme = (Theme *) g_hash_table_lookup (theme_hash, selected_theme_name);
 
-	/* Scale the image to a max of 520 pixels wide. */
+	/* Scale the image. */
 	scale_image(m_wand, annotation);
 	MagickWriteImage(m_wand, "/tmp/scaled.jpg");
 	/* Determine height of the annotation, and compute other measurements. */
