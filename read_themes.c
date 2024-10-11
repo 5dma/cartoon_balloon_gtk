@@ -66,20 +66,3 @@ void read_themes(User_Data *user_data)
 
 
 }
-
-/**
-* Retieves the requested theme from the theme_hash, and applies that theme's settings to the corresponding members of Settings. If the requested theme is not in the theme hash, the output falls back to the default theme. 
- */
-/*void apply_theme(GHashTable * theme_hash, const Annotation * annotation, Configuration **configuration) {
-	Theme * requested_theme = (Theme *)g_hash_table_lookup (theme_hash, annotation->theme);
-	if (requested_theme == NULL) {
-		return;
-	}
-	Configuration * local_configuration = *configuration;
-	g_strlcpy(local_settings->balloon_fill_color, requested_theme->balloon_fill_color, 8);
-	g_strlcpy(local_settings->balloon_stroke_color, requested_theme->balloon_stroke_color, 8);
-	g_strlcpy(local_settings->font, requested_theme->balloon_stroke_color, 256);
-	g_strlcpy(local_settings->text_color, requested_theme->text_color, 8);
-	local_settings->font_size = requested_theme->font_size;
-	local_settings->stroke_width = requested_theme->stroke_width;
-} */

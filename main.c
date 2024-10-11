@@ -56,9 +56,7 @@ int main(int argc, char *argv[]) {
 	/* Decrease reference count because assigning it in on_app_activate */
 	g_object_unref(app);
 
-	//apply_theme(theme_hash, annotation, &settings);
 	cleanup(user_data);
-	
-	
+		
 	return status;
 }

@@ -192,7 +192,6 @@ void add_balloon(MagickWand *m_wand, Configuration *configuration, Theme *theme,
 Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data);
 void resize_image(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
 void add_path(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
-void apply_theme(GHashTable *theme_hash, const Annotation *annotation, Configuration **configuration);
 void process_image(User_Data *user_data);
 
 /* GTK headers */
@@ -203,7 +202,6 @@ void activate (GtkApplication*app, gpointer  user_data);
 FILE *get_log_file_pointer(Configuration *configuration);
 void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data);
 void log_configuration_values(User_Data *user_data);
-void memory_addresses(const gchar *intro, User_Data *user_data);
 
 /* GUI headers */
 GtkWidget *build_box_annotation(User_Data *user_data);

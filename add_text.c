@@ -127,11 +127,6 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_da
 	//text_metrics[4] - text_metrics[6] + text_metrics[2] ;
 	text_analysis->text_width = text_metrics[4]; //This may change to + text_metrics[2]
 	
-
-	//for (int i= 0; i<13; i++) {
-	//	g_print("text_metrics[%d]: %f\n", i, text_metrics[i]);
-	//}
-
 	/* Clean up */
 	RelinquishMagickMemory(text_metrics);
 	DestroyDrawingWand(d_wand);
