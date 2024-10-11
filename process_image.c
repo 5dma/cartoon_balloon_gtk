@@ -38,7 +38,7 @@ void process_image(User_Data *user_data) {
 		g_print("Could not read the image %s. Exiting\n", annotation->input_image);
 		return;
 	}
-
+	MagickWriteImage(m_wand, "/tmp/original.jpg");
 	/* Get the name of the selected theme on the annotations tab. */
 	guint selected_item = gtk_drop_down_get_selected (GTK_DROP_DOWN(user_data->gui_data->gui_data_annotation->dropdown_theme));
 
@@ -46,24 +46,27 @@ void process_image(User_Data *user_data) {
 	const char *selected_theme_name = gtk_string_list_get_string ( GTK_STRING_LIST(model_theme), selected_item);
 	Theme *theme = (Theme *) g_hash_table_lookup (theme_hash, selected_theme_name);
 
-
 	/* Scale the image to a max of 520 pixels wide. */
 	scale_image(m_wand, annotation);
-
+	MagickWriteImage(m_wand, "/tmp/scaled.jpg");
 	/* Determine height of the annotation, and compute other measurements. */
 	Text_Analysis *text_analysis = analyze_text(m_wand, configuration, theme, annotation);
 
 	/* Extend the image vertically to accommodate the balloon. */
 	resize_image(m_wand,annotation, configuration, theme, text_analysis);
-
+	MagickWriteImage(m_wand, "/tmp/resized.jpg");
+	
 	/* Add the balloon. */
 	add_balloon(m_wand, configuration, theme, annotation, text_analysis);
+	MagickWriteImage(m_wand, "/tmp/add_balloon.jpg");
 
 	/* Add the text inside the balloon. */
 	add_text(m_wand, configuration,theme, annotation,text_analysis);
+	MagickWriteImage(m_wand, "/tmp/add_text.jpg");
 
 	/* Add the path to the balloon. */
 	add_path(m_wand, annotation, configuration, theme, text_analysis);
+	MagickWriteImage(m_wand, "/tmp/add_path.jpg");
 
 	/* Write the new image */
 	MagickWriteImage(m_wand, configuration->new_image_path);

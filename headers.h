@@ -67,6 +67,7 @@ typedef struct Annotation
 	gchar text_string[256];  /**< Maximal length of the text in the balloon. A reasonable value is 256. */
 	gchar theme[256];  /**< Theme to apply to the text and balloon.  */
 	float resize_proportion_x; /**< Proportion the image is resized in the x direction so that it does not exceed the maximal width. */
+	float preview_scale; /**< Ratio of the original image's height to the preview height. */
 	float resize_proportion_y; /**< Proportion the image is resized in the y direction so that it does not exceed the maximal width. (Typically matches `resize_proportion_x`.) */
 	Dimensions dimensions_picture_preview_widget; /**< Dimensions of the widget containing the displayed image.) */
 	Dimensions dimensions_original_image; /**< Dimensions of the actual image (not scaled). */

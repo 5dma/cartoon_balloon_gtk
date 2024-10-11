@@ -36,7 +36,9 @@ void add_balloon(MagickWand *m_wand, Configuration *configuration, Theme *theme,
 		theme->stroke_width;
 
 	gint64 top_left_y =
-		annotation->text_bottom_left.y * annotation->resize_proportion_y -
+		annotation->text_bottom_left.y * 
+		annotation->preview_scale * 
+		annotation->resize_proportion_y -
 		text_analysis->text_height -
 		configuration->padding -
 		theme->stroke_width -
@@ -94,8 +96,8 @@ void add_path(MagickWand *m_wand, Annotation *annotation, Configuration *configu
 	/* Compute the positions of the path. */
 	p1.x = text_analysis->balloon_midpoint - configuration->space;
 	p1.y = text_analysis->balloon_bottom - configuration->elevation;
-	vertex.x =  annotation->vertex.x * annotation->resize_proportion_x;
-	vertex.y = annotation->vertex.y  * annotation->resize_proportion_y - text_analysis->overflow;
+	vertex.x =  annotation->vertex.x * annotation->resize_proportion_x * annotation->preview_scale;
+	vertex.y = annotation->vertex.y  * annotation->resize_proportion_y * annotation->preview_scale - text_analysis->overflow;
 	p3.x = text_analysis->balloon_midpoint + configuration->space;
 	p3.y = text_analysis->balloon_bottom - configuration->elevation;
 

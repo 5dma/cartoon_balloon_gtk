@@ -13,9 +13,6 @@ Scales the original image to no wider than the user-specified width found in `an
  */
 void scale_image(MagickWand *m_wand, Annotation *annotation)
 {
-
-	MagickWriteImage(m_wand, "/tmp/pre_pre_scaled.jpg");
-
 	gint64 old_width = MagickGetImageWidth(m_wand);
 	gint64 old_height = MagickGetImageHeight(m_wand);
 
@@ -25,7 +22,6 @@ void scale_image(MagickWand *m_wand, Annotation *annotation)
 	MagickResizeImage(m_wand, annotation->new_width, new_height, BoxFilter, 0);
 
 	annotation->resize_proportion_x = (float) annotation->new_width / old_width;
-
 	annotation->resize_proportion_y = (float) new_height / old_height;
 }
 

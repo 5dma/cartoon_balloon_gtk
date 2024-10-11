@@ -60,16 +60,17 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Th
 	Text_Analysis *text_analysis;
 	text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
 
-	float preview_scale = (float) annotation->dimensions_original_image.height / annotation->dimensions_picture_preview_widget.height;
+	// Need to find another place for this assignment, should not be here. 
+	annotation->preview_scale = (float) annotation->dimensions_original_image.height / annotation->dimensions_picture_preview_widget.height;
 	
 	/* Compute locations where text will be placed. */
 	text_analysis->left_offset = 
 		annotation->text_bottom_left.x * 
-		preview_scale * 
+		annotation->preview_scale * 
 		annotation->resize_proportion_x;
 	text_analysis->bottom_offset = 
 		annotation->text_bottom_left.y * 
-		preview_scale *
+		annotation->preview_scale *
 		annotation->resize_proportion_y;
 	text_analysis->text_width = 0;
 	text_analysis->text_height = 0;
