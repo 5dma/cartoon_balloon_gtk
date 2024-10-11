@@ -55,10 +55,12 @@ void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, An
  * - Compute the size of the balloon.
  * - Resize as necessary the image upward to contain the balloon.
  */
-Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation) {
-	
-	Text_Analysis *text_analysis;
-	text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
+Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
+
+	Configuration *configuration = user_data->configuration;
+	Annotation *annotation = user_data->annotation;
+
+	Text_Analysis *text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
 
 	// Need to find another place for this assignment, should not be here. 
 	annotation->preview_scale = (float) annotation->dimensions_original_image.height / annotation->dimensions_picture_preview_widget.height;
@@ -95,7 +97,11 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Th
 	gchar *rightmost_space;
 
 	/* Parse the annotation, placing newlines in places where the string exceeds max_text_width. */
-	gchar *text_string_copy = g_strdup (annotation->text_string);
+
+	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer (GTK_ENTRY(user_data->gui_data->gui_data_annotation->entry_text_string));
+
+	const gchar *text_string = gtk_entry_buffer_get_text (entry_buffer);
+	gchar *text_string_copy = g_strdup (text_string);
 
 	gchar *token = strtok(text_string_copy, " ");
 	g_strlcpy(text_analysis->split_string, token, configuration->max_annotation_length);
@@ -109,6 +115,7 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Th
 		}
 		RelinquishMagickMemory(text_metrics);
 	}
+
 
 	g_free(text_string_copy);
 

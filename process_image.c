@@ -50,7 +50,7 @@ void process_image(User_Data *user_data) {
 	scale_image(m_wand, annotation);
 	MagickWriteImage(m_wand, "/tmp/scaled.jpg");
 	/* Determine height of the annotation, and compute other measurements. */
-	Text_Analysis *text_analysis = analyze_text(m_wand, configuration, theme, annotation);
+	Text_Analysis *text_analysis = analyze_text(m_wand, theme, user_data);
 
 	/* Extend the image vertically to accommodate the balloon. */
 	resize_image(m_wand,annotation, configuration, theme, text_analysis);

@@ -189,7 +189,7 @@ void read_themes(User_Data *user_data);
 void scale_image(MagickWand *m_wand, Annotation *annotation);
 void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis);
 void add_balloon(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis);
-Text_Analysis *analyze_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation);
+Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data);
 void resize_image(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
 void add_path(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
 void apply_theme(GHashTable *theme_hash, const Annotation *annotation, Configuration **configuration);
