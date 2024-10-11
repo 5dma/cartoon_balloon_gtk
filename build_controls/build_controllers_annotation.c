@@ -187,6 +187,7 @@ This function is fired when the user clicks the **Export** button. It launches t
 void launch_processing(GtkWidget *widget, gpointer data) {
 
 	User_Data *user_data = (User_Data *)data;
+	user_data->annotation->new_width = (gint64) gtk_spin_button_get_value (GTK_SPIN_BUTTON(user_data->gui_data->gui_data_annotation->spin_new_width));
 	process_image(user_data);
 
 }
