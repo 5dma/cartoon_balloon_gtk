@@ -145,6 +145,7 @@ typedef struct Gui_Data_Annotation {
  */
 typedef struct Gui_Data_Theme {
 	GtkWidget *dropdown_theme; /**< Address of the dropdown_theme widget. */
+	GtkWidget *entry_new_theme; /**< Address of the entry_new_theme widget. */
 	GtkWidget *entry_font_name; /**< Address of the entry_font_name widget. */
 	GtkWidget *entry_font_color; /**< Address of the entry_font_color widget. */
 	GtkWidget *spin_font_size; /**< Address of the spin_font_size widget. */
@@ -211,6 +212,7 @@ void initialize_gui(User_Data *user_data);
 
 /* Controller (callback) headers*/
 void build_controllers_annotation(User_Data *user_data);
+void build_controllers_theme(User_Data *user_data);
 void build_controllers_window(User_Data *user_data);
 
 /* Memory management headers */

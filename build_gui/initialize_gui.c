@@ -39,6 +39,8 @@ void initialize_gui(User_Data *user_data) {
 	guint hash_size;
 	gpointer key_array = g_hash_table_get_keys_as_array (user_data->theme_hash, &hash_size);
 	GtkStringList *stringlist = gtk_string_list_new (key_array);
+	gtk_string_list_append (stringlist, "(new)");
+	
 	gtk_drop_down_set_model ( GTK_DROP_DOWN( gui_data_annotation->dropdown_theme ), G_LIST_MODEL(stringlist));
 	/* On initialize, set the first item in the model as selected. */
 	gtk_drop_down_set_selected (GTK_DROP_DOWN( gui_data_annotation->dropdown_theme), 0); 

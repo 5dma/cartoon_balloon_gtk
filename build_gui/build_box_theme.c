@@ -17,13 +17,14 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	/* Controls for selecting the theme. */
 
 	GtkWidget *lbl_name = gtk_label_new ("Name:");
-
 	GtkWidget *dropdown_theme = gtk_drop_down_new (NULL, NULL);
+	GtkWidget *entry_new_theme = gtk_entry_new ();
 
 	GtkWidget *box_theme_selector  = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	
 	gtk_box_append(GTK_BOX(box_theme_selector), lbl_name);
 	gtk_box_append(GTK_BOX(box_theme_selector), dropdown_theme);
+	gtk_box_append(GTK_BOX(box_theme_selector), entry_new_theme);
 
 	/* Controls for styling the text. */
 
@@ -138,6 +139,8 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 
 
 	gtk_widget_add_css_class (box_theme, "tab" );
+	gtk_widget_add_css_class (dropdown_theme, "horizontal_field_label");
+	
 	gtk_widget_add_css_class (lbl_name, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_font, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_color, "horizontal_field_label");
@@ -147,15 +150,20 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	gtk_widget_add_css_class (lbl_stroke_color, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_stroke_width, "horizontal_field_label");
 
+
 	gtk_widget_add_css_class(grid_text,"grid_coordinates");
 	gtk_widget_add_css_class(grid_balloon ,"grid_coordinates");
 
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_font_size), 1.0);
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_stroke_width), 1.0);
 
+	gtk_widget_set_sensitive (entry_new_theme, FALSE);
+
+
 	gtk_widget_set_visible(box_theme, FALSE);
 
 	user_data->gui_data->gui_data_theme->dropdown_theme = dropdown_theme;
+	user_data->gui_data->gui_data_theme->entry_new_theme = entry_new_theme;
 	user_data->gui_data->gui_data_theme->entry_font_name = entry_font_name;
 	user_data->gui_data->gui_data_theme->entry_font_color = entry_font_color;
 	user_data->gui_data->gui_data_theme->entry_fill_color = entry_fill_color;

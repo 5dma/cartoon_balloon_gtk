@@ -103,7 +103,7 @@ void activate(GtkApplication *app, gpointer data) {
 	/* Assign callbacks to controls */
 	build_controllers_window(user_data);
 	build_controllers_annotation(user_data);
-
+	build_controllers_theme(user_data);
 
 
 	/* Apply values read from settings.json to the GUI. */
