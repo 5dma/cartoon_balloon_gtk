@@ -21,6 +21,12 @@
 #define MAX_PATH_LENGTH 256
 
 /**
+   \brief Static string indicating a new theme.
+*/
+#define NEW_THEME "(new)"
+
+
+/**
  * Structure containing user-defined configuration. The settings in this struct, such as the ballon's fill color, file are relatively static: they can apply to multiple images. The function read_json() reads the values from a JSON file.
  * 
  * All dimensions in this structure are in pixels. For a visual representation of the dimensions, see the specification.
