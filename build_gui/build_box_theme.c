@@ -112,14 +112,16 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	gtk_grid_attach ( GTK_GRID(grid_balloon), lbl_stroke_width, 0, 3, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_balloon), spin_stroke_width, 1, 3, 1, 1);
 
-	GtkWidget*picture_balloon = gtk_picture_new_for_filename ("/home/abba/.cartoon_balloon/balloon_preview.png");
+	GtkWidget *drawing_balloon = gtk_drawing_area_new ();
+	gtk_drawing_area_set_content_height (GTK_DRAWING_AREA(drawing_balloon), 156);
+	gtk_drawing_area_set_content_width (GTK_DRAWING_AREA(drawing_balloon), 178);
 
 	/* Controls for save, copy, and delete theme */
 	GtkWidget *btn_save = gtk_button_new_with_label("Save");
 	GtkWidget *btn_copy = gtk_button_new_with_label("Copy");
 	GtkWidget *btn_delete = gtk_button_new_with_label("Delete");
 
-	GtkWidget *box_save_copy_delete  = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	GtkWidget *box_save_copy_delete = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 	
 	gtk_box_append(GTK_BOX(box_save_copy_delete), btn_save);
 	gtk_box_append(GTK_BOX(box_save_copy_delete), btn_copy);
@@ -130,7 +132,7 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	GtkWidget *grid_font_balloon_preview = gtk_grid_new();
 	gtk_grid_attach ( GTK_GRID(grid_font_balloon_preview), grid_text, 0, 0, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_font_balloon_preview), grid_balloon, 0, 1, 1, 1);
-	gtk_grid_attach ( GTK_GRID(grid_font_balloon_preview), picture_balloon, 1, 0, 1, 2);
+	gtk_grid_attach ( GTK_GRID(grid_font_balloon_preview), drawing_balloon, 1, 0, 1, 2);
 
 	gtk_box_append(GTK_BOX(box_theme), box_theme_selector);
 	gtk_box_append(GTK_BOX(box_theme), grid_font_balloon_preview);
@@ -171,6 +173,9 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	user_data->gui_data->gui_data_theme->entry_font_color = entry_font_color;
 	user_data->gui_data->gui_data_theme->entry_stroke_color = entry_stroke_color;
 	user_data->gui_data->gui_data_theme->spin_stroke_width = spin_stroke_width;
+	user_data->gui_data->gui_data_theme->drawing_balloon = drawing_balloon;
+	
+
 
 	return box_theme;
 

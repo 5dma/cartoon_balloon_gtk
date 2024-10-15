@@ -40,6 +40,48 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 	}
 }
 
+double scaled_rgb (int input) {
+	return (double) input / 255;
+}
+
+void draw_theme(GtkDrawingArea* drawing_area, cairo_t* cr,
+  int width,
+  int height,
+  gpointer user_data) {
+	g_print("Draw\n");
+
+	int left = 20;
+	int top = 15;
+	int right = 158;
+	int bottom = 160;
+
+
+ double barf1 = scaled_rgb (114);
+double barf2 = scaled_rgb (159);
+double barf3 = scaled_rgb (207);
+
+	cairo_set_source_rgb (cr,barf1, barf2, barf3);
+	cairo_set_line_width(cr, 5);
+	cairo_new_path(cr);
+	cairo_move_to(cr,left, top);
+	cairo_line_to(cr, right, top);
+	cairo_line_to(cr, right, bottom);
+	cairo_line_to(cr, left, bottom);
+	cairo_close_path(cr);
+	cairo_fill_preserve (cr);
+	 barf1 = scaled_rgb (51);
+barf2 = scaled_rgb (71);
+barf3 = scaled_rgb (230);
+
+
+
+	cairo_set_source_rgb (cr,barf1, barf2, barf3);
+	 cairo_stroke(cr);
+
+
+}
+
+
 /**
 Assigns callbacks to controls in the theme tab
  */
@@ -47,4 +89,7 @@ void build_controllers_theme(User_Data *user_data) {
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
 
 	g_signal_connect(gui_data_theme->dropdown_theme, "notify::selected", G_CALLBACK(theme_selection_changed), user_data);
+
+	gtk_drawing_area_set_draw_func ( GTK_DRAWING_AREA(gui_data_theme->drawing_balloon), draw_theme, user_data, NULL);
+
 }

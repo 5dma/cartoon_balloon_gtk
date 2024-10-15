@@ -158,6 +158,7 @@ typedef struct Gui_Data_Theme {
 	GtkWidget *entry_fill_color; /**< Address of the entry_fill_color widget. */
 	GtkWidget *entry_stroke_color; /**< Address of the entry_stroke_color widget. */
 	GtkWidget *spin_stroke_width; /**< Address of the spin_stroke_width widget. */
+	GtkWidget *drawing_balloon;  /**< Address of the drawing_balloon widget. */
 } Gui_Data_Theme;
 
 
