@@ -40,14 +40,14 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 	}
 }
 
-double scaled_rgb (int input) {
-	return (double) input / 255;
+double scaled_rgb(int input) {
+	return (double)input / 255;
 }
 
-void draw_theme(GtkDrawingArea* drawing_area, cairo_t* cr,
-  int width,
-  int height,
-  gpointer user_data) {
+void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
+				int width,
+				int height,
+				gpointer user_data) {
 	g_print("Draw\n");
 
 	int left = 20;
@@ -55,63 +55,62 @@ void draw_theme(GtkDrawingArea* drawing_area, cairo_t* cr,
 	int right = 158;
 	int bottom = 90;
 	int elevation = bottom - 10;
-	int midpoint = (right - left) / 2 + left;
-	int vertex_left = midpoint - 10;
-	int vertex_right = midpoint + 10;
+	int midpoint_horizontal = (right - left) / 2 + left;
+	int midpoint_vertical = (bottom - top) / 2 + top;
+	int vertex_left = midpoint_horizontal - 10;
+	int vertex_right = midpoint_horizontal + 10;
 	int vertex_bottom = bottom + 30;
 
-double barf1 = scaled_rgb (114);
-double barf2 = scaled_rgb (159);
-double barf3 = scaled_rgb (207);
+	/* Draw balloon and fill */
+	double barf1 = scaled_rgb(114);
+	double barf2 = scaled_rgb(159);
+	double barf3 = scaled_rgb(207);
 
-	cairo_set_source_rgb (cr,barf1, barf2, barf3);
+	cairo_set_source_rgb(cr, barf1, barf2, barf3);
 	cairo_set_line_width(cr, 5);
 	cairo_new_path(cr);
-	cairo_move_to(cr,left, top);
+	cairo_move_to(cr, left, top);
 	cairo_line_to(cr, right, top);
 	cairo_line_to(cr, right, bottom);
 	cairo_line_to(cr, left, bottom);
 	cairo_close_path(cr);
-	cairo_fill_preserve (cr);
-	 barf1 = scaled_rgb (51);
-barf2 = scaled_rgb (71);
-barf3 = scaled_rgb (230);
+	cairo_fill_preserve(cr);
 
+	/* Stroke balloon */
 
+	barf1 = scaled_rgb(51);
+	barf2 = scaled_rgb(71);
+	barf3 = scaled_rgb(230);
 
-	cairo_set_source_rgb (cr,barf1, barf2, barf3);
-	 cairo_stroke(cr);
+	cairo_set_source_rgb(cr, barf1, barf2, barf3);
+	cairo_stroke(cr);
 
+	/* Draw vertex and fill */
+	barf1 = scaled_rgb(114);
+	barf2 = scaled_rgb(159);
+	barf3 = scaled_rgb(207);
 
-	cairo_surface_t *surface_vertex = cairo_surface_create_similar (cairo_get_target (cr),
-                                          CAIRO_CONTENT_COLOR_ALPHA,
-                                          width, height);
+	cairo_set_source_rgb(cr, barf1, barf2, barf3);
+	cairo_move_to(cr, vertex_left, elevation);
+	cairo_line_to(cr, midpoint_horizontal, vertex_bottom);
+	cairo_line_to(cr, vertex_right, elevation);
+	cairo_fill_preserve(cr);
 
-	cairo_t *vertex_cr = cairo_create (surface_vertex);
+	/* Stroke vertex */
 
-	 barf1 = scaled_rgb (252);
-barf2 = scaled_rgb (10);
-barf3 = scaled_rgb (20);
- 	cairo_set_source_rgb (cr,barf1, barf2, barf3);
+	barf1 = scaled_rgb(51);
+	barf2 = scaled_rgb(71);
+	barf3 = scaled_rgb(230);
 
-cairo_set_operator (vertex_cr, CAIRO_OPERATOR_OVER);
-cairo_move_to(vertex_cr,vertex_left, elevation);
-	cairo_line_to(vertex_cr, midpoint,vertex_bottom);
-	cairo_line_to(vertex_cr,vertex_right,elevation);
-	cairo_close_path(vertex_cr);
-	 cairo_stroke(vertex_cr);
+	cairo_set_source_rgb(cr, barf1, barf2, barf3);
+	cairo_stroke(cr);
 
-
-  cairo_set_source_surface (cr, surface_vertex, 0, 0);
-/* cairo_paint (vertex_cr);
- cairo_surface_flush (surface_vertex);*/
- cairo_paint(cr); 
-
-
-
-
+	/* Add text */
+	cairo_select_font_face(cr, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size(cr, 15);
+	cairo_move_to(cr, midpoint_horizontal - 50, midpoint_vertical);
+	cairo_show_text(cr, "THEME");
 }
-
 
 /**
 Assigns callbacks to controls in the theme tab
@@ -121,6 +120,5 @@ void build_controllers_theme(User_Data *user_data) {
 
 	g_signal_connect(gui_data_theme->dropdown_theme, "notify::selected", G_CALLBACK(theme_selection_changed), user_data);
 
-	gtk_drawing_area_set_draw_func ( GTK_DRAWING_AREA(gui_data_theme->drawing_balloon), draw_theme, user_data, NULL);
-
+	gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(gui_data_theme->drawing_balloon), draw_theme, user_data, NULL);
 }
