@@ -47,68 +47,49 @@ double scaled_rgb(int input) {
 void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 				int width,
 				int height,
-				gpointer user_data) {
+				gpointer data) {
 	g_print("Draw\n");
 
-	int left = 20;
-	int top = 15;
-	int right = 158;
-	int bottom = 90;
-	int elevation = bottom - 10;
-	int midpoint_horizontal = (right - left) / 2 + left;
-	int midpoint_vertical = (bottom - top) / 2 + top;
-	int vertex_left = midpoint_horizontal - 10;
-	int vertex_right = midpoint_horizontal + 10;
-	int vertex_bottom = bottom + 30;
+	User_Data *user_data = (User_Data *)data;
+	Theme_Preview *theme_preview = user_data->theme_preview;
+
 
 	/* Draw balloon and fill */
-	double barf1 = scaled_rgb(114);
-	double barf2 = scaled_rgb(159);
-	double barf3 = scaled_rgb(207);
 
-	cairo_set_source_rgb(cr, barf1, barf2, barf3);
+	cairo_set_source_rgb(cr, theme_preview->fill_rgb[0] ,theme_preview->fill_rgb[1], theme_preview->fill_rgb[2]);
 	cairo_set_line_width(cr, 5);
 	cairo_new_path(cr);
-	cairo_move_to(cr, left, top);
-	cairo_line_to(cr, right, top);
-	cairo_line_to(cr, right, bottom);
-	cairo_line_to(cr, left, bottom);
+	cairo_move_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_top_left.y);
+	cairo_line_to(cr, theme_preview->balloon_bottom_right.x, theme_preview->balloon_top_left.y);
+	cairo_line_to(cr, theme_preview->balloon_bottom_right.x, theme_preview->balloon_bottom_right.y);
+	cairo_line_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_bottom_right.y);
 	cairo_close_path(cr);
 	cairo_fill_preserve(cr);
 
 	/* Stroke balloon */
 
-	barf1 = scaled_rgb(51);
-	barf2 = scaled_rgb(71);
-	barf3 = scaled_rgb(230);
 
-	cairo_set_source_rgb(cr, barf1, barf2, barf3);
+	cairo_set_source_rgb(cr, theme_preview->stroke_rgb[0] ,theme_preview->stroke_rgb[1], theme_preview->stroke_rgb[2]);
 	cairo_stroke(cr);
 
 	/* Draw vertex and fill */
-	barf1 = scaled_rgb(114);
-	barf2 = scaled_rgb(159);
-	barf3 = scaled_rgb(207);
 
-	cairo_set_source_rgb(cr, barf1, barf2, barf3);
-	cairo_move_to(cr, vertex_left, elevation);
-	cairo_line_to(cr, midpoint_horizontal, vertex_bottom);
-	cairo_line_to(cr, vertex_right, elevation);
+
+	cairo_set_source_rgb(cr, theme_preview->fill_rgb[0] ,theme_preview->fill_rgb[1], theme_preview->fill_rgb[2]);
+
+	cairo_move_to(cr,theme_preview->vertex_left.x,theme_preview->vertex_left.y);
+	cairo_line_to(cr, theme_preview->vertex_bottom.x,theme_preview->vertex_bottom.y);
+	cairo_line_to(cr, theme_preview->vertex_right.x,theme_preview->vertex_right.y);
 	cairo_fill_preserve(cr);
 
 	/* Stroke vertex */
-
-	barf1 = scaled_rgb(51);
-	barf2 = scaled_rgb(71);
-	barf3 = scaled_rgb(230);
-
-	cairo_set_source_rgb(cr, barf1, barf2, barf3);
+	cairo_set_source_rgb(cr, theme_preview->stroke_rgb[0] ,theme_preview->stroke_rgb[1], theme_preview->stroke_rgb[2]);
 	cairo_stroke(cr);
 
 	/* Add text */
 	cairo_select_font_face(cr, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
 	cairo_set_font_size(cr, 15);
-	cairo_move_to(cr, midpoint_horizontal - 50, midpoint_vertical);
+	cairo_move_to(cr, theme_preview->text_start.x, theme_preview->text_start.y);
 	cairo_show_text(cr, "THEME");
 }
 
@@ -116,6 +97,38 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 Assigns callbacks to controls in the theme tab
  */
 void build_controllers_theme(User_Data *user_data) {
+
+
+	Theme_Preview *theme_preview = user_data->theme_preview;
+	theme_preview->balloon_top_left.x = 20;
+	theme_preview->balloon_top_left.y = 15;
+	theme_preview->balloon_bottom_right.x = 158;
+	theme_preview->balloon_bottom_right.y = 90;
+
+	const int midpoint_horizontal = (theme_preview->balloon_bottom_right.x - theme_preview->balloon_top_left.x) / 2 + theme_preview->balloon_top_left.x;
+	const int midpoint_vertical = (theme_preview->balloon_bottom_right.y - theme_preview->balloon_top_left.y) / 2 + theme_preview->balloon_top_left.y;
+	const int elevation = theme_preview->balloon_bottom_right.y - 10;
+	
+	theme_preview->vertex_left.x = midpoint_horizontal - 10;
+	theme_preview->vertex_left.y = elevation;
+
+	theme_preview->vertex_bottom.x = midpoint_horizontal;
+	theme_preview->vertex_bottom.y = theme_preview->balloon_bottom_right.y + 20;
+
+	theme_preview->vertex_right.x = midpoint_horizontal + 10;
+	theme_preview->vertex_right.y = elevation;
+
+	theme_preview->fill_rgb[0]= 0.44;
+	theme_preview->fill_rgb[1]= 0.62;
+	theme_preview->fill_rgb[2]= 0.81;
+
+	theme_preview->stroke_rgb[0]= 0.02;
+	theme_preview->stroke_rgb[1]= 0.0;
+	theme_preview->stroke_rgb[2]= 0.98;
+
+	theme_preview->text_start.x = midpoint_horizontal - 20;
+	theme_preview->text_start.y = midpoint_vertical;
+
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
 
 	g_signal_connect(gui_data_theme->dropdown_theme, "notify::selected", G_CALLBACK(theme_selection_changed), user_data);

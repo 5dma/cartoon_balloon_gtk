@@ -176,6 +176,21 @@ typedef struct Gui_Data {
 } Gui_Data;
 
 /**
+ * Structure holding configuration for drawing the theme preview in the Theme tab.
+ */
+typedef struct Theme_Preview {
+	Coordinates balloon_top_left;  /**< Coordinates for balloons top-left corner. */
+	Coordinates balloon_bottom_right;  /**< Coordinates for balloons top-left corner. */
+	Coordinates vertex_left; /**< Coordinates for vertex left side. */
+	Coordinates vertex_bottom; /**< Coordinates for vertex bottom. */
+	Coordinates vertex_right; /**< Coordinates for vertex right side. */
+	Coordinates text_start;  /**< Coordinates where text starts. */
+	float stroke_rgb[3]; /**< RGB values for stroke color (range 0-1). */
+	float fill_rgb[3]; /**< RGB values for fill color (range 0-1). */
+	Theme *selected_theme; /**< Pointer to currently selected theme. */
+} Theme_Preview;
+
+/**
  * Parent structure for passing all settings between callbacks.
  */
 typedef struct User_Data
@@ -187,7 +202,7 @@ typedef struct User_Data
 	Gui_Data *gui_data; /**< Address of the gui_data structure. */
 	JsonParser *parser; /**< Address of a JSON parser. */
 	JsonReader *reader; /**< Address of a JSON reader. */
-
+	Theme_Preview *theme_preview;  /**< Address of a Theme_Preview. */
 } User_Data;
 
 /* Processing headers */
