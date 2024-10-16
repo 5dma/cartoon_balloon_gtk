@@ -83,29 +83,29 @@ barf3 = scaled_rgb (230);
 	 cairo_stroke(cr);
 
 
- //cairo_surface_t *surface_vertex = cairo_surface_create_similar (cairo_get_target (cr),
- //                                         CAIRO_CONTENT_COLOR_ALPHA,
- //                                         width, height);
+	cairo_surface_t *surface_vertex = cairo_surface_create_similar (cairo_get_target (cr),
+                                          CAIRO_CONTENT_COLOR_ALPHA,
+                                          width, height);
 
- //cairo_t *vertex_cr = cairo_create (surface_vertex);
+	cairo_t *vertex_cr = cairo_create (surface_vertex);
 
 	 barf1 = scaled_rgb (252);
 barf2 = scaled_rgb (10);
 barf3 = scaled_rgb (20);
  	cairo_set_source_rgb (cr,barf1, barf2, barf3);
 
+cairo_set_operator (vertex_cr, CAIRO_OPERATOR_OVER);
+cairo_move_to(vertex_cr,vertex_left, elevation);
+	cairo_line_to(vertex_cr, midpoint,vertex_bottom);
+	cairo_line_to(vertex_cr,vertex_right,elevation);
+	cairo_close_path(vertex_cr);
+	 cairo_stroke(vertex_cr);
 
-cairo_move_to(cr,vertex_left, elevation);
-	cairo_line_to(cr, midpoint,vertex_bottom);
-	cairo_line_to(cr,vertex_right,elevation);
-	cairo_close_path(cr);
-	 cairo_stroke(cr);
 
-/* cairo_set_operator (vertex_cr, CAIRO_OPERATOR_OVER);
   cairo_set_source_surface (cr, surface_vertex, 0, 0);
- cairo_paint (vertex_cr);
- cairo_surface_flush (surface_vertex);
- cairo_paint(cr); */
+/* cairo_paint (vertex_cr);
+ cairo_surface_flush (surface_vertex);*/
+ cairo_paint(cr); 
 
 
 
