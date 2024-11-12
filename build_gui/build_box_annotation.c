@@ -29,9 +29,6 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 
 	GtkWidget *btn_file_open = gtk_button_new_with_label ("Browse…");
 
-	//GCancellable *file_open_cancel = g_cancellable_new ();
-	GtkFileDialog *file_open_dialog = gtk_file_dialog_new ();
-
 	gtk_grid_attach ( GTK_GRID(grid_annotation), lbl_input_image, 0, 0, 2, 1);
 	gtk_grid_attach ( GTK_GRID(grid_annotation), entry_input_image, 0, 1, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_annotation), btn_file_open, 1, 1, 1, 1);

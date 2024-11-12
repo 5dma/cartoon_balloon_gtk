@@ -26,28 +26,33 @@ This function is fired when the user selects a file in the file open dialog box.
 * - Displaying the file in the picture preview widget.
 * - Storing the image's width and height.
 */
-static void on_open_response (GObject *source, GAsyncResult *result, gpointer data)
+static void on_open_response (GtkDialog *dialog, int response, gpointer data)
 {
 
-	User_Data *user_data = (User_Data *)data;
-	GtkFileDialog *dialog = GTK_FILE_DIALOG (source);
-  
-	GFile *file = gtk_file_dialog_open_finish (dialog, result, NULL);
-
-  if (file != NULL) {
-
+User_Data *user_data = (User_Data *)data;
+	
+if (response == GTK_RESPONSE_ACCEPT)
+{
+	GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+	GFile *file = gtk_file_chooser_get_file (chooser);
+	
 	gchar  *file_name = g_file_get_parse_name (file);
-	g_strlcpy(user_data->annotation->input_image, g_file_get_parse_name (file), MAX_PATH_LENGTH);
+
+	g_strlcpy(user_data->annotation->input_image, file_name, MAX_PATH_LENGTH);
+
 	GtkEntryBuffer *file_name_buffer = gtk_entry_get_buffer (GTK_ENTRY (user_data->gui_data->gui_data_annotation->entry_input_image));
 
-	gtk_entry_buffer_set_text (file_name_buffer, g_file_get_parse_name (file), MAX_PATH_LENGTH);
+	gtk_entry_buffer_set_text (file_name_buffer, file_name, MAX_PATH_LENGTH);
 
 	gtk_picture_set_file (GTK_PICTURE(user_data->gui_data->gui_data_annotation->picture_preview), file);
 
 	GdkPixbufFormat *pbformat = gdk_pixbuf_get_file_info ( g_file_get_parse_name (file), &(user_data->annotation->dimensions_original_image.width), &(user_data->annotation->dimensions_original_image.height));
+	g_object_unref(file);
+		g_free(file_name);
 
-	g_free(file_name);
-  }
+	}
+
+  gtk_window_destroy (GTK_WINDOW (dialog));
 
 }
 
@@ -172,13 +177,27 @@ void on_btn_text_bottom_clicked(GtkWidget *widget, gpointer data) {
 This function is fired when the user clicks the Browse button to select an image.
  */
 void select_input_file(GtkWidget *widget, gpointer data) {
+
+	User_Data *user_data = (User_Data *) data;
 	
 	GCancellable *cancellable = g_cancellable_new ();
-	GtkFileDialog *file_dialog = gtk_file_dialog_new();
-	
-	gtk_file_dialog_open (file_dialog, NULL, cancellable, on_open_response, data);
-	g_object_unref(file_dialog);
-	g_object_unref(cancellable);
+
+	GtkWidget *file_dialog = gtk_file_chooser_dialog_new (
+  		"Choose a file",
+  	GTK_WINDOW (user_data->gui_data->window),
+	GTK_FILE_CHOOSER_ACTION_OPEN,
+		"Cancel",
+		GTK_RESPONSE_CANCEL,
+		"Open",
+		GTK_RESPONSE_ACCEPT,
+		NULL);
+	  gtk_window_present (GTK_WINDOW (file_dialog));
+	  g_signal_connect (file_dialog, "response",
+					G_CALLBACK (on_open_response),
+					data);
+	//gtk_file_dialog_open (file_dialog, NULL, cancellable, on_open_response, data);
+	//g_object_unref(file_dialog);
+	//g_object_unref(cancellable);
 }
 
 /**
