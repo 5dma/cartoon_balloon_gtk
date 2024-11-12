@@ -12,7 +12,9 @@
 
 /**
 Reads the configuration file into a `Settings` struct. The settings in this configuration file are relatively static: they can apply to multiple images. Also opens the log file.
- */
+*
+* If the configuration file CONFIG_FILE (defined in headers.h) is not available, the memory allocated to far is freed and the application exits with error code `1`.
+*/
 void read_configuration(User_Data *user_data) {
 	JsonParser *parser;
 	GError *error;
@@ -25,7 +27,14 @@ void read_configuration(User_Data *user_data) {
 		g_print("Unable to parse `%s': %s\n", CONFIG_FILE, error->message);
 		g_error_free(error);
 		g_object_unref(parser);
-		return;
+
+		/* Free memory that was allocated in allocate_structures(). */
+		g_free(user_data->gui_data->gui_data_theme);
+		g_free(user_data->gui_data->gui_data_annotation);
+		g_free(user_data->gui_data->gui_data_configuration);
+		g_free(user_data->gui_data);
+		g_free(user_data);
+		exit(1);
 	}
 	user_data->configuration = (Configuration *)g_malloc(sizeof(Configuration));
 	Configuration *configuration = user_data->configuration;
