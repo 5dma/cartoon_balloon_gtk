@@ -34,8 +34,8 @@ void process_image(User_Data *user_data) {
 	MagickBooleanType result = MagickReadImage(m_wand, annotation->input_image);
 
 	if (result == MagickFalse) {
-		logger(G_LOG_LEVEL_ERROR, "Could not read the image in annotation->image. Exiting.", user_data);
-		g_print("Could not read the image %s. Exiting\n", annotation->input_image);
+		logger(G_LOG_LEVEL_ERROR, "Could not read the image in annotation->image.", user_data);
+		populate_status_bar(user_data->gui_data->status_bar, "Could not read the image %s.", annotation->input_image);
 		return;
 	}
 	MagickWriteImage(m_wand, "/tmp/original.jpg");

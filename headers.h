@@ -143,7 +143,8 @@ typedef struct Gui_Data_Annotation {
 	GtkWidget *dropdown_theme; /**< Address of theme in the box_annotation tab. */
 	GtkWidget *entry_text_string; /**< Address of the entry_text_string in the box_annotaton tab. */
 	GtkWidget *btn_export; /**< Address of btn_export in the box_annotation tab. */
-	GtkWidget *picture_preview;  /**< Address of the picture_preview in the box_annotaton tab. */
+	GtkWidget *picture_preview; /**< Address of the picture_preview in the box_annotaton tab. */
+	GtkFileFilter *file_filter; /**< Address of the file filter applied to the file chooser in the annotation tab. */
 } Gui_Data_Annotation;
 
 /**
@@ -172,7 +173,8 @@ typedef struct Gui_Data {
 	Gui_Data_Configuration *gui_data_configuration; /**< Structure containing pointers to controls in the Configuration tab. */
 	Gui_Data_Annotation *gui_data_annotation; /**< Structure containing pointers to controls in the Annotation tab. */
 	Gui_Data_Theme *gui_data_theme; /**< Structure containing pointers to controls in the Themes tab. */
-	GtkCssProvider * provider; /**< Address of the `GtkCssProvider` instance. */
+	GtkCssProvider *provider; /**< Address of the `GtkCssProvider` instance. */
+	GtkWidget *status_bar; /**< Address of the status_bar widget. */
 } Gui_Data;
 
 /**
@@ -225,6 +227,7 @@ void activate (GtkApplication*app, gpointer  user_data);
 FILE *get_log_file_pointer(Configuration *configuration);
 void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data);
 void log_configuration_values(User_Data *user_data);
+void populate_status_bar( GtkWidget *status_bar, const gchar *formatting_string, ...);
 
 /* GUI headers */
 GtkWidget *build_box_annotation(User_Data *user_data);
