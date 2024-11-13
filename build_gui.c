@@ -65,7 +65,8 @@ void activate(GtkApplication *app, gpointer data) {
 	user_data->gui_data->box_top = box_top;
 
 	GtkWidget *status_bar = gtk_entry_new();
-	gtk_entry_set_placeholder_text(GTK_ENTRY(status_bar), "Ready...");
+	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(status_bar));
+	gtk_entry_buffer_set_text(entry_buffer, "Ready...", -1);
 	gtk_widget_set_sensitive(status_bar, FALSE);
 	gtk_widget_set_hexpand(status_bar, TRUE);
 
@@ -104,8 +105,6 @@ void activate(GtkApplication *app, gpointer data) {
 	/* Assign callbacks to controls */
 	build_controllers_window(user_data);
 	build_controllers_annotation(user_data);
-
-
 
 	/* Apply values read from settings.json to the GUI. */
 	initialize_gui(user_data);

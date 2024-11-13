@@ -35,8 +35,7 @@ void process_image(User_Data *user_data) {
 
 	if (result == MagickFalse) {
 		logger(G_LOG_LEVEL_ERROR, "Could not read the image in annotation->image.", user_data);
-		g_print("Could not read the image %s.\n", annotation->input_image);
-		populate_status_bar("Could not read the image", user_data->gui_data->status_bar);
+		populate_status_bar(user_data->gui_data->status_bar, "Could not read the image %s.", annotation->input_image);
 		return;
 	}
 	MagickWriteImage(m_wand, "/tmp/original.jpg");

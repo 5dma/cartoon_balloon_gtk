@@ -1,6 +1,7 @@
 #include <glib.h>
 #include <stdio.h>
 #include "headers.h"
+#include <stdarg.h>
 /**
    \brief Maximal size of the possible literals for log levels `ERROR`, `CRITICAL`, etc. Required for performing `g_strlcpy` into the containing log message.
 */
@@ -191,6 +192,21 @@ void log_configuration_values(User_Data *user_data) {
 	g_strv_builder_unref(message_builder);
 }
 
-void populate_status_bar(gchar *message, GtkWidget *status_bar) {
-	gtk_entry_set_placeholder_text(GTK_ENTRY(status_bar), message);
+/**
+ * Updates the text in the status bar.
+ */
+void populate_status_bar(GtkWidget *status_bar, const gchar *formatting_string, ...) {
+
+	va_list pargs;
+	va_start(pargs, formatting_string);
+
+	gchar *status_line;
+	status_line = g_strdup_vprintf (formatting_string, pargs);
+	
+	GtkEntryBuffer *buffer = gtk_entry_get_buffer (GTK_ENTRY(status_bar));
+
+	gtk_entry_buffer_set_text(buffer, status_line, -1);
+	
+	g_free(status_line);
+	va_end(pargs);
 }

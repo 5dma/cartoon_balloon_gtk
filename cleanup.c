@@ -9,7 +9,6 @@
   Frees memory in the User_Data instance.
  */
 void cleanup(User_Data *user_data) {
-	
 
 	g_object_unref(user_data->parser);
 	g_object_unref(user_data->reader);
@@ -21,7 +20,8 @@ void cleanup(User_Data *user_data) {
 	g_free(user_data->gui_data->gui_data_configuration);
 	g_free(user_data->gui_data->gui_data_annotation);
 	g_free(user_data->gui_data->gui_data_theme);
-	
+
+
 	g_free(user_data->gui_data);
 	g_free(user_data->configuration);
 	g_free(user_data->annotation);
