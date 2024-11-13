@@ -147,6 +147,11 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_new_width), 1.0);
 
 
+	GtkFileFilter *file_filter = gtk_file_filter_new ();
+	gtk_file_filter_add_suffix (file_filter, "png");
+	gtk_file_filter_add_suffix (file_filter, "jpg");
+	gtk_file_filter_add_suffix (file_filter, "gif");
+
 	user_data->gui_data->gui_data_annotation->btn_annotation = btn_annotation;
 	user_data->gui_data->gui_data_annotation->entry_input_image = entry_input_image;
 	user_data->gui_data->gui_data_annotation->btn_file_open = btn_file_open;
@@ -161,6 +166,7 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	user_data->gui_data->gui_data_annotation->entry_text_string = entry_text_string;
 	user_data->gui_data->gui_data_annotation->btn_export = btn_export;
 	user_data->gui_data->gui_data_annotation->picture_preview = picture_preview;
+	user_data->gui_data->gui_data_annotation->file_filter = file_filter;
 
 
 	gtk_widget_set_visible(box_annotation, TRUE);

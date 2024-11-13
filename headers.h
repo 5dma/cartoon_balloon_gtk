@@ -137,7 +137,8 @@ typedef struct Gui_Data_Annotation {
 	GtkWidget *dropdown_theme; /**< Address of theme in the box_annotation tab. */
 	GtkWidget *entry_text_string; /**< Address of the entry_text_string in the box_annotaton tab. */
 	GtkWidget *btn_export; /**< Address of btn_export in the box_annotation tab. */
-	GtkWidget *picture_preview;  /**< Address of the picture_preview in the box_annotaton tab. */
+	GtkWidget *picture_preview; /**< Address of the picture_preview in the box_annotaton tab. */
+	GtkFileFilter *file_filter; /**< Address of the file filter applied to the file chooser in the annotation tab. */
 } Gui_Data_Annotation;
 
 /**
