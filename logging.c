@@ -190,3 +190,7 @@ void log_configuration_values(User_Data *user_data) {
 	g_free(final_message);
 	g_strv_builder_unref(message_builder);
 }
+
+void populate_status_bar(gchar *message, GtkWidget *status_bar) {
+	gtk_entry_set_placeholder_text(GTK_ENTRY(status_bar), message);
+}

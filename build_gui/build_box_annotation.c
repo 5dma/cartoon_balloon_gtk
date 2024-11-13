@@ -166,6 +166,7 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	user_data->gui_data->gui_data_annotation->entry_text_string = entry_text_string;
 	user_data->gui_data->gui_data_annotation->btn_export = btn_export;
 	user_data->gui_data->gui_data_annotation->picture_preview = picture_preview;
+	user_data->gui_data->status_bar = status_bar;
 
 	gtk_widget_set_visible(box_annotation, TRUE);
 
