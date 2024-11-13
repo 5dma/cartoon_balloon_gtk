@@ -99,6 +99,7 @@ void activate(GtkApplication *app, gpointer data) {
 	gtk_widget_add_css_class(status_bar, "statusbar");
 
 	user_data->gui_data->window = window;
+	user_data->gui_data->status_bar = status_bar;
 
 	/* Assign callbacks to controls */
 	build_controllers_window(user_data);

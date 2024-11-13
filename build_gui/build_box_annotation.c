@@ -123,11 +123,6 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_box_append(GTK_BOX(box_annotation), grid_text_string_export);
 	gtk_box_append(GTK_BOX(box_annotation), picture_preview);
 
-	GtkWidget *status_bar = gtk_entry_new();
-	gtk_entry_set_placeholder_text(GTK_ENTRY(status_bar), "Ready...");
-	gtk_widget_set_sensitive (status_bar, FALSE);
-	gtk_widget_set_hexpand (status_bar, TRUE);
-
 	gtk_widget_add_css_class (box_annotation, "tab" );
 
 	
@@ -166,7 +161,7 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	user_data->gui_data->gui_data_annotation->entry_text_string = entry_text_string;
 	user_data->gui_data->gui_data_annotation->btn_export = btn_export;
 	user_data->gui_data->gui_data_annotation->picture_preview = picture_preview;
-	user_data->gui_data->status_bar = status_bar;
+
 
 	gtk_widget_set_visible(box_annotation, TRUE);
 
