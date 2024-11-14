@@ -6,7 +6,9 @@
  * @brief Contains functions for adding callbacks to the themes window.
  */
 
-
+/**
+ * Converts a passed hexadecimal character to its corresponding integer.
+ */
 gint convert_hex_to_int(const gchar digit) {
 
 	switch (toupper(digit)) {
@@ -49,6 +51,9 @@ gint convert_hex_to_int(const gchar digit) {
 
 }
 
+/**
+ * Converts a hexadecimal color (such as `#ABCD12`) to an RGB triplet.
+ */
 void convert_hex_to_rgb(float *rgb, gchar *hex) {
 
 	gchar *r_hex = g_strndup (hex + 1, 2);
@@ -72,6 +77,9 @@ void convert_hex_to_rgb(float *rgb, gchar *hex) {
 
 }
 
+/**
+ * Called when the user selects a new theme in the Themes tab. The function displays the selected theme's settings.
+ */
 void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
@@ -124,10 +132,17 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 	}
 }
 
+/**
+ * Scales a standard R, G, or B value in the range 0-255 to a double in the range 0-1.
+ */
 double scaled_rgb(int input) {
 	return (double)input / 255;
 }
 
+
+/**
+ * Draws a preview of the selected theme in the Themes tab.
+ */
 void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 				int width,
 				int height,

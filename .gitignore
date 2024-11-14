@@ -7,3 +7,4 @@ balloon.dSYM/*
 .~lock.specifications.odt#
 doc/
 *.gch
+*.bak
