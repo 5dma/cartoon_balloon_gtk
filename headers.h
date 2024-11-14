@@ -193,6 +193,7 @@ typedef struct Theme_Preview {
 	Coordinates text_start;  /**< Coordinates where text starts. */
 	float stroke_rgb[3]; /**< RGB values for stroke color (range 0-1). */
 	float fill_rgb[3]; /**< RGB values for fill color (range 0-1). */
+	gchar font[256]; /**< Name of the font. */
 	Theme *selected_theme; /**< Pointer to currently selected theme. */
 } Theme_Preview;
 

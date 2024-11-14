@@ -103,10 +103,6 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 	g_print("New theme selected\n");
 	User_Data *user_data = (User_Data *)data;
 
-	if (user_data->gui_data->gui_data_theme->cr == NULL) {
-		return;
-	}
-
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
 
 	guint selected_item = gtk_drop_down_get_selected(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
@@ -125,6 +121,7 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 		gtk_widget_set_sensitive(gui_data_theme->entry_new_theme, FALSE);
 		Theme *theme = (Theme *)g_hash_table_lookup(user_data->theme_hash, selected_theme_name);
 
+
 		GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_font_name));
 		gtk_entry_buffer_set_text(entry_buffer, theme->font, -1);
 
@@ -141,64 +138,18 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_theme->spin_stroke_width), theme->stroke_width);
 
+
+		/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. */
 		Theme_Preview *theme_preview = user_data->theme_preview;
 		theme_preview->selected_theme = theme;
 
 		convert_hex_to_rgb(theme_preview->fill_rgb, theme->balloon_fill_color);
 		convert_hex_to_rgb(theme_preview->stroke_rgb, theme->balloon_stroke_color);
+		g_stpcpy (theme_preview->font, theme->font);
 
 
-		/* Draw balloon and fill */
-
-	cairo_t *cr = user_data->gui_data->gui_data_theme->cr;
-
-
-	cairo_set_source_rgb(cr, theme_preview->fill_rgb[0] ,theme_preview->fill_rgb[1], theme_preview->fill_rgb[2]);
-	cairo_set_line_width(cr, 5);
-	cairo_new_path(cr);
-	cairo_move_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_top_left.y);
-	cairo_line_to(cr, theme_preview->balloon_bottom_right.x, theme_preview->balloon_top_left.y);
-	cairo_line_to(cr, theme_preview->balloon_bottom_right.x, theme_preview->balloon_bottom_right.y);
-	cairo_line_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_bottom_right.y);
-	cairo_close_path(cr);
-	cairo_fill_preserve(cr);
-
-	/* Stroke balloon */
-
-
-	cairo_set_source_rgb(cr, theme_preview->stroke_rgb[0] ,theme_preview->stroke_rgb[1], theme_preview->stroke_rgb[2]);
-	cairo_stroke(cr);
-
-	/* Draw vertex and fill */
-
-
-	cairo_set_source_rgb(cr, theme_preview->fill_rgb[0] ,theme_preview->fill_rgb[1], theme_preview->fill_rgb[2]);
-
-	cairo_move_to(cr,theme_preview->vertex_left.x,theme_preview->vertex_left.y);
-	cairo_line_to(cr, theme_preview->vertex_bottom.x,theme_preview->vertex_bottom.y);
-	cairo_line_to(cr, theme_preview->vertex_right.x,theme_preview->vertex_right.y);
-	cairo_fill_preserve(cr);
-
-	/* Stroke vertex */
-	cairo_set_source_rgb(cr, theme_preview->stroke_rgb[0] ,theme_preview->stroke_rgb[1], theme_preview->stroke_rgb[2]);
-	cairo_stroke(cr);
-
-	/* Add text */
-	cairo_select_font_face(cr, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-	cairo_set_font_size(cr, 15);
-	cairo_move_to(cr, theme_preview->text_start.x, theme_preview->text_start.y);
-	cairo_show_text(cr, "THEME");
-
-	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
-
-
-	/*theme_preview->fill_rgb[0]= 0.44;
-	theme_preview->fill_rgb[1]= 0.62;
-	theme_preview->fill_rgb[2]= 0.81;
-
-	theme_preview->stroke_rgb[0]= 0.02;
-	theme_preview->stroke_rgb[1]= 0.0;
-	theme_preview->stroke_rgb[2]= 0.98; */
+		/* Go draw the theme preview. */
+		gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
 	}
 }
 
@@ -256,7 +207,25 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 	cairo_stroke(cr);
 
 	/* Add text */
+	/* In following line, sans-serif is hard coded because cairo_selet_font_face supports only
+	the basic fonts sans-serif, serif, monospace. */
 	cairo_select_font_face(cr, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+
+
+/*
+Preliminary attempts at using cairo to retrieve the back-end fonts. Pango may be better way to go.
+cairo_set_font_face (cairo_t *cr,
+                     cairo_font_face_t *font_face);
+ cairo_scaled_font_t *scaled_font = cairo_scaled_font_create (cairo_font_face_t *font_face,
+                          const cairo_matrix_t *font_matrix,
+                          const cairo_matrix_t *ctm,
+                          const cairo_font_options_t *options);
+
+	FT_Face font_face = cairo_ft_scaled_font_lock_face (cairo_scaled_font_t *scaled_font);
+	cairo_font_face_t status = cairo_font_face_set_user_data (font_face, &key,
+                               ft_face, (cairo_destroy_func_t) FT_Done_Face); */
+
+
 	cairo_set_font_size(cr, 15);
 	cairo_move_to(cr, theme_preview->text_start.x, theme_preview->text_start.y);
 	cairo_show_text(cr, "THEME");
