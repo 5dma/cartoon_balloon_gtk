@@ -116,6 +116,8 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 
 	/* Controls for the picture preview */
 	GtkWidget *picture_preview = gtk_picture_new_for_filename (user_data->annotation->input_image);
+	/* Get initial dimensions of the image. */
+	gdk_pixbuf_get_file_info(user_data->annotation->input_image, &(user_data->annotation->dimensions_original_image.width), &(user_data->annotation->dimensions_original_image.height));
 
 	gtk_box_append(GTK_BOX(box_annotation), grid_annotation);
 	gtk_box_append(GTK_BOX(box_annotation), grid_coordinates);
