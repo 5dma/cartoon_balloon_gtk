@@ -18,6 +18,10 @@ User_Data *allocate_structures(void)
 	user_data->gui_data->gui_data_configuration = (Gui_Data_Configuration *) g_malloc(sizeof(Gui_Data_Configuration));
 	user_data->gui_data->gui_data_annotation = (Gui_Data_Annotation *) g_malloc(sizeof(Gui_Data_Annotation));
 	user_data->gui_data->gui_data_theme = (Gui_Data_Theme *) g_malloc(sizeof(Gui_Data_Theme));
+
+	/* Required to prevent premature running of callback when*/
+	user_data->gui_data->gui_data_theme->cr = NULL;
+
 	user_data->theme_preview = (Theme_Preview *) g_malloc(sizeof(Theme_Preview));
 	
  return user_data; 

@@ -1,6 +1,7 @@
 #include "../headers.h"
 #include <ctype.h>
 
+
 /**
  * @file build_controllers_theme.c
  * @brief Contains functions for adding callbacks to the themes window.
@@ -64,12 +65,30 @@ void convert_hex_to_rgb(float *rgb, gchar *hex) {
 	g_print("green: %s\n", g_hex);
 	g_print("blue: %s\n", b_hex);
 	
+	/* Scale red */
 	int trash1 = convert_hex_to_int(r_hex[0]);
 	int trash2 = convert_hex_to_int(r_hex[1]);
 	int trash = 16*trash1 + trash2;
 	float normalized = (float) trash / 256;
-
 	g_print("r: %d, g: %d, b: %d, %f\n", trash1, trash2, trash, normalized);
+	*rgb = normalized;
+
+	/* Scale green */
+	trash1 = convert_hex_to_int(g_hex[0]);
+	trash2 = convert_hex_to_int(g_hex[1]);
+	trash = 16*trash1 + trash2;
+	normalized = (float) trash / 256;
+	g_print("r: %d, g: %d, b: %d, %f\n", trash1, trash2, trash, normalized);
+	*(rgb + 1) = normalized;
+
+	/* Scale blue */
+	trash1 = convert_hex_to_int(b_hex[0]);
+	trash2 = convert_hex_to_int(b_hex[1]);
+	trash = 16*trash1 + trash2;
+	normalized = (float) trash / 256;
+	g_print("r: %d, g: %d, b: %d, %f\n", trash1, trash2, trash, normalized);
+	*(rgb + 2) = normalized;
+
 
 	g_free(r_hex);
 	g_free(g_hex);
@@ -81,7 +100,13 @@ void convert_hex_to_rgb(float *rgb, gchar *hex) {
  * Called when the user selects a new theme in the Themes tab. The function displays the selected theme's settings.
  */
 void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
+	g_print("New theme selected\n");
 	User_Data *user_data = (User_Data *)data;
+
+	if (user_data->gui_data->gui_data_theme->cr == NULL) {
+		return;
+	}
+
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
 
 	guint selected_item = gtk_drop_down_get_selected(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
@@ -122,6 +147,51 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 		convert_hex_to_rgb(theme_preview->fill_rgb, theme->balloon_fill_color);
 		convert_hex_to_rgb(theme_preview->stroke_rgb, theme->balloon_stroke_color);
 
+
+		/* Draw balloon and fill */
+
+	cairo_t *cr = user_data->gui_data->gui_data_theme->cr;
+
+
+	cairo_set_source_rgb(cr, theme_preview->fill_rgb[0] ,theme_preview->fill_rgb[1], theme_preview->fill_rgb[2]);
+	cairo_set_line_width(cr, 5);
+	cairo_new_path(cr);
+	cairo_move_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_top_left.y);
+	cairo_line_to(cr, theme_preview->balloon_bottom_right.x, theme_preview->balloon_top_left.y);
+	cairo_line_to(cr, theme_preview->balloon_bottom_right.x, theme_preview->balloon_bottom_right.y);
+	cairo_line_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_bottom_right.y);
+	cairo_close_path(cr);
+	cairo_fill_preserve(cr);
+
+	/* Stroke balloon */
+
+
+	cairo_set_source_rgb(cr, theme_preview->stroke_rgb[0] ,theme_preview->stroke_rgb[1], theme_preview->stroke_rgb[2]);
+	cairo_stroke(cr);
+
+	/* Draw vertex and fill */
+
+
+	cairo_set_source_rgb(cr, theme_preview->fill_rgb[0] ,theme_preview->fill_rgb[1], theme_preview->fill_rgb[2]);
+
+	cairo_move_to(cr,theme_preview->vertex_left.x,theme_preview->vertex_left.y);
+	cairo_line_to(cr, theme_preview->vertex_bottom.x,theme_preview->vertex_bottom.y);
+	cairo_line_to(cr, theme_preview->vertex_right.x,theme_preview->vertex_right.y);
+	cairo_fill_preserve(cr);
+
+	/* Stroke vertex */
+	cairo_set_source_rgb(cr, theme_preview->stroke_rgb[0] ,theme_preview->stroke_rgb[1], theme_preview->stroke_rgb[2]);
+	cairo_stroke(cr);
+
+	/* Add text */
+	cairo_select_font_face(cr, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size(cr, 15);
+	cairo_move_to(cr, theme_preview->text_start.x, theme_preview->text_start.y);
+	cairo_show_text(cr, "THEME");
+
+	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
+
+
 	/*theme_preview->fill_rgb[0]= 0.44;
 	theme_preview->fill_rgb[1]= 0.62;
 	theme_preview->fill_rgb[2]= 0.81;
@@ -152,7 +222,7 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 	User_Data *user_data = (User_Data *)data;
 	Theme_Preview *theme_preview = user_data->theme_preview;
 
-
+	user_data->gui_data->gui_data_theme->cr = cr;
 	/* Draw balloon and fill */
 
 	cairo_set_source_rgb(cr, theme_preview->fill_rgb[0] ,theme_preview->fill_rgb[1], theme_preview->fill_rgb[2]);
@@ -197,6 +267,7 @@ Assigns callbacks to controls in the theme tab
  */
 void build_controllers_theme(User_Data *user_data) {
 
+	g_print("Started build_controllers_theme\n");
 
 	Theme_Preview *theme_preview = user_data->theme_preview;
 	theme_preview->balloon_top_left.x = 20;
@@ -221,8 +292,9 @@ void build_controllers_theme(User_Data *user_data) {
 	theme_preview->text_start.y = midpoint_vertical;
 
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
+	gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(gui_data_theme->drawing_balloon), draw_theme, user_data, NULL);
 
 	g_signal_connect(gui_data_theme->dropdown_theme, "notify::selected", G_CALLBACK(theme_selection_changed), user_data);
 
-	gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(gui_data_theme->drawing_balloon), draw_theme, user_data, NULL);
+
 }
