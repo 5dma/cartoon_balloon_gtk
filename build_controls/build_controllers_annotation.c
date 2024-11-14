@@ -139,6 +139,8 @@ void preview_clicked(GtkGestureClick *self, gint n_press, gdouble x, gdouble y, 
 	{
 		annotation->text_bottom_left.x = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x));
 		annotation->text_bottom_left.y = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y));
+		/* Turn off tracking the mouse's position inside the image. */
+		annotation->is_selecting_text_bottom_left_point = FALSE;
 
 		g_snprintf(log_message, MAX_INPUT, "Text bottom left clicked at x: %ld, y: %ld", annotation->text_bottom_left.x, annotation->text_bottom_left.y);
 
@@ -150,6 +152,10 @@ void preview_clicked(GtkGestureClick *self, gint n_press, gdouble x, gdouble y, 
 
 		annotation->vertex.x = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x));
 		annotation->vertex.y = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y));
+
+		/* Turn off tracking the mouse's position inside the image. */
+		annotation->is_selecting_vertex_point = FALSE;
+
 
 		g_snprintf(log_message, MAX_INPUT, "Vertex clicked at x: %ld, y: %ld", annotation->vertex.x, annotation->vertex.y);
 	}
