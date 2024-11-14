@@ -163,6 +163,8 @@ typedef struct Gui_Data_Theme {
 	GtkWidget *entry_stroke_color; /**< Address of the entry_stroke_color widget. */
 	GtkWidget *spin_stroke_width; /**< Address of the spin_stroke_width widget. */
 	GtkWidget *drawing_balloon;  /**< Address of the drawing_balloon widget. */
+	GtkWidget *btn_font_name_picker; /**< Address of the Font name's Choose widget. */
+	GtkWidget *btn_font_color_picker; /**< Address of the Font color's Choose widget. */
 	cairo_t *cr; /**< Address of the Cairo context in the theme preview. */
 } Gui_Data_Theme;
 

@@ -231,6 +231,51 @@ cairo_set_font_face (cairo_t *cr,
 	cairo_show_text(cr, "THEME");
 }
 
+
+void get_font_name (GtkButton* self,  gpointer data) {
+	g_print("Clicked\n");
+	
+	User_Data *user_data = (User_Data *)data;
+
+	/* gchar *selected_font = gtk_font_chooser_get_font (GTK_FONT_CHOOSER(self));
+	g_print("Font: %s\n",selected_font);
+	g_free(selected_font);
+
+ */
+	PangoFontFace *pango_font_face = gtk_font_chooser_get_font_face (GTK_FONT_CHOOSER(self));
+ 	const gchar *face_name  = pango_font_face_get_face_name (pango_font_face);
+	g_print("Face name: %s\n",face_name); 
+
+	PangoFontFamily *pango_font_family = pango_font_face_get_family (pango_font_face);
+	const gchar *font_family = pango_font_family_get_name (pango_font_family);
+	g_print("Font family: %s\n",font_family);
+
+/* 	const gchar *font_family_from_pango = pango_font_family_get_name (pango_font_family);
+	g_print("Font family from pango: %s\n",font_family_from_pango); */
+
+
+/* 
+	selected_font = gtk_font_chooser_get_font_features (GTK_FONT_CHOOSER(self));
+	g_print("Font features: %s\n",selected_font);
+	g_free(selected_font);
+ */
+	gint fontsize = gtk_font_chooser_get_font_size (GTK_FONT_CHOOSER(self)) / 1000;
+	g_print("Font size: %d\n",fontsize);
+ 
+
+	gchar *font_family_and_face = g_strconcat (font_family,"-",face_name, NULL);
+	g_print("Before: %s\n", font_family_and_face);
+	gchar *normalized_font_name = g_strdelimit (font_family_and_face," ",'-');
+	g_print("After: %s\n", normalized_font_name);
+	g_print("Back to the original: %s\n", font_family_and_face);
+
+	//g_free(normalized_font_name);
+	//g_free(font_family_and_face);
+	
+
+}
+
+
 /**
 Assigns callbacks to controls in the theme tab
  */
@@ -264,6 +309,7 @@ void build_controllers_theme(User_Data *user_data) {
 	gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(gui_data_theme->drawing_balloon), draw_theme, user_data, NULL);
 
 	g_signal_connect(gui_data_theme->dropdown_theme, "notify::selected", G_CALLBACK(theme_selection_changed), user_data);
+	g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(get_font_name), user_data);
 
 
 }
