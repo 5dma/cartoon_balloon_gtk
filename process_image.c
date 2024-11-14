@@ -71,8 +71,8 @@ void process_image(User_Data *user_data) {
 	/* Write the new image */
 	MagickWriteImage(m_wand, configuration->new_image_path);
 
-	g_print("The new image is at %s\n", configuration->new_image_path);
-
+	populate_status_bar(user_data->gui_data->status_bar, "The new image is at %s", configuration->new_image_path); 
+	
 	/* Clean up */
 	DestroyMagickWand(m_wand);
 	MagickWandTerminus();

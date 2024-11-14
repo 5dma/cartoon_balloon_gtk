@@ -156,7 +156,6 @@ void preview_clicked(GtkGestureClick *self, gint n_press, gdouble x, gdouble y, 
 		/* Turn off tracking the mouse's position inside the image. */
 		annotation->is_selecting_vertex_point = FALSE;
 
-
 		g_snprintf(log_message, MAX_INPUT, "Vertex clicked at x: %ld, y: %ld", annotation->vertex.x, annotation->vertex.y);
 	}
 	logger(G_LOG_LEVEL_INFO, log_message, user_data);
