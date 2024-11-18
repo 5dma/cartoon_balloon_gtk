@@ -31,18 +31,12 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	GtkWidget *lbl_text = gtk_label_new ("Text");
 	GtkWidget *lbl_font = gtk_label_new ("Font:");
 	GtkWidget *lbl_color = gtk_label_new ("Color:");
-	GtkWidget *lbl_size = gtk_label_new ("Size:");
 
 	gtk_widget_set_halign (lbl_text, GTK_ALIGN_START);
 	gtk_widget_set_halign (lbl_font, GTK_ALIGN_START);
 	gtk_widget_set_halign (lbl_color, GTK_ALIGN_START);
-	gtk_widget_set_halign (lbl_size, GTK_ALIGN_START);
 
-	GtkAdjustment *adjustment_font_size = gtk_adjustment_new (18, 0, 96, 1, 10, 0);
-
-	GtkWidget *entry_font_name = gtk_entry_new();
 	GtkWidget *entry_font_color = gtk_entry_new();
-	GtkWidget *spin_font_size = gtk_spin_button_new (adjustment_font_size, 2, 0);
 	GtkWidget *btn_font_name_picker = gtk_font_button_new ();
 
 	GtkWidget *btn_font_color_picker = gtk_button_new_with_label("Choose…");
@@ -55,18 +49,12 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 
 	/* Row 1*/
 	gtk_grid_attach ( GTK_GRID(grid_text), lbl_font, 0, 1, 1, 1);
-	gtk_grid_attach ( GTK_GRID(grid_text), entry_font_name, 1, 1, 1, 1);
-	gtk_grid_attach ( GTK_GRID(grid_text), btn_font_name_picker, 2, 1, 1, 1);
+	gtk_grid_attach ( GTK_GRID(grid_text), btn_font_name_picker, 1, 1, 2, 1);
 
 	/* Row 2 */
 	gtk_grid_attach ( GTK_GRID(grid_text), lbl_color, 0, 2, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_text), entry_font_color, 1, 2, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_text), btn_font_color_picker, 2, 2, 1, 1);
-
-	/* Row 3 */
-	gtk_grid_attach ( GTK_GRID(grid_text), lbl_size, 0, 3, 1, 1);
-	gtk_grid_attach ( GTK_GRID(grid_text), spin_font_size, 1, 3, 1, 1);
-
 
 
 	/* Controls for styling the balloon. */
@@ -145,7 +133,6 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	gtk_widget_add_css_class (lbl_name, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_font, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_color, "horizontal_field_label");
-	gtk_widget_add_css_class (lbl_size, "horizontal_field_label");
 
 	gtk_widget_add_css_class (lbl_fill_color, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_stroke_color, "horizontal_field_label");
@@ -155,7 +142,6 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	gtk_widget_add_css_class(grid_text,"grid_coordinates");
 	gtk_widget_add_css_class(grid_balloon ,"grid_coordinates");
 
-	gtk_editable_set_alignment(GTK_EDITABLE(spin_font_size), 1.0);
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_stroke_width), 1.0);
 
 	gtk_widget_set_sensitive (entry_new_theme, FALSE);
@@ -165,10 +151,8 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 
 	user_data->gui_data->gui_data_theme->dropdown_theme = dropdown_theme;
 	user_data->gui_data->gui_data_theme->entry_new_theme = entry_new_theme;
-	user_data->gui_data->gui_data_theme->entry_font_name = entry_font_name;
 	user_data->gui_data->gui_data_theme->entry_font_color = entry_font_color;
 	user_data->gui_data->gui_data_theme->entry_fill_color = entry_fill_color;
-	user_data->gui_data->gui_data_theme->spin_font_size = spin_font_size;
 	user_data->gui_data->gui_data_theme->entry_font_color = entry_font_color;
 	user_data->gui_data->gui_data_theme->entry_stroke_color = entry_stroke_color;
 	user_data->gui_data->gui_data_theme->spin_stroke_width = spin_stroke_width;

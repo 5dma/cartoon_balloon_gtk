@@ -60,13 +60,8 @@ void initialize_gui(User_Data *user_data) {
 
 	Theme *selected_theme_value = (Theme *) g_hash_table_lookup (user_data->theme_hash, selected_theme_string);
 
-	temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_theme->entry_font_name));
-	gtk_entry_buffer_set_text (temp_buffer, selected_theme_value->font , -1);
-	
 	temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_theme->entry_font_color));
 	gtk_entry_buffer_set_text (temp_buffer, selected_theme_value->text_color , -1);
-	
-	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_theme->spin_font_size), selected_theme_value->font_size);
 	
 	temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_theme->entry_fill_color));
 	gtk_entry_buffer_set_text (temp_buffer, selected_theme_value->balloon_fill_color, -1);
