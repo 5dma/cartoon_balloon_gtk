@@ -165,6 +165,7 @@ typedef struct Gui_Data_Theme {
 	GtkWidget *drawing_balloon;  /**< Address of the drawing_balloon widget. */
 	GtkWidget *btn_font_name_picker; /**< Address of the Font name's Choose widget. */
 	GtkWidget *btn_font_color_picker; /**< Address of the Font color's Choose widget. */
+	GtkWidget *grid_text; /**< Address of the grid containing theme controls. */
 	cairo_t *cr; /**< Address of the Cairo context in the theme preview. */
 } Gui_Data_Theme;
 

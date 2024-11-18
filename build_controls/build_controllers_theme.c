@@ -139,6 +139,13 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_theme->spin_stroke_width), theme->stroke_width);
 
 
+		/* Remove current font picker from the grid; create a new one and add it to the grid. */
+		gtk_grid_remove (GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker);
+		gchar *font_label = g_strdup_printf ("%s %ld", theme->font, theme->font_size);
+		gui_data_theme->btn_font_name_picker = gtk_font_button_new_with_font (font_label);
+		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker, 2, 1, 1, 1);
+		g_free(font_label);
+
 		/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. */
 		Theme_Preview *theme_preview = user_data->theme_preview;
 		theme_preview->selected_theme = theme;

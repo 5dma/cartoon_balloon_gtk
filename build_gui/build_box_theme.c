@@ -43,9 +43,9 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	GtkWidget *entry_font_name = gtk_entry_new();
 	GtkWidget *entry_font_color = gtk_entry_new();
 	GtkWidget *spin_font_size = gtk_spin_button_new (adjustment_font_size, 2, 0);
-	
 	GtkWidget *btn_font_name_picker = gtk_font_button_new ();
-	GtkWidget *btn_font_color_picker = gtk_font_button_new();
+
+	GtkWidget *btn_font_color_picker = gtk_button_new_with_label("Choose…");
 
 	/* Grid for styling the text */
 	GtkWidget *grid_text = gtk_grid_new ();
@@ -175,6 +175,7 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	user_data->gui_data->gui_data_theme->drawing_balloon = drawing_balloon;
 	user_data->gui_data->gui_data_theme->btn_font_name_picker = btn_font_name_picker;
 	user_data->gui_data->gui_data_theme->btn_font_color_picker = btn_font_color_picker;
+	user_data->gui_data->gui_data_theme->grid_text = grid_text;
 
 	return box_theme;
 }
