@@ -96,6 +96,26 @@ void convert_hex_to_rgb(float *rgb, gchar *hex) {
 
 }
 
+
+void save_selected_font_to_theme (GtkButton* self,  gpointer data) {
+	
+	User_Data *user_data = (User_Data *)data;
+
+	PangoFontFace *pango_font_face = gtk_font_chooser_get_font_face (GTK_FONT_CHOOSER(self));
+ 	const gchar *face_name  = pango_font_face_get_face_name (pango_font_face);
+
+	PangoFontFamily *pango_font_family = pango_font_face_get_family (pango_font_face);
+	const gchar *font_family = pango_font_family_get_name (pango_font_family);
+
+	g_snprintf (user_data->theme_preview->selected_theme->font_name, MAX_PATH_LENGTH , "%s %s", font_family, face_name);	
+
+	user_data->theme_preview->selected_theme->font_size = gtk_font_chooser_get_font_size (GTK_FONT_CHOOSER(self)) / 1000;
+ 
+ 	g_print("The new theme font is %s, size %ld\n",user_data->theme_preview->selected_theme->font_name ,user_data->theme_preview->selected_theme->font_size);
+
+}
+
+
 /**
  * Called when the user selects a new theme in the Themes tab. The function displays the selected theme's settings.
  */
@@ -132,11 +152,11 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_theme->spin_stroke_width), theme->stroke_width);
 
-
-		/* Remove current font picker from the grid; create a new one and add it to the grid. */
+		/* Remove current font picker from the grid; create a new one, connect a signal, and add it to the grid. */
 		gtk_grid_remove (GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker);
-		gchar *font_label = g_strdup_printf ("%s %ld", theme->font, theme->font_size);
+		gchar *font_label = g_strdup_printf ("%s %ld", theme->font_name, theme->font_size);
 		gui_data_theme->btn_font_name_picker = gtk_font_button_new_with_font (font_label);
+		g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
 		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker, 1, 1, 1, 1);
 		g_free(font_label);
 
@@ -146,7 +166,7 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 
 		convert_hex_to_rgb(theme_preview->fill_rgb, theme->balloon_fill_color);
 		convert_hex_to_rgb(theme_preview->stroke_rgb, theme->balloon_stroke_color);
-		g_stpcpy (theme_preview->font, theme->font);
+		g_stpcpy (theme_preview->font, theme->font_name);
 
 
 		/* Go draw the theme preview. */
@@ -233,49 +253,6 @@ cairo_set_font_face (cairo_t *cr,
 }
 
 
-void get_font_name (GtkButton* self,  gpointer data) {
-	g_print("Clicked\n");
-	
-	User_Data *user_data = (User_Data *)data;
-
-	/* gchar *selected_font = gtk_font_chooser_get_font (GTK_FONT_CHOOSER(self));
-	g_print("Font: %s\n",selected_font);
-	g_free(selected_font);
-
- */
-	PangoFontFace *pango_font_face = gtk_font_chooser_get_font_face (GTK_FONT_CHOOSER(self));
- 	const gchar *face_name  = pango_font_face_get_face_name (pango_font_face);
-	g_print("Face name: %s\n",face_name); 
-
-	PangoFontFamily *pango_font_family = pango_font_face_get_family (pango_font_face);
-	const gchar *font_family = pango_font_family_get_name (pango_font_family);
-	g_print("Font family: %s\n",font_family);
-
-/* 	const gchar *font_family_from_pango = pango_font_family_get_name (pango_font_family);
-	g_print("Font family from pango: %s\n",font_family_from_pango); */
-
-
-/* 
-	selected_font = gtk_font_chooser_get_font_features (GTK_FONT_CHOOSER(self));
-	g_print("Font features: %s\n",selected_font);
-	g_free(selected_font);
- */
-	gint fontsize = gtk_font_chooser_get_font_size (GTK_FONT_CHOOSER(self)) / 1000;
-	g_print("Font size: %d\n",fontsize);
- 
-
-	gchar *font_family_and_face = g_strconcat (font_family,"-",face_name, NULL);
-	g_print("Before: %s\n", font_family_and_face);
-	gchar *normalized_font_name = g_strdelimit (font_family_and_face," ",'-');
-	g_print("After: %s\n", normalized_font_name);
-	g_print("Back to the original: %s\n", font_family_and_face);
-
-	//g_free(normalized_font_name);
-	//g_free(font_family_and_face);
-	
-
-}
-
 
 /**
 Assigns callbacks to controls in the theme tab
@@ -310,7 +287,7 @@ void build_controllers_theme(User_Data *user_data) {
 	gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(gui_data_theme->drawing_balloon), draw_theme, user_data, NULL);
 
 	g_signal_connect(gui_data_theme->dropdown_theme, "notify::selected", G_CALLBACK(theme_selection_changed), user_data);
-	g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(get_font_name), user_data);
+	g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
 
 
 }

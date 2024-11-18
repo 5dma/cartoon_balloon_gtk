@@ -41,7 +41,7 @@ void read_themes(User_Data *user_data)
 		json_reader_end_member(reader);
 		
 		success = json_reader_read_member(reader, "font");
-		g_strlcpy(theme->font, json_reader_get_string_value(reader), 100);
+		g_strlcpy(theme->font_name, json_reader_get_string_value(reader), 100);
 		json_reader_end_member(reader);
 		
 		success = json_reader_read_member(reader, "font_size");

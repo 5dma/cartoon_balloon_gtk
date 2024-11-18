@@ -25,7 +25,7 @@ void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, An
 	DrawSetFillColor(d_wand, p_wand);
 	DrawSetGravity(d_wand, NorthWestGravity);
 	DrawSetFontSize(d_wand, theme->font_size);
-	DrawSetFont(d_wand,theme->font);
+	DrawSetFont(d_wand,theme->font_name);
 
 
 	//DrawSetStrokeColor(d_wand, p_wand);
@@ -89,7 +89,7 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_da
 
 	/* Set up wand for drawing text. */
 	DrawingWand *d_wand = NewDrawingWand();
-	DrawSetFont(d_wand, theme->font);
+	DrawSetFont(d_wand, theme->font_name);
 	DrawSetFontSize(d_wand, theme->font_size);
 
 

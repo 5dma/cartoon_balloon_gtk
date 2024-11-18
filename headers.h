@@ -106,7 +106,7 @@ typedef struct Theme
 {
 	gchar name[100];  /**< Name of the theme. */
 	gchar text_color[8]; /**< Hex value of the text color including the octothorp. For example, white is `#FFFFFF`.*/
-	gchar font[256]; /**< Name of the font, provided as the font's full name with spaces replaced by hyphens. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu-Serif-Bold`. (A more complete command is `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf | sed "s/ /-/g"` .)
+	gchar font_name[MAX_PATH_LENGTH]; /**< Name of the font, provided as the font's full name with spaces replaced by hyphens. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu-Serif-Bold`. (A more complete command is `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf | sed "s/ /-/g"` .)
 
 	A list of fonts is available from `fc-list`. 
 	 */

@@ -86,7 +86,7 @@ void print_theme(gpointer key, gpointer value, gpointer user_data) {
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 	
-	current_line = g_strdup_printf ("%-23s: %s", "    font", theme->font);
+	current_line = g_strdup_printf ("%-23s: %s", "    font", theme->font_name);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 	
