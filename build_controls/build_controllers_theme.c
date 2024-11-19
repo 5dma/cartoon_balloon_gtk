@@ -157,7 +157,6 @@ void save_selected_font_color_to_theme(GtkColorButton* self, gpointer data) {
 }
 
 
-
 /**
  * Called when the user selects a new color for the balloon fill. The function does the following:
  * - Retrieves the color from the color picker.
@@ -179,6 +178,26 @@ void save_selected_balloon_fill_color_to_theme(GtkColorButton* self, gpointer da
 }
 
 
+
+/**
+ * Called when the user selects a new color for the balloon stroke. The function does the following:
+ * - Retrieves the color from the color picker.
+ * - Saves the color in hex format to the theme.
+ * - Displays the hex value in the GUI.
+ * - Redraws the preview with the new text color.
+ */
+void save_selected_balloon_stroke_color_to_theme(GtkColorButton* self, gpointer data) {
+	User_Data *user_data = (User_Data *)data;
+
+	gtk_color_chooser_get_rgba ( GTK_COLOR_CHOOSER(self), &user_data->theme_preview->stroke_rgb);
+	convert_rgb_to_hex(user_data->theme_preview->selected_theme->balloon_stroke_color, &user_data->theme_preview->stroke_rgb);
+	g_print("Hex string for new fill: %s\n",user_data->theme_preview->selected_theme->balloon_stroke_color);
+	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_stroke_color));
+	gtk_entry_buffer_set_text(entry_buffer, user_data->theme_preview->selected_theme->balloon_stroke_color, -1);
+
+	/* Go draw the theme preview. */
+	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
+}
 
 
 /**
@@ -242,6 +261,14 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 		gui_data_theme->btn_balloon_fill_color_picker = gtk_color_button_new_with_rgba (&rgba);
 		g_signal_connect(gui_data_theme->btn_balloon_fill_color_picker, "color-set", G_CALLBACK(save_selected_balloon_fill_color_to_theme), user_data);
 		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_fill_color_picker, 2, 1, 1, 1);
+
+
+		/* Remove current balloon stroke color picker from the grid; create a new one, connect a signal, and add it to the grid. */
+		gtk_grid_remove (GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_stroke_color_picker);
+		convert_hex_to_rgb(&rgba, theme->balloon_stroke_color);
+		gui_data_theme->btn_balloon_stroke_color_picker = gtk_color_button_new_with_rgba (&rgba);
+		g_signal_connect(gui_data_theme->btn_balloon_stroke_color_picker, "color-set", G_CALLBACK(save_selected_balloon_stroke_color_to_theme), user_data);
+		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_stroke_color_picker, 2, 2, 1, 1);
 
 
 		/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. */
