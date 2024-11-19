@@ -55,7 +55,7 @@ gint convert_hex_to_int(const gchar digit) {
 /**
  * Converts a hexadecimal color (such as `#ABCD12`) to an RGB triplet.
  */
-void convert_hex_to_rgb(float *rgb, gchar *hex) {
+void convert_hex_to_rgb(GdkRGBA *rgb, gchar *hex) {
 
 	gchar *r_hex = g_strndup (hex + 1, 2);
  	gchar *g_hex =  g_strndup (hex + 3, 2);
@@ -69,27 +69,24 @@ void convert_hex_to_rgb(float *rgb, gchar *hex) {
 	int trash1 = convert_hex_to_int(r_hex[0]);
 	int trash2 = convert_hex_to_int(r_hex[1]);
 	int trash = 16*trash1 + trash2;
-	float normalized = (float) trash / 256;
-	g_print("r: %d, g: %d, b: %d, %f\n", trash1, trash2, trash, normalized);
-	*rgb = normalized;
+	rgb->red = (float) trash / 256;
 
 	/* Scale green */
 	trash1 = convert_hex_to_int(g_hex[0]);
 	trash2 = convert_hex_to_int(g_hex[1]);
 	trash = 16*trash1 + trash2;
-	normalized = (float) trash / 256;
-	g_print("r: %d, g: %d, b: %d, %f\n", trash1, trash2, trash, normalized);
-	*(rgb + 1) = normalized;
+	rgb->green = (float) trash / 256;
 
 	/* Scale blue */
 	trash1 = convert_hex_to_int(b_hex[0]);
 	trash2 = convert_hex_to_int(b_hex[1]);
 	trash = 16*trash1 + trash2;
-	normalized = (float) trash / 256;
-	g_print("r: %d, g: %d, b: %d, %f\n", trash1, trash2, trash, normalized);
-	*(rgb + 2) = normalized;
+	rgb->blue = (float) trash / 256;
 
+	rgb->alpha = 1.0;
 
+	g_print("r: %f, g: %f, b: %f, %f\n", rgb->red, rgb->green, rgb->blue, rgb->alpha);
+	
 	g_free(r_hex);
 	g_free(g_hex);
 	g_free(b_hex);
@@ -166,12 +163,29 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker, 1, 1, 1, 1);
 		g_free(font_label);
 
+		/* Remove current font color picker from the grid; create a new one, connect a signal, and add it to the grid. */
+		/* gtk_grid_remove (GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker);
+
+		GdkRGBA rgba;
+		convert_hex_to_rgb(&rgba, theme->text_color);
+		gchar *font_label = g_strdup_printf ("%s %ld", theme->font_name, theme->font_size);
+		gui_data_theme->btn_font_name_picker = gtk_color_button_new_with_rgba (&rgba); (font_label);
+		//gtk_font_chooser_set_font (GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker ), font_label);
+		gtk_font_chooser_set_font (GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker ), font_label);
+		
+		gtk_font_button_set_use_font (GTK_FONT_BUTTON (gui_data_theme->btn_font_name_picker), TRUE);
+		g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
+		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker, 1, 1, 1, 1);
+		g_free(font_label);
+ */
+
+
 		/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. */
 		Theme_Preview *theme_preview = user_data->theme_preview;
 		theme_preview->selected_theme = theme;
 
-		convert_hex_to_rgb(theme_preview->fill_rgb, theme->balloon_fill_color);
-		convert_hex_to_rgb(theme_preview->stroke_rgb, theme->balloon_stroke_color);
+		convert_hex_to_rgb(&(theme_preview->fill_rgb), theme->balloon_fill_color);
+		convert_hex_to_rgb(&(theme_preview->stroke_rgb), theme->balloon_stroke_color);
 		g_stpcpy (theme_preview->font, theme->font_name);
 
 
@@ -203,7 +217,7 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 	user_data->gui_data->gui_data_theme->cr = cr;
 	/* Draw balloon and fill */
 
-	cairo_set_source_rgb(cr, theme_preview->fill_rgb[0] ,theme_preview->fill_rgb[1], theme_preview->fill_rgb[2]);
+	cairo_set_source_rgb(cr, theme_preview->fill_rgb.red ,theme_preview->fill_rgb.green, theme_preview->fill_rgb.blue);
 	cairo_set_line_width(cr, 5);
 	cairo_new_path(cr);
 	cairo_move_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_top_left.y);
@@ -216,13 +230,13 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 	/* Stroke balloon */
 
 
-	cairo_set_source_rgb(cr, theme_preview->stroke_rgb[0] ,theme_preview->stroke_rgb[1], theme_preview->stroke_rgb[2]);
+	cairo_set_source_rgb(cr, theme_preview->stroke_rgb.red ,theme_preview->stroke_rgb.green, theme_preview->stroke_rgb.blue);
 	cairo_stroke(cr);
 
 	/* Draw vertex and fill */
 
 
-	cairo_set_source_rgb(cr, theme_preview->fill_rgb[0] ,theme_preview->fill_rgb[1], theme_preview->fill_rgb[2]);
+	cairo_set_source_rgb(cr, theme_preview->fill_rgb.red ,theme_preview->fill_rgb.green, theme_preview->fill_rgb.blue);
 
 	cairo_move_to(cr,theme_preview->vertex_left.x,theme_preview->vertex_left.y);
 	cairo_line_to(cr, theme_preview->vertex_bottom.x,theme_preview->vertex_bottom.y);
@@ -230,7 +244,7 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 	cairo_fill_preserve(cr);
 
 	/* Stroke vertex */
-	cairo_set_source_rgb(cr, theme_preview->stroke_rgb[0] ,theme_preview->stroke_rgb[1], theme_preview->stroke_rgb[2]);
+	cairo_set_source_rgb(cr, theme_preview->stroke_rgb.red ,theme_preview->stroke_rgb.green, theme_preview->stroke_rgb.blue);
 	cairo_stroke(cr);
 
 	/* Add text */

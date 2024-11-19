@@ -39,8 +39,12 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	GtkWidget *entry_font_color = gtk_entry_new();
 	GtkWidget *btn_font_name_picker = gtk_font_button_new ();
 
-	GtkWidget *btn_font_color_picker = gtk_button_new_with_label("Choose…");
-
+	GdkRGBA rgba;
+	rgba.alpha = 1.0;
+	rgba.blue = 0.5;
+	rgba.green = 0.5;
+	rgba.red = 0.5;
+	GtkWidget *btn_font_color_picker = gtk_color_button_new_with_rgba (&rgba);
 	/* Grid for styling the text */
 	GtkWidget *grid_text = gtk_grid_new ();
 
