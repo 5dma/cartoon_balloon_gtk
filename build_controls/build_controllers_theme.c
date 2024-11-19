@@ -137,7 +137,7 @@ void save_selected_font_to_theme (GtkButton* self,  gpointer data) {
 }
 
 /**
- * Called when the user selects a new color for the font.
+ * Called when the user selects a new color for the font. The function retrieves the color from the color picker, saves the color in hex format to the theme, and displays the hex value in the GUI.
  */
 void save_selected_font_color_to_theme(GtkColorButton* self, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
@@ -146,7 +146,8 @@ void save_selected_font_color_to_theme(GtkColorButton* self, gpointer data) {
 	gtk_color_chooser_get_rgba ( GTK_COLOR_CHOOSER(self), &color);
 	convert_rgb_to_hex(user_data->theme_preview->selected_theme->text_color, &color);
 	g_print("Hex string: %s\n",user_data->theme_preview->selected_theme->text_color);
-
+	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_font_color));
+	gtk_entry_buffer_set_text(entry_buffer, user_data->theme_preview->selected_theme->text_color, -1);
 }
 
 /**
