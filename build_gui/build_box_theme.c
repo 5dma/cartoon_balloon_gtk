@@ -107,15 +107,10 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	gtk_drawing_area_set_content_height (GTK_DRAWING_AREA(drawing_balloon), 156);
 	gtk_drawing_area_set_content_width (GTK_DRAWING_AREA(drawing_balloon), 178);
 
-	/* Controls for save, copy, and delete theme */
-	GtkWidget *btn_save = gtk_button_new_with_label("Save");
-	GtkWidget *btn_copy = gtk_button_new_with_label("Copy");
-	GtkWidget *btn_delete = gtk_button_new_with_label("Delete");
+	/* Control to delete theme */
 
+	GtkWidget *btn_delete = gtk_button_new_with_label("Delete");
 	GtkWidget *box_save_copy_delete = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-	
-	gtk_box_append(GTK_BOX(box_save_copy_delete), btn_save);
-	gtk_box_append(GTK_BOX(box_save_copy_delete), btn_copy);
 	gtk_box_append(GTK_BOX(box_save_copy_delete), btn_delete);
 
 
