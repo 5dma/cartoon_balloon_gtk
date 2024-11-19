@@ -94,6 +94,28 @@ void convert_hex_to_rgb(GdkRGBA *rgb, gchar *hex) {
 }
 
 
+/**
+*Converts a `GdkRGBA` struct to a hexadecimal color.
+*/
+void convert_rgb_to_hex(gchar *hex, GdkRGBA *rgb) {
+
+	hex[0]='#';
+
+	/* Convert red */
+	guint scaled_red = rgb->red * 256;
+	g_snprintf (hex + 1, 3, "%X", scaled_red);
+
+	/* Convert green */
+	guint scaled_green = rgb->green * 256;
+	g_snprintf (hex + 3, 3, "%X", scaled_green);
+
+	/* Convert blue */
+	guint scaled_blue = rgb->blue * 256;
+	g_snprintf (hex + 5, 3, "%X", scaled_blue);
+
+}
+
+
 void save_selected_font_to_theme (GtkButton* self,  gpointer data) {
 	
 	User_Data *user_data = (User_Data *)data;
@@ -114,6 +136,18 @@ void save_selected_font_to_theme (GtkButton* self,  gpointer data) {
 
 }
 
+/**
+ * Called when the user selects a new color for the font.
+ */
+void save_selected_font_color_to_theme(GtkColorButton* self, gpointer data) {
+	User_Data *user_data = (User_Data *)data;
+
+	GdkRGBA color;
+	gtk_color_chooser_get_rgba ( GTK_COLOR_CHOOSER(self), &color);
+	convert_rgb_to_hex(user_data->theme_preview->selected_theme->text_color, &color);
+	g_print("Hex string: %s\n",user_data->theme_preview->selected_theme->text_color);
+
+}
 
 /**
  * Called when the user selects a new theme in the Themes tab. The function displays the selected theme's settings.
@@ -164,20 +198,13 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 		g_free(font_label);
 
 		/* Remove current font color picker from the grid; create a new one, connect a signal, and add it to the grid. */
-		/* gtk_grid_remove (GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker);
+		gtk_grid_remove (GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker);
 
 		GdkRGBA rgba;
 		convert_hex_to_rgb(&rgba, theme->text_color);
-		gchar *font_label = g_strdup_printf ("%s %ld", theme->font_name, theme->font_size);
-		gui_data_theme->btn_font_name_picker = gtk_color_button_new_with_rgba (&rgba); (font_label);
-		//gtk_font_chooser_set_font (GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker ), font_label);
-		gtk_font_chooser_set_font (GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker ), font_label);
-		
-		gtk_font_button_set_use_font (GTK_FONT_BUTTON (gui_data_theme->btn_font_name_picker), TRUE);
-		g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
-		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker, 1, 1, 1, 1);
-		g_free(font_label);
- */
+		gui_data_theme->btn_font_color_picker = gtk_color_button_new_with_rgba (&rgba);
+		g_signal_connect(gui_data_theme->btn_font_color_picker, "color-set", G_CALLBACK(save_selected_font_color_to_theme), user_data);
+		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker, 2, 2, 1, 1);
 
 
 		/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. */
