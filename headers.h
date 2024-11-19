@@ -250,4 +250,5 @@ User_Data *allocate_structures(void);
 void cleanup(User_Data *user_data);
 
 /* read/save settings headers */
-void read_save(User_Data *user_data);
+void read_files(User_Data *user_data);
+void save_files(User_Data *user_data);

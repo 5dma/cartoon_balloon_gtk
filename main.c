@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 
 	User_Data *user_data = allocate_structures();
 
-	read_save(user_data);
+	read_files(user_data);
 
 	logger(G_LOG_LEVEL_INFO, "Started", user_data);
 	log_configuration_values(user_data);

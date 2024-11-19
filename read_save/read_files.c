@@ -1,6 +1,6 @@
 #include "headers.h"
 
-void read_save(User_Data *user_data) {
+void read_files(User_Data *user_data) {
 
 	JsonParser *parser;
 	GError *error;
