@@ -10,10 +10,6 @@
  * @brief C headers.
  */
 
-/**
-   \brief Path to the application's configuration file.
-*/
-#define CONFIG_FILE "/home/abba/.cartoon_balloon/settings.json"
 
 /**
    \brief Maximal length of a file path.
