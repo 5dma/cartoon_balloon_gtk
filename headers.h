@@ -218,9 +218,6 @@ typedef struct User_Data
 } User_Data;
 
 /* Processing headers */
-void read_configuration(User_Data *user_data);
-void read_annotation(User_Data *user_data);
-void read_themes(User_Data *user_data);
 void scale_image(MagickWand *m_wand, Annotation *annotation);
 void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis);
 void add_balloon(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis);
@@ -253,3 +250,6 @@ void build_controllers_window(User_Data *user_data);
 /* Memory management headers */
 User_Data *allocate_structures(void);
 void cleanup(User_Data *user_data);
+
+/* read/save settings headers */
+void read_save(User_Data *user_data);
