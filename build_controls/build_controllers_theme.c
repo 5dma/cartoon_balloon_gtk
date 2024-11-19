@@ -109,6 +109,8 @@ void save_selected_font_to_theme (GtkButton* self,  gpointer data) {
 
 	g_snprintf (user_data->theme_preview->selected_theme->font_name, MAX_PATH_LENGTH , "%s %s", font_family, face_name);	
 
+	g_print("The actual font retrieved is %s\n", gtk_font_chooser_get_font (GTK_FONT_CHOOSER(self)));
+
 	user_data->theme_preview->selected_theme->font_size = gtk_font_chooser_get_font_size (GTK_FONT_CHOOSER(self)) / 1000;
  
  	g_print("The new theme font is %s, size %ld\n",user_data->theme_preview->selected_theme->font_name ,user_data->theme_preview->selected_theme->font_size);
@@ -156,6 +158,10 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 		gtk_grid_remove (GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker);
 		gchar *font_label = g_strdup_printf ("%s %ld", theme->font_name, theme->font_size);
 		gui_data_theme->btn_font_name_picker = gtk_font_button_new_with_font (font_label);
+		//gtk_font_chooser_set_font (GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker ), font_label);
+		gtk_font_chooser_set_font (GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker ), font_label);
+		
+		gtk_font_button_set_use_font (GTK_FONT_BUTTON (gui_data_theme->btn_font_name_picker), TRUE);
 		g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
 		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker, 1, 1, 1, 1);
 		g_free(font_label);
