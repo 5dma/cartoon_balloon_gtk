@@ -14,39 +14,12 @@ Reads the configuration file into a `Settings` struct. The settings in this conf
 *
 * If the configuration file CONFIG_FILE (defined in headers.h) is not available, the memory allocated to far is freed and the application exits with error code `1`.
 */
-void read_configuration(User_Data *user_data) {
-	JsonParser *parser;
-	GError *error;
+void read_configuration(User_Data *user_data, JsonReader *reader) {
 
-
-	parser = json_parser_new();
-	error = NULL;
-	json_parser_load_from_file(parser, CONFIG_FILE, &error);
-	if (error) {
-		g_print("Unable to parse `%s': %s\n", CONFIG_FILE, error->message);
-		g_error_free(error);
-		g_object_unref(parser);
-
-		/* Free memory that was allocated in allocate_structures(). */
-		g_free(user_data->gui_data->gui_data_theme);
-		g_free(user_data->gui_data->gui_data_annotation);
-		g_free(user_data->gui_data->gui_data_configuration);
-		g_free(user_data->gui_data);
-		g_free(user_data);
-		exit(1);
-	}
 	user_data->configuration = (Configuration *)g_malloc(sizeof(Configuration));
 	Configuration *configuration = user_data->configuration;
 
-	JsonReader *reader;
-	reader = json_reader_new(json_parser_get_root(parser));
-	
-	gboolean success = FALSE;
-
-	user_data->parser = parser;
-	user_data->reader = reader;
-
-	success = json_reader_read_member(reader, "configuration");
+	json_reader_read_member(reader, "configuration");
 
 	json_reader_read_member(reader, "max_annotation_length");
 	configuration->max_annotation_length = json_reader_get_int_value(reader);

@@ -212,8 +212,6 @@ typedef struct User_Data
 	GHashTable *theme_hash; /**< Hash table of themes, keyed by theme name. */
 	Text_Analysis *text_analysis; /**< Address of the text_analysis structure. */
 	Gui_Data *gui_data; /**< Address of the gui_data structure. */
-	JsonParser *parser; /**< Address of a JSON parser. */
-	JsonReader *reader; /**< Address of a JSON reader. */
 	Theme_Preview *theme_preview;  /**< Address of a Theme_Preview. */
 } User_Data;
 

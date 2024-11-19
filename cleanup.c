@@ -10,8 +10,6 @@
  */
 void cleanup(User_Data *user_data) {
 
-	g_object_unref(user_data->parser);
-	g_object_unref(user_data->reader);
 	g_object_unref(user_data->annotation->crosshair_cursor);
 	g_object_unref(user_data->gui_data->gui_data_annotation->file_filter);
 
