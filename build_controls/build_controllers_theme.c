@@ -199,6 +199,17 @@ void save_selected_balloon_stroke_color_to_theme(GtkColorButton* self, gpointer 
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
 }
 
+/**
+ * Called when the user selects a new color for the balloon stroke. The function does the following:
+ * - Retrieves the color from the color picker.
+ * - Saves the color in hex format to the theme.
+ * - Displays the hex value in the GUI.
+ * - Redraws the preview with the new text color.
+ */
+void save_selected_stroke_width_to_theme(GtkSpinButton* self, gpointer data) {
+	User_Data *user_data = (User_Data *)data;
+	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
+}
 
 /**
  * Called when the user selects a new theme in the Themes tab. The function displays the selected theme's settings.
@@ -300,8 +311,9 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 	user_data->gui_data->gui_data_theme->cr = cr;
 	/* Draw balloon and fill */
 
+	gint64 stroke_width = (gint64) gtk_spin_button_get_value (GTK_SPIN_BUTTON(user_data->gui_data->gui_data_theme->spin_stroke_width));
 	cairo_set_source_rgb(cr, theme_preview->fill_rgb.red ,theme_preview->fill_rgb.green, theme_preview->fill_rgb.blue);
-	cairo_set_line_width(cr, 5);
+	cairo_set_line_width(cr, stroke_width);
 	cairo_new_path(cr);
 	cairo_move_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_top_left.y);
 	cairo_line_to(cr, theme_preview->balloon_bottom_right.x, theme_preview->balloon_top_left.y);
@@ -392,6 +404,7 @@ void build_controllers_theme(User_Data *user_data) {
 
 	g_signal_connect(gui_data_theme->dropdown_theme, "notify::selected", G_CALLBACK(theme_selection_changed), user_data);
 	g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
+	g_signal_connect(gui_data_theme->spin_stroke_width,"value-changed", G_CALLBACK(save_selected_stroke_width_to_theme), user_data);
 
 
 }
