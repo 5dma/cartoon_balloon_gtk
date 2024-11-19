@@ -142,12 +142,17 @@ void save_selected_font_to_theme (GtkButton* self,  gpointer data) {
 void save_selected_font_color_to_theme(GtkColorButton* self, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
 
-	GdkRGBA color;
-	gtk_color_chooser_get_rgba ( GTK_COLOR_CHOOSER(self), &color);
-	convert_rgb_to_hex(user_data->theme_preview->selected_theme->text_color, &color);
+
+	
+	//GdkRGBA color;
+	gtk_color_chooser_get_rgba ( GTK_COLOR_CHOOSER(self), &user_data->theme_preview->text_rgb);
+	convert_rgb_to_hex(user_data->theme_preview->selected_theme->text_color, &user_data->theme_preview->text_rgb);
 	g_print("Hex string: %s\n",user_data->theme_preview->selected_theme->text_color);
 	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_font_color));
 	gtk_entry_buffer_set_text(entry_buffer, user_data->theme_preview->selected_theme->text_color, -1);
+
+	/* Go draw the theme preview. */
+	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
 }
 
 /**
@@ -223,14 +228,6 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 }
 
 /**
- * Scales a standard R, G, or B value in the range 0-255 to a double in the range 0-1.
- */
-double scaled_rgb(int input) {
-	return (double)input / 255;
-}
-
-
-/**
  * Draws a preview of the selected theme in the Themes tab.
  */
 void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
@@ -279,6 +276,7 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 	/* In following line, sans-serif is hard coded because cairo_selet_font_face supports only
 	the basic fonts sans-serif, serif, monospace. */
 	cairo_select_font_face(cr, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_source_rgb(cr, theme_preview->text_rgb.red ,theme_preview->text_rgb.green, theme_preview->text_rgb.blue);
 
 
 /*
