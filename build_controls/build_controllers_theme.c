@@ -288,6 +288,7 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 
 		convert_hex_to_rgb(&(theme_preview->fill_rgb), theme->balloon_fill_color);
 		convert_hex_to_rgb(&(theme_preview->stroke_rgb), theme->balloon_stroke_color);
+		convert_hex_to_rgb(&(theme_preview->text_rgb),  theme->text_color);
 		g_stpcpy (theme_preview->font, theme->font_name);
 
 
