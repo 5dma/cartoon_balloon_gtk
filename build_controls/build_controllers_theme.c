@@ -137,23 +137,49 @@ void save_selected_font_to_theme (GtkButton* self,  gpointer data) {
 }
 
 /**
- * Called when the user selects a new color for the font. The function retrieves the color from the color picker, saves the color in hex format to the theme, and displays the hex value in the GUI.
+ * Called when the user selects a new color for the font. The function does the following:
+ * - Retrieves the color from the color picker.
+ * - Saves the color in hex format to the theme.
+ * - Displays the hex value in the GUI.
+ * - Redraws the preview with the new text color.
  */
 void save_selected_font_color_to_theme(GtkColorButton* self, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
 
-
-	
-	//GdkRGBA color;
 	gtk_color_chooser_get_rgba ( GTK_COLOR_CHOOSER(self), &user_data->theme_preview->text_rgb);
 	convert_rgb_to_hex(user_data->theme_preview->selected_theme->text_color, &user_data->theme_preview->text_rgb);
-	g_print("Hex string: %s\n",user_data->theme_preview->selected_theme->text_color);
+	g_print("Hex string for new text color: %s\n",user_data->theme_preview->selected_theme->text_color);
 	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_font_color));
 	gtk_entry_buffer_set_text(entry_buffer, user_data->theme_preview->selected_theme->text_color, -1);
 
 	/* Go draw the theme preview. */
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
 }
+
+
+
+/**
+ * Called when the user selects a new color for the balloon fill. The function does the following:
+ * - Retrieves the color from the color picker.
+ * - Saves the color in hex format to the theme.
+ * - Displays the hex value in the GUI.
+ * - Redraws the preview with the new text color.
+ */
+void save_selected_balloon_fill_color_to_theme(GtkColorButton* self, gpointer data) {
+	User_Data *user_data = (User_Data *)data;
+
+	gtk_color_chooser_get_rgba ( GTK_COLOR_CHOOSER(self), &user_data->theme_preview->fill_rgb);
+	convert_rgb_to_hex(user_data->theme_preview->selected_theme->balloon_fill_color, &user_data->theme_preview->fill_rgb);
+	g_print("Hex string for new fill: %s\n",user_data->theme_preview->selected_theme->balloon_fill_color);
+	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_fill_color));
+	gtk_entry_buffer_set_text(entry_buffer, user_data->theme_preview->selected_theme->balloon_fill_color, -1);
+
+	/* Go draw the theme preview. */
+	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
+}
+
+
+
 
 /**
  * Called when the user selects a new theme in the Themes tab. The function displays the selected theme's settings.
@@ -195,7 +221,6 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 		gtk_grid_remove (GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker);
 		gchar *font_label = g_strdup_printf ("%s %ld", theme->font_name, theme->font_size);
 		gui_data_theme->btn_font_name_picker = gtk_font_button_new_with_font (font_label);
-		//gtk_font_chooser_set_font (GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker ), font_label);
 		gtk_font_chooser_set_font (GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker ), font_label);
 		
 		gtk_font_button_set_use_font (GTK_FONT_BUTTON (gui_data_theme->btn_font_name_picker), TRUE);
@@ -205,12 +230,18 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data) {
 
 		/* Remove current font color picker from the grid; create a new one, connect a signal, and add it to the grid. */
 		gtk_grid_remove (GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker);
-
 		GdkRGBA rgba;
 		convert_hex_to_rgb(&rgba, theme->text_color);
 		gui_data_theme->btn_font_color_picker = gtk_color_button_new_with_rgba (&rgba);
 		g_signal_connect(gui_data_theme->btn_font_color_picker, "color-set", G_CALLBACK(save_selected_font_color_to_theme), user_data);
 		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker, 2, 2, 1, 1);
+
+		/* Remove current balloon fill color picker from the grid; create a new one, connect a signal, and add it to the grid. */
+		gtk_grid_remove (GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_fill_color_picker);
+		convert_hex_to_rgb(&rgba, theme->balloon_fill_color);
+		gui_data_theme->btn_balloon_fill_color_picker = gtk_color_button_new_with_rgba (&rgba);
+		g_signal_connect(gui_data_theme->btn_balloon_fill_color_picker, "color-set", G_CALLBACK(save_selected_balloon_fill_color_to_theme), user_data);
+		gtk_grid_attach ( GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_fill_color_picker, 2, 1, 1, 1);
 
 
 		/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. */

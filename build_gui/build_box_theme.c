@@ -79,8 +79,8 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	GtkWidget *entry_stroke_color = gtk_entry_new();
 	GtkWidget *spin_stroke_width = gtk_spin_button_new (adjustment_stroke_width, 2, 0);
 
-	GtkWidget *btn_balloon_color_picker = gtk_button_new_with_label("Choose…");
-	GtkWidget *btn_stroke_color_picker = gtk_button_new_with_label("Choose…");
+	GtkWidget *btn_balloon_fill_color_picker = gtk_color_button_new_with_rgba (&rgba);
+	GtkWidget *btn_balloon_stroke_color_picker = gtk_color_button_new_with_rgba (&rgba);
 
 
 	/* Grid for styling the balloon */
@@ -92,12 +92,12 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	/* Row 1*/
 	gtk_grid_attach ( GTK_GRID(grid_balloon), lbl_fill_color, 0, 1, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_balloon), entry_fill_color, 1, 1, 1, 1);
-	gtk_grid_attach ( GTK_GRID(grid_balloon), btn_balloon_color_picker, 2, 1, 1, 1);
+	gtk_grid_attach ( GTK_GRID(grid_balloon), btn_balloon_fill_color_picker, 2, 1, 1, 1);
 
 	/* Row 2 */
 	gtk_grid_attach ( GTK_GRID(grid_balloon), lbl_stroke_color, 0, 2, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_balloon), entry_stroke_color, 1, 2, 1, 1);
-	gtk_grid_attach ( GTK_GRID(grid_balloon), btn_stroke_color_picker, 2, 2, 1, 1);
+	gtk_grid_attach ( GTK_GRID(grid_balloon), btn_balloon_stroke_color_picker, 2, 2, 1, 1);
 
 	/* Row 3 */
 	gtk_grid_attach ( GTK_GRID(grid_balloon), lbl_stroke_width, 0, 3, 1, 1);
@@ -163,7 +163,10 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	user_data->gui_data->gui_data_theme->drawing_balloon = drawing_balloon;
 	user_data->gui_data->gui_data_theme->btn_font_name_picker = btn_font_name_picker;
 	user_data->gui_data->gui_data_theme->btn_font_color_picker = btn_font_color_picker;
+	user_data->gui_data->gui_data_theme->btn_balloon_fill_color_picker = btn_balloon_fill_color_picker;
+	user_data->gui_data->gui_data_theme->btn_balloon_stroke_color_picker = btn_balloon_stroke_color_picker;
 	user_data->gui_data->gui_data_theme->grid_text = grid_text;
+	user_data->gui_data->gui_data_theme->grid_balloon = grid_balloon;
 
 	return box_theme;
 }
