@@ -369,7 +369,80 @@ cairo_set_font_face (cairo_t *cr,
 	cairo_show_text(cr, "THEME");
 }
 
+/**
+ * Called when the user changes the name in the new theme field. As the user types characters, the function displays a message if the new name already exists in the hash of themes.
+ */
+void get_new_theme_name (GtkWidget* self, gpointer data) {
+	
+	User_Data *user_data = (User_Data *)data;
+	
+	const gchar *new_theme_name = gtk_editable_get_text (GTK_EDITABLE(self));
 
+	gboolean already_exists = g_hash_table_contains (user_data->theme_hash, new_theme_name);
+	if (already_exists) {
+		populate_status_bar(user_data->gui_data->status_bar, "A theme named %s already exists, not saving", new_theme_name);
+	} else {
+		populate_status_bar(user_data->gui_data->status_bar, "Creating new theme %s when exiting the field", new_theme_name);
+	}
+}
+
+/**
+ * Called when the user exits the field for adding a new theme. The function does the following:
+ * - Verifies the new theme name does not exist in the hash of themes.
+ * - Allocates memory for a new theme.
+ * - Populates the new theme's fields with values from the currently displayed theme.
+ * - Adds the new theme to the hash.
+ * - Adds the new theme's name to the model populating the theme dropdown.
+ */
+void new_theme(GtkEventControllerFocus* self, gpointer data) {
+	User_Data *user_data = (User_Data *)data;
+	GHashTable *theme_hash = user_data->theme_hash;
+	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
+
+	const gchar *new_theme_name = gtk_editable_get_text(GTK_EDITABLE(user_data->gui_data->gui_data_theme->entry_new_theme));
+	gboolean already_exists = g_hash_table_contains (theme_hash, new_theme_name);
+
+	if (!already_exists) {
+		g_print("Adding the new theme.\n");
+
+		Theme *new_theme = (Theme *)g_malloc(sizeof(Theme));
+		g_strlcpy (new_theme->name, new_theme_name, 100);
+		
+		GtkWidget *temp = gui_data_theme->entry_font_color;
+		g_strlcpy(new_theme->text_color, gtk_editable_get_text(GTK_EDITABLE(temp)), 8);
+		
+		temp = gui_data_theme->btn_font_name_picker;
+		const gchar *current_font = gtk_font_chooser_get_font (GTK_FONT_CHOOSER(temp));
+		g_print("The font is %s\n", current_font );
+
+
+		gchar *font_name_size_delimiter = g_strrstr (current_font, " ");
+ 		g_utf8_strncpy(new_theme->font_name, current_font ,font_name_size_delimiter - current_font);
+
+		new_theme->font_size = g_ascii_strtoull ( font_name_size_delimiter + 1, NULL, 10);
+		
+		temp = gui_data_theme->spin_stroke_width;
+		new_theme->stroke_width = (gint64) gtk_spin_button_get_value (GTK_SPIN_BUTTON(temp));
+
+		temp = gui_data_theme->btn_balloon_fill_color_picker;
+		GdkRGBA color;
+		gchar color_holder[55];
+		gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER(gui_data_theme->btn_balloon_fill_color_picker), &color);
+		convert_rgb_to_hex(color_holder, &color);
+		g_strlcpy(new_theme->balloon_fill_color,color_holder ,8);
+		
+		temp = gui_data_theme->btn_balloon_stroke_color_picker;
+		gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER(gui_data_theme->btn_balloon_stroke_color_picker), &color);
+		convert_rgb_to_hex(color_holder, &color);
+		g_strlcpy(new_theme->balloon_stroke_color,color_holder ,8);
+
+		g_hash_table_insert (theme_hash, new_theme->name, new_theme);
+
+		GListModel *model_theme = gtk_drop_down_get_model(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
+		gtk_string_list_append (GTK_STRING_LIST(model_theme),new_theme->name);
+		populate_status_bar(user_data->gui_data->status_bar, "Added %s to the list of themes.", new_theme->name);
+	}
+}
 
 /**
 Assigns callbacks to controls in the theme tab
@@ -406,6 +479,13 @@ void build_controllers_theme(User_Data *user_data) {
 	g_signal_connect(gui_data_theme->dropdown_theme, "notify::selected", G_CALLBACK(theme_selection_changed), user_data);
 	g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
 	g_signal_connect(gui_data_theme->spin_stroke_width,"value-changed", G_CALLBACK(save_selected_stroke_width_to_theme), user_data);
+
+	/* Create a controller for exiting the new theme field. */
+	GtkEventController *new_theme_controller_focus = gtk_event_controller_focus_new ();
+	g_signal_connect(new_theme_controller_focus, "leave", G_CALLBACK(new_theme), user_data);
+	gtk_widget_add_controller(gui_data_theme->entry_new_theme, new_theme_controller_focus);
+	
+	g_signal_connect(GTK_EDITABLE(gui_data_theme->entry_new_theme),"changed", G_CALLBACK(get_new_theme_name), user_data);
 
 
 }
