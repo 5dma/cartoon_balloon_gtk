@@ -6,7 +6,9 @@
  * @brief Contains functions for adding callbacks to the application window.
  */
 
-
+/**
+Called when user clicks the window close control. The function writes all settings to disk and then destroys the window.
+*/
 void save_settings(GtkWidget *self, gpointer data) {
 
 	User_Data *user_data = (User_Data *)data;

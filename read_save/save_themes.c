@@ -1,8 +1,15 @@
 #include <glib/gstdio.h>
 #include "headers.h"
 
+/**
+ * @file save_themes.c
+ * @brief Places theme settings into a passed JSON builder.
+ */
 
 
+/**
+ * Creates a theme object in the `themes` JSON array.
+ */
 void add_theme_object (gpointer key, gpointer value, gpointer data) {
 
 	gchar *theme_name = (gchar *)key;
@@ -36,7 +43,9 @@ void add_theme_object (gpointer key, gpointer value, gpointer data) {
 }
 
 
-
+/**
+ * Places theme settings into a JSON structure for later save to disk. See also save_files().
+ */
 void save_themes(User_Data *user_data, JsonBuilder *builder) {
 
 	GHashTable* theme_hash = user_data->theme_hash;

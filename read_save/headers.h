@@ -1,9 +1,18 @@
 #include "../headers.h"
+/**
+ * @file headers.h
+ * @brief C headers pertaining to reading and saving settings.
+ */
+
 
 /**
    \brief Path to the application's configuration file.
 */
 #define CONFIG_FILE "/home/abba/.cartoon_balloon/settings.json"
+
+/**
+   \brief Path to the application's backup configuration file.
+*/
 #define CONFIG_FILE_BACKUP "/home/abba/.cartoon_balloon/settings.json.bak"
 
 

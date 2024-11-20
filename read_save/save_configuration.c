@@ -1,6 +1,15 @@
 #include <glib/gstdio.h>
 #include "headers.h"
 
+
+/**
+ * @file save_configuration.c
+ * @brief Places a configuration's settings into a passed JSON builder.
+ */
+
+/**
+ * Places configuration settings into a JSON structure for later save to disk. See also save_files().
+ */
 void save_configuration(User_Data *user_data, JsonBuilder *builder) {
 
 	Configuration *configuration = user_data->configuration;

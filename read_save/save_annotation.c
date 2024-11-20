@@ -1,6 +1,15 @@
 #include <glib/gstdio.h>
 #include "headers.h"
 
+/**
+ * @file save_annotation.c
+ * @brief Places an annotation's settings into a passed JSON builder.
+ */
+
+
+/**
+ * Places annotation settings into a JSON structure for later save to disk. See also save_files().
+ */
 void save_annotation(User_Data *user_data, JsonBuilder *builder) {
 
 	Annotation *annotation = user_data->annotation;

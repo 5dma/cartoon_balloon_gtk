@@ -115,7 +115,15 @@ void convert_rgb_to_hex(gchar *hex, GdkRGBA *rgb) {
 
 }
 
-
+/**
+ * Called when the user selects a font. The function does the following:
+ * - ingests the selected font, which includes the font's family, face and size. For example, for `DejaVu Sans Mono Bold 12`:
+ *   - `DejaVu Sans Mono` is the font family.
+ *   - `Bold` is the font face.
+ *   - `12` is the font size.
+ * - Saves the font family and face in the theme's `font_name` field.
+ * - Saves the font size in the theme's `font_size` field.
+ */
 void save_selected_font_to_theme (GtkButton* self,  gpointer data) {
 	
 	User_Data *user_data = (User_Data *)data;

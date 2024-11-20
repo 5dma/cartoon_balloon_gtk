@@ -1,6 +1,18 @@
 #include <glib/gstdio.h>
 #include "headers.h"
 
+/**
+ * @file save_files.c
+ * @brief Contains parent function for saving settings to disk in JSON format.
+*/
+
+
+/**
+ * Saves settings to disk in JSON format. See also
+ * - save_configuration()
+ * - save_annotation()
+ * - save_themes()
+*/
 void save_files(User_Data *user_data) {
 
 	GError *error;

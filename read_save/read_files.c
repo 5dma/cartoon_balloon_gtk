@@ -1,5 +1,18 @@
 #include "headers.h"
 
+/**
+ * @file read_files.c
+ * @brief Contains parent function for reading settings from disk in JSON format.
+*/
+
+
+
+/**
+ * Reads settings from disk in JSON format. See also
+ * - read_configuration()
+ * - read_annotation()
+ * - read_themes()
+*/
 void read_files(User_Data *user_data) {
 
 	JsonParser *parser;
