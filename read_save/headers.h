@@ -11,3 +11,5 @@
 void read_configuration(User_Data *user_data, JsonReader *reader);
 void read_annotation(User_Data *user_data, JsonReader *reader);
 void read_themes(User_Data *user_data, JsonReader *reader);
+
+void save_configuration(User_Data *user_data, JsonBuilder *builder);
