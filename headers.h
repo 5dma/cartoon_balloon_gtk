@@ -163,6 +163,7 @@ typedef struct Gui_Data_Theme {
 	GtkWidget *btn_balloon_stroke_color_picker; /**< Address of the baloon stroke color picker. */
 	GtkWidget *grid_text; /**< Address of the grid containing the theme's text controls. */
 	GtkWidget *grid_balloon; /**< Address of the grid containing the theme's balloon controls. */
+	GtkWidget *btn_delete;  /**< Address of the Delete button. */
 	cairo_t *cr; /**< Address of the Cairo context in the theme preview. */
 } Gui_Data_Theme;
 

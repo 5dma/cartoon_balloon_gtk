@@ -162,6 +162,7 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	user_data->gui_data->gui_data_theme->btn_balloon_stroke_color_picker = btn_balloon_stroke_color_picker;
 	user_data->gui_data->gui_data_theme->grid_text = grid_text;
 	user_data->gui_data->gui_data_theme->grid_balloon = grid_balloon;
+	user_data->gui_data->gui_data_theme->btn_delete = btn_delete;
 
 	return box_theme;
 }

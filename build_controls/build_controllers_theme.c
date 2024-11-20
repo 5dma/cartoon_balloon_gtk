@@ -453,6 +453,40 @@ void new_theme(GtkEventControllerFocus* self, gpointer data) {
 }
 
 /**
+ * Called when the user clicks the Delete button. The function does the following:
+ * - Acquires the name of the currently selected theme.
+ * - Removes the theme from the hash of themes.
+ * - Frees memory allocated to the theme.
+ * - Removes the theme from the list model populating the dropdown.
+ * - Displays the next available theme.
+ */
+void delete_theme(GtkButton* self, gpointer data) {
+
+	g_print("Clicked~\n");
+
+	User_Data *user_data = (User_Data *)data;
+	GHashTable *theme_hash = user_data->theme_hash;
+	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
+
+	guint selected_theme_position = gtk_drop_down_get_selected (GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
+	g_print("The selected theme is %d\n", selected_theme_position);
+
+	GListModel *model_theme = gtk_drop_down_get_model(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
+	const gchar *deleted_theme_name = gtk_string_list_get_string (GTK_STRING_LIST(model_theme), selected_theme_position);
+
+	gpointer *deleted_theme = g_hash_table_lookup (theme_hash, deleted_theme_name);
+
+	if (deleted_theme != NULL) {
+		g_print("Found the theme, trashing in\n");
+		/* theme_hash was created with g_hash_table_new_full, so the key and value are freed automatically. */
+		g_hash_table_remove(theme_hash, deleted_theme_name);
+	}
+	gtk_string_list_remove (GTK_STRING_LIST(model_theme), selected_theme_position);
+	g_print("Removed the theme\n");
+
+}
+
+/**
 Assigns callbacks to controls in the theme tab
  */
 void build_controllers_theme(User_Data *user_data) {
@@ -494,6 +528,7 @@ void build_controllers_theme(User_Data *user_data) {
 	gtk_widget_add_controller(gui_data_theme->entry_new_theme, new_theme_controller_focus);
 	
 	g_signal_connect(GTK_EDITABLE(gui_data_theme->entry_new_theme),"changed", G_CALLBACK(get_new_theme_name), user_data);
+	g_signal_connect(GTK_EDITABLE(gui_data_theme->btn_delete),"clicked", G_CALLBACK(delete_theme), user_data);
 
 
 }
