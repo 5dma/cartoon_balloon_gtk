@@ -3,8 +3,6 @@
 
 void save_configuration(User_Data *user_data, JsonBuilder *builder) {
 
-	g_rename (CONFIG_FILE, CONFIG_FILE_BACKUP);
-
 	Configuration *configuration = user_data->configuration;
 
 	json_builder_set_member_name (builder, "configuration");

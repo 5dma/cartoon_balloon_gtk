@@ -7,10 +7,10 @@ void save_files(User_Data *user_data) {
 
 	g_rename (CONFIG_FILE, CONFIG_FILE_BACKUP);
 
-
 	JsonBuilder *builder = json_builder_new ();
 	json_builder_begin_object (builder);
 	save_configuration(user_data, builder);
+	save_annotation(user_data, builder);
 
 	json_builder_end_object (builder); /* root */
 	
