@@ -9,7 +9,6 @@
 
 void save_settings(GtkWidget *self, gpointer data) {
 
-	g_print("Destroying the window\n");
 	User_Data *user_data = (User_Data *)data;
 	save_files(user_data);
 	gtk_window_destroy (GTK_WINDOW(self));
