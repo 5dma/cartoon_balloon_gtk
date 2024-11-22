@@ -111,4 +111,6 @@ void activate(GtkApplication *app, gpointer data) {
 	initialize_gui(user_data);
 
 	gtk_window_present(GTK_WINDOW(window));
+
+
 }
