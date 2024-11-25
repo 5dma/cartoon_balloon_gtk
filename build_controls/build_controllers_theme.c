@@ -229,74 +229,72 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 
 	int new_compare = g_strcmp0(NEW_THEME, selected_theme_name);
 
-	if (new_compare == 0)
-	{
-		/* If the user selected (new), enable the entry box for the new theme name.*/
+	
+	if (new_compare == 0){
 		gtk_widget_set_sensitive(gui_data_theme->entry_new_theme, TRUE);
 		gtk_widget_grab_focus(gui_data_theme->entry_new_theme);
+		return;
 	}
-	else
-	{
-		/* Otherwise, disable the entry box and set the controls to the values for the selected theme. */
-		gtk_widget_set_sensitive(gui_data_theme->entry_new_theme, FALSE);
-		Theme *theme = (Theme *)g_hash_table_lookup(user_data->theme_hash, selected_theme_name);
+	/* Otherwise, disable the entry box and set the controls to the values for the selected theme. */
+	gtk_widget_set_sensitive(gui_data_theme->entry_new_theme, FALSE);
+	Theme *theme = (Theme *)g_hash_table_lookup(user_data->theme_hash, selected_theme_name);
 
-		GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_font_color));
-		gtk_entry_buffer_set_text(entry_buffer, theme->text_color, -1);
+	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_font_color));
+	gtk_entry_buffer_set_text(entry_buffer, theme->text_color, -1);
 
-		entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_fill_color));
-		gtk_entry_buffer_set_text(entry_buffer, theme->balloon_fill_color, -1);
+	entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_fill_color));
+	gtk_entry_buffer_set_text(entry_buffer, theme->balloon_fill_color, -1);
 
-		entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_stroke_color));
-		gtk_entry_buffer_set_text(entry_buffer, theme->balloon_stroke_color, -1);
+	entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_stroke_color));
+	gtk_entry_buffer_set_text(entry_buffer, theme->balloon_stroke_color, -1);
 
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_theme->spin_stroke_width), theme->stroke_width);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_theme->spin_stroke_width), theme->stroke_width);
 
-		/* Remove current font picker from the grid; create a new one, connect a signal, and add it to the grid. */
-		gtk_grid_remove(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker);
-		gchar *font_label = g_strdup_printf("%s %ld", theme->font_name, theme->font_size);
-		gui_data_theme->btn_font_name_picker = gtk_font_button_new_with_font(font_label);
-		gtk_font_chooser_set_font(GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker), font_label);
+	/* Remove current font picker from the grid; create a new one, connect a signal, and add it to the grid. */
+	gtk_grid_remove(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker);
+	gchar *font_label = g_strdup_printf("%s %ld", theme->font_name, theme->font_size);
+	gui_data_theme->btn_font_name_picker = gtk_font_button_new_with_font(font_label);
+	gtk_font_chooser_set_font(GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker), font_label);
 
-		gtk_font_button_set_use_font(GTK_FONT_BUTTON(gui_data_theme->btn_font_name_picker), TRUE);
-		g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
-		gtk_grid_attach(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker, 1, 1, 1, 1);
-		g_free(font_label);
+	gtk_font_button_set_use_font(GTK_FONT_BUTTON(gui_data_theme->btn_font_name_picker), TRUE);
+	g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
+	gtk_grid_attach(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker, 1, 1, 1, 1);
+	g_free(font_label);
 
-		/* Remove current font color picker from the grid; create a new one, connect a signal, and add it to the grid. */
-		gtk_grid_remove(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker);
-		GdkRGBA rgba;
-		convert_hex_to_rgb(&rgba, theme->text_color);
-		gui_data_theme->btn_font_color_picker = gtk_color_button_new_with_rgba(&rgba);
-		g_signal_connect(gui_data_theme->btn_font_color_picker, "color-set", G_CALLBACK(save_selected_font_color_to_theme), user_data);
-		gtk_grid_attach(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker, 2, 2, 1, 1);
+	/* Remove current font color picker from the grid; create a new one, connect a signal, and add it to the grid. */
+	gtk_grid_remove(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker);
+	GdkRGBA rgba;
+	convert_hex_to_rgb(&rgba, theme->text_color);
+	gui_data_theme->btn_font_color_picker = gtk_color_button_new_with_rgba(&rgba);
+	g_signal_connect(gui_data_theme->btn_font_color_picker, "color-set", G_CALLBACK(save_selected_font_color_to_theme), user_data);
+	gtk_grid_attach(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_color_picker, 2, 2, 1, 1);
 
-		/* Remove current balloon fill color picker from the grid; create a new one, connect a signal, and add it to the grid. */
-		gtk_grid_remove(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_fill_color_picker);
-		convert_hex_to_rgb(&rgba, theme->balloon_fill_color);
-		gui_data_theme->btn_balloon_fill_color_picker = gtk_color_button_new_with_rgba(&rgba);
-		g_signal_connect(gui_data_theme->btn_balloon_fill_color_picker, "color-set", G_CALLBACK(save_selected_balloon_fill_color_to_theme), user_data);
-		gtk_grid_attach(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_fill_color_picker, 2, 1, 1, 1);
+	/* Remove current balloon fill color picker from the grid; create a new one, connect a signal, and add it to the grid. */
+	gtk_grid_remove(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_fill_color_picker);
+	convert_hex_to_rgb(&rgba, theme->balloon_fill_color);
+	gui_data_theme->btn_balloon_fill_color_picker = gtk_color_button_new_with_rgba(&rgba);
+	g_signal_connect(gui_data_theme->btn_balloon_fill_color_picker, "color-set", G_CALLBACK(save_selected_balloon_fill_color_to_theme), user_data);
+	gtk_grid_attach(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_fill_color_picker, 2, 1, 1, 1);
 
-		/* Remove current balloon stroke color picker from the grid; create a new one, connect a signal, and add it to the grid. */
-		gtk_grid_remove(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_stroke_color_picker);
-		convert_hex_to_rgb(&rgba, theme->balloon_stroke_color);
-		gui_data_theme->btn_balloon_stroke_color_picker = gtk_color_button_new_with_rgba(&rgba);
-		g_signal_connect(gui_data_theme->btn_balloon_stroke_color_picker, "color-set", G_CALLBACK(save_selected_balloon_stroke_color_to_theme), user_data);
-		gtk_grid_attach(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_stroke_color_picker, 2, 2, 1, 1);
+	/* Remove current balloon stroke color picker from the grid; create a new one, connect a signal, and add it to the grid. */
+	gtk_grid_remove(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_stroke_color_picker);
+	convert_hex_to_rgb(&rgba, theme->balloon_stroke_color);
+	gui_data_theme->btn_balloon_stroke_color_picker = gtk_color_button_new_with_rgba(&rgba);
+	g_signal_connect(gui_data_theme->btn_balloon_stroke_color_picker, "color-set", G_CALLBACK(save_selected_balloon_stroke_color_to_theme), user_data);
+	gtk_grid_attach(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_stroke_color_picker, 2, 2, 1, 1);
 
-		/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. */
-		Theme_Preview *theme_preview = user_data->theme_preview;
-		theme_preview->selected_theme = theme;
+	/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. */
+	Theme_Preview *theme_preview = user_data->theme_preview;
+	theme_preview->selected_theme = theme;
 
-		convert_hex_to_rgb(&(theme_preview->fill_rgb), theme->balloon_fill_color);
-		convert_hex_to_rgb(&(theme_preview->stroke_rgb), theme->balloon_stroke_color);
-		convert_hex_to_rgb(&(theme_preview->text_rgb), theme->text_color);
-		g_stpcpy(theme_preview->font, theme->font_name);
+	convert_hex_to_rgb(&(theme_preview->fill_rgb), theme->balloon_fill_color);
+	convert_hex_to_rgb(&(theme_preview->stroke_rgb), theme->balloon_stroke_color);
+	convert_hex_to_rgb(&(theme_preview->text_rgb), theme->text_color);
+	g_stpcpy(theme_preview->font, theme->font_name);
 
-		/* Go draw the theme preview. */
-		gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
-	}
+	/* Go draw the theme preview. */
+	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
+
 }
 
 /**
