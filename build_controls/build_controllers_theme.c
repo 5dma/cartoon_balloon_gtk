@@ -460,6 +460,11 @@ void new_theme(GtkEventControllerFocus *self, gpointer data)
 	g_signal_handler_unblock (gui_data_theme->dropdown_theme, handler_id);
 
 
+	/* Disable the text field, delete any text in the text field, and move focus to the dropdown */
+	gtk_widget_set_sensitive(gui_data_theme->entry_new_theme, FALSE);
+	gtk_editable_delete_text (GTK_EDITABLE(gui_data_theme->entry_new_theme), 0, -1);
+	gtk_widget_grab_focus(gui_data_theme->dropdown_theme);
+
 	populate_status_bar(user_data->gui_data->status_bar, "Added %s to the list of themes.", new_theme->name);
 }
 
