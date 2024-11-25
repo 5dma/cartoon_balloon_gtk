@@ -233,10 +233,13 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 	if (new_compare == 0){
 		gtk_widget_set_sensitive(gui_data_theme->entry_new_theme, TRUE);
 		gtk_widget_grab_focus(gui_data_theme->entry_new_theme);
+		gtk_widget_set_sensitive(gui_data_theme->btn_delete,FALSE);
 		return;
 	}
 	/* Otherwise, disable the entry box and set the controls to the values for the selected theme. */
 	gtk_widget_set_sensitive(gui_data_theme->entry_new_theme, FALSE);
+	gtk_widget_set_sensitive(gui_data_theme->btn_delete,TRUE);
+	
 	Theme *theme = (Theme *)g_hash_table_lookup(user_data->theme_hash, selected_theme_name);
 
 	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_font_color));
@@ -486,10 +489,10 @@ void delete_theme(GtkButton *self, gpointer data)
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
 
 	guint selected_theme_position = gtk_drop_down_get_selected(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
-	g_print("The selected theme is %d\n", selected_theme_position);
 
 	GListModel *model_theme = gtk_drop_down_get_model(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
 	const gchar *deleted_theme_name = gtk_string_list_get_string(GTK_STRING_LIST(model_theme), selected_theme_position);
+	g_print("The selected theme is %d %s\n", selected_theme_position, deleted_theme_name);
 
 	gpointer *deleted_theme = g_hash_table_lookup(theme_hash, deleted_theme_name);
 
@@ -498,9 +501,10 @@ void delete_theme(GtkButton *self, gpointer data)
 		g_print("Found the theme, trashing in\n");
 		/* theme_hash was created with g_hash_table_new_full, so the key and value are freed automatically. */
 		g_hash_table_remove(theme_hash, deleted_theme_name);
+		gtk_string_list_remove(GTK_STRING_LIST(model_theme), selected_theme_position);
+		g_print("Removed the theme\n");
 	}
-	gtk_string_list_remove(GTK_STRING_LIST(model_theme), selected_theme_position);
-	g_print("Removed the theme\n");
+
 }
 
 /**
