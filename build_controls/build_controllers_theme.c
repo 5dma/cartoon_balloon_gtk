@@ -444,13 +444,20 @@ void new_theme(GtkEventControllerFocus *self, gpointer data)
 	g_hash_table_insert(theme_hash, new_theme->name, new_theme);
 
 	GListModel *model_theme = gtk_drop_down_get_model(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
-	guint old_theme_position = g_list_model_get_n_items (model_theme);
 	gtk_string_list_append(GTK_STRING_LIST(model_theme), new_theme->name);
 
 	guint new_theme_position = g_list_model_get_n_items (model_theme);
 
+
+	 GQuark detail = 0;
+	gulong handler_id = g_signal_handler_find (gui_data_theme->dropdown_theme, G_SIGNAL_MATCH_FUNC, 0, detail, NULL, theme_selection_changed, NULL);
+
+	g_signal_handler_block (gui_data_theme->dropdown_theme, handler_id);
+
 	gtk_drop_down_set_selected (GTK_DROP_DOWN(gui_data_theme->dropdown_theme), new_theme_position); 
-	
+	g_signal_handler_unblock (gui_data_theme->dropdown_theme, handler_id);
+
+
 	populate_status_bar(user_data->gui_data->status_bar, "Added %s to the list of themes.", new_theme->name);
 }
 
