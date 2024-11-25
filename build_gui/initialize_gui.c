@@ -45,7 +45,7 @@ void initialize_gui(User_Data *user_data) {
 	gtk_drop_down_set_model ( GTK_DROP_DOWN( gui_data_annotation->dropdown_theme ), G_LIST_MODEL(stringlist));
 	/* On initialize, set the first item in the model as selected. */
 	gtk_drop_down_set_selected (GTK_DROP_DOWN( gui_data_annotation->dropdown_theme), 0); 
-	GtkSingleSelection *single_selection_annotation_theme_dropdown = gtk_single_selection_new ( G_LIST_MODEL(stringlist));
+	//GtkSingleSelection *single_selection_annotation_theme_dropdown = gtk_single_selection_new ( G_LIST_MODEL(stringlist));
 
 
 
@@ -55,10 +55,10 @@ void initialize_gui(User_Data *user_data) {
 
 	gtk_drop_down_set_model ( GTK_DROP_DOWN(gui_data_theme->dropdown_theme), G_LIST_MODEL(stringlist));
 	gtk_drop_down_set_selected (GTK_DROP_DOWN( gui_data_theme->dropdown_theme), 0);
-	GtkSingleSelection *single_selection_theme_theme_dropdown = gtk_single_selection_new ( G_LIST_MODEL(stringlist));
+	//GtkSingleSelection *single_selection_theme_theme_dropdown = gtk_single_selection_new ( G_LIST_MODEL(stringlist));
 
-	GtkStringObject *selected_theme_key = (GtkStringObject *)gtk_single_selection_get_selected_item (single_selection_annotation_theme_dropdown);
-	const char *selected_theme_string = gtk_string_object_get_string (selected_theme_key);
+	//GtkStringObject *selected_theme_key = (GtkStringObject *)gtk_single_selection_get_selected_item (single_selection_annotation_theme_dropdown);
+	const char *selected_theme_string = gtk_string_list_get_string (stringlist, 0);
 
 	Theme *selected_theme_value = (Theme *) g_hash_table_lookup (user_data->theme_hash, selected_theme_string);
 

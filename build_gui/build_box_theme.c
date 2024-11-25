@@ -19,7 +19,6 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	GtkWidget *lbl_name = gtk_label_new ("Name:");
 	GtkWidget *dropdown_theme = gtk_drop_down_new (NULL, NULL);
 	GtkWidget *entry_new_theme = gtk_entry_new ();
-	g_print("At 0\nuser_data: %p\ngui_data: %p\ngui_data_theme: %p\ndropdown_theme: %p\n", user_data, user_data->gui_data, user_data->gui_data->gui_data_theme, dropdown_theme);
 
 	GtkWidget *box_theme_selector  = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	
@@ -164,9 +163,6 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	user_data->gui_data->gui_data_theme->grid_text = grid_text;
 	user_data->gui_data->gui_data_theme->grid_balloon = grid_balloon;
 	user_data->gui_data->gui_data_theme->btn_delete = btn_delete;
-	g_print("At 1\nuser_data: %p\ngui_data: %p\ngui_data_theme: %p\ndropdown_theme: %p\n", user_data, user_data->gui_data, user_data->gui_data->gui_data_theme, user_data->gui_data->gui_data_theme->dropdown_theme);
-	GtkWidget *crap = gtk_widget_get_parent (user_data->gui_data->gui_data_theme->dropdown_theme);
-
 
 	return box_theme;
 }

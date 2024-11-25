@@ -218,7 +218,6 @@ void save_selected_stroke_width_to_theme(GtkSpinButton *self, gpointer data)
  */
 void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 {
-	g_print("New theme selected because the dropdown emitted notify::selected\n");
 	User_Data *user_data = (User_Data *)data;
 
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
@@ -374,7 +373,6 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
  */
 void get_new_theme_name(GtkWidget *self, gpointer data)
 {
-	g_print("Evaluating theme name\n");
 	User_Data *user_data = (User_Data *)data;
 
 	const gchar *new_theme_name = gtk_editable_get_text(GTK_EDITABLE(self));
@@ -401,12 +399,9 @@ void get_new_theme_name(GtkWidget *self, gpointer data)
 void new_theme(GtkEventControllerFocus *self, gpointer data)
 {
 
-	g_print("Adding the new theme because I left the field.\n");
 	User_Data *user_data = (User_Data *)data;
 	GHashTable *theme_hash = user_data->theme_hash;
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
-	GtkWidget *crap = gtk_widget_get_parent (gui_data_theme->dropdown_theme);
-
 
 	const gchar *new_theme_name = gtk_editable_get_text(GTK_EDITABLE(user_data->gui_data->gui_data_theme->entry_new_theme));
 
@@ -451,15 +446,13 @@ void new_theme(GtkEventControllerFocus *self, gpointer data)
 	g_hash_table_insert(theme_hash, new_theme->name, new_theme);
 
 	GListModel *model_theme = gtk_drop_down_get_model(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
+	guint old_theme_position = g_list_model_get_n_items (model_theme);
 	gtk_string_list_append(GTK_STRING_LIST(model_theme), new_theme->name);
 
-	/* Need to fix this line so that the new theme appears as the selected item.*/
-	g_print("user_data: %p\ngui_data: %p\ngui_data_theme: %p\ndropdown_theme: %p\n", user_data, user_data->gui_data, user_data->gui_data->gui_data_theme, user_data->gui_data->gui_data_theme->dropdown_theme);
+	guint new_theme_position = g_list_model_get_n_items (model_theme);
 
-	GtkWidget *crap1 = gtk_widget_get_parent (gui_data_theme->dropdown_theme);
-
-	gtk_drop_down_set_selected (GTK_DROP_DOWN(gui_data_theme->dropdown_theme), 1);
-
+	gtk_drop_down_set_selected (GTK_DROP_DOWN(gui_data_theme->dropdown_theme), new_theme_position); 
+	
 	populate_status_bar(user_data->gui_data->status_bar, "Added %s to the list of themes.", new_theme->name);
 }
 
@@ -531,7 +524,7 @@ void build_controllers_theme(User_Data *user_data)
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
 	gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(gui_data_theme->drawing_balloon), draw_theme, user_data, NULL);
 
-	g_signal_connect(gui_data_theme->dropdown_theme, "notify", G_CALLBACK(theme_selection_changed), user_data);
+	g_signal_connect(gui_data_theme->dropdown_theme, "notify::selected", G_CALLBACK(theme_selection_changed), user_data);
 	g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
 	g_signal_connect(gui_data_theme->spin_stroke_width, "value-changed", G_CALLBACK(save_selected_stroke_width_to_theme), user_data);
 
