@@ -37,29 +37,38 @@ void initialize_gui(User_Data *user_data) {
 
 	guint hash_size;
 	gpointer key_array = g_hash_table_get_keys_as_array (user_data->theme_hash, &hash_size);
-	GtkStringList *stringlist = gtk_string_list_new (key_array);
-	g_free(key_array);
-	gtk_string_list_append (stringlist, NEW_THEME);
+
+	GListStore *list_store_themes = g_list_store_new(GTK_TYPE_STRING_OBJECT);
+
+	const gchar **interator = (const gchar **)key_array;
+	while(*interator != NULL) {
+		g_list_store_append(list_store_themes, gtk_string_object_new(*interator));
+		interator++;
+	}
 	
-	gtk_drop_down_set_model ( GTK_DROP_DOWN( gui_data_annotation->dropdown_theme ), G_LIST_MODEL(stringlist));
+	g_free(key_array);
+	g_list_store_append (list_store_themes, gtk_string_object_new(NEW_THEME));
+	
+	gtk_drop_down_set_model ( GTK_DROP_DOWN( gui_data_annotation->dropdown_theme ), G_LIST_MODEL(list_store_themes));
 	/* On initialize, set the first item in the model as selected. */
 	gtk_drop_down_set_selected (GTK_DROP_DOWN( gui_data_annotation->dropdown_theme), 0); 
-	//GtkSingleSelection *single_selection_annotation_theme_dropdown = gtk_single_selection_new ( G_LIST_MODEL(stringlist));
-
 
 
 	/* Initialize the controls in the Theme tab. */
 
 	Gui_Data_Theme *gui_data_theme = gui_data->gui_data_theme;
 
-	gtk_drop_down_set_model ( GTK_DROP_DOWN(gui_data_theme->dropdown_theme), G_LIST_MODEL(stringlist));
+	gtk_drop_down_set_model ( GTK_DROP_DOWN(gui_data_theme->dropdown_theme), G_LIST_MODEL(list_store_themes));
 	gtk_drop_down_set_selected (GTK_DROP_DOWN( gui_data_theme->dropdown_theme), 0);
 	//GtkSingleSelection *single_selection_theme_theme_dropdown = gtk_single_selection_new ( G_LIST_MODEL(stringlist));
 
 	//GtkStringObject *selected_theme_key = (GtkStringObject *)gtk_single_selection_get_selected_item (single_selection_annotation_theme_dropdown);
-	const char *selected_theme_string = gtk_string_list_get_string (stringlist, 0);
+	//const char *selected_theme_string = gtk_string_list_get_string (stringlist, 0);
 
-	Theme *selected_theme_value = (Theme *) g_hash_table_lookup (user_data->theme_hash, selected_theme_string);
+	gpointer temp = g_list_model_get_item (G_LIST_MODEL(list_store_themes), 0);
+	gchar *first_theme_name = (gchar *)temp;
+
+	Theme *selected_theme_value = (Theme *) g_hash_table_lookup (user_data->theme_hash, first_theme_name);
 
 	temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_theme->entry_font_color));
 	gtk_entry_buffer_set_text (temp_buffer, selected_theme_value->text_color , -1);
