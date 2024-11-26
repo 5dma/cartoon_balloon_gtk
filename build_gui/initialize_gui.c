@@ -20,7 +20,6 @@ void initialize_gui(User_Data *user_data) {
 	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration->spin_space), user_data->configuration->space);
 	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_configuration->spin_top_margin), user_data->configuration->top_margin);
 
-
 	/* Initialize the controls in the Annotation tab. */
 	Gui_Data_Annotation *gui_data_annotation = gui_data->gui_data_annotation;
 
