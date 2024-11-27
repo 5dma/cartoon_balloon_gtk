@@ -485,8 +485,6 @@ void new_theme(GtkEventControllerFocus *self, gpointer data)
 void delete_theme(GtkButton *self, gpointer data)
 {
 
-	g_print("Clicked~\n");
-
 	User_Data *user_data = (User_Data *)data;
 	GHashTable *theme_hash = user_data->theme_hash;
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
@@ -498,17 +496,15 @@ void delete_theme(GtkButton *self, gpointer data)
 	gpointer temp = g_list_model_get_item (G_LIST_MODEL(model_theme), selected_theme_position);
 	const char *deleted_theme_name = gtk_string_object_get_string (GTK_STRING_OBJECT(temp));
 
-	g_print("The deleted theme is %d %s\n", selected_theme_position, deleted_theme_name);
-
 	gpointer *deleted_theme = g_hash_table_lookup(theme_hash, deleted_theme_name);
 
 	if (deleted_theme != NULL)
 	{
-		g_print("Found the theme, trashing in\n");
 		/* theme_hash was created with g_hash_table_new_full, so the key and value are freed automatically. */
 		g_hash_table_remove(theme_hash, deleted_theme_name);
 		g_list_store_remove (user_data->list_store_themes, selected_theme_position);
-		g_print("Removed the theme\n");
+		/* Select the first theme in the dropdown.*/
+		gtk_drop_down_set_selected (GTK_DROP_DOWN(gui_data_theme->dropdown_theme), 0); 
 	}
 
 }
