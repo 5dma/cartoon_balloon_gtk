@@ -1,4 +1,4 @@
-#include "../headers.h"
+#include <headers.h>
 /**
  * @file headers.h
  * @brief C headers pertaining to reading and saving settings.

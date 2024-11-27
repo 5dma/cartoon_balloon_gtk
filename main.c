@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <glib.h>
 #include <glib-object.h>
-#include "headers.h"
+#include <headers.h>
 #include <gtk/gtk.h>
 #include <wand/MagickWand.h>
 /**

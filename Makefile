@@ -6,7 +6,7 @@ TARGET      := balloon
 
 #The Directories, Source, Includes, Objects, Binary and Resources
 SRCDIR      := .
-#INCDIR      := inc
+INCDIR      := headers
 OBJDIR      := obj
 TARGETDIR   := bin
 #RESDIR      := res
@@ -17,6 +17,7 @@ OBJEXT      := o
 #Flags, Libraries and Includes
 CFLAGS      := -g -Wall `pkg-config --cflags ImageMagick` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags glib-2.0` `pkg-config --cflags gtk4`
 LFLAGS         := `pkg-config --libs glib-2.0` `pkg-config --libs json-glib-1.0` `pkg-config --libs gtk4` `pkg-config --libs ImageMagick` `pkg-config --libs MagickWand`
+INC          := -I$(INCDIR)
 #INC         := -I$(INCDIR) -I/usr/local/include
 #INCDEP      := -I$(INCDIR)
 
@@ -43,7 +44,7 @@ $(TARGET): $(OBJECTS)
 #Compile
 $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 #Clean objects
 clean:

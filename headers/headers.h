@@ -1,3 +1,4 @@
+#pragma once
 #include <wand/MagickWand.h>
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -9,7 +10,6 @@
  * @file headers.h
  * @brief C headers.
  */
-
 
 /**
    \brief Maximal length of a file path.

@@ -2,7 +2,7 @@
 #include <json-glib/json-glib.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../headers.h"
+#include <headers.h>
 
 /**
  * @file read_configuration.c

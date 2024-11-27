@@ -1,5 +1,5 @@
 #include <gtk/gtk.h>
-#include "../headers.h"
+#include <headers.h>
 
 gint comparestrings (gconstpointer a, gconstpointer b, gpointer user_data) {
 	GtkStringObject *object_a = (GtkStringObject *)a;

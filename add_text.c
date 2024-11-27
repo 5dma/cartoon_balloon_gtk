@@ -2,7 +2,7 @@
 
 #include <wand/MagickWand.h>
 #include <glib.h>
-#include "headers.h"
+#include <headers.h>
 /**
  * @file add_text.c
  * @brief Analyzes and places the text on the image.

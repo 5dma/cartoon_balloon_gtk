@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <wand/MagickWand.h>
-#include "headers.h"
+#include <headers.h>
 
 /**
  * @file add_balloon.c

@@ -2,7 +2,7 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <wand/MagickWand.h>
-#include "headers.h"
+#include <headers.h>
 /**
  * @file process_image.c
  * @brief Processes the image based on the current settings for annotation and configuration.

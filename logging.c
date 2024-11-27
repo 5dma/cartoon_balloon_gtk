@@ -1,6 +1,6 @@
 #include <glib.h>
 #include <stdio.h>
-#include "headers.h"
+#include <headers.h>
 #include <stdarg.h>
 /**
    \brief Maximal size of the possible literals for log levels `ERROR`, `CRITICAL`, etc. Required for performing `g_strlcpy` into the containing log message.
