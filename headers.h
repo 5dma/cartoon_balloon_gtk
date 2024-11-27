@@ -1,5 +1,5 @@
-#include "wand/MagickWand.h"
-#include "glib.h"
+#include <wand/MagickWand.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 #include <json-glib/json-glib.h>
 

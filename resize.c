@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "headers.h"
-#include "glib.h"
-#include "wand/MagickWand.h"
+#include <glib.h>
+#include <wand/MagickWand.h>
 
 /**
  * @file resize.c

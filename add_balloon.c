@@ -1,7 +1,7 @@
 #include <stdlib.h>
-
-#include "wand/MagickWand.h"
+#include <wand/MagickWand.h>
 #include "headers.h"
+
 /**
  * @file add_balloon.c
  * @brief Adds the speech balloon and the path to the balloon.

@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <glib.h>
 #include <glib-object.h>
-
-#include "wand/MagickWand.h"
+#include <wand/MagickWand.h>
 #include "headers.h"
 /**
  * @file process_image.c

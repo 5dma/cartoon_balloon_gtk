@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
-#include "wand/MagickWand.h"
-#include "glib.h"
+#include <wand/MagickWand.h>
+#include <glib.h>
 #include "headers.h"
 /**
  * @file add_text.c
