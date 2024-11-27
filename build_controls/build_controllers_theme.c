@@ -225,7 +225,9 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 	guint selected_item = gtk_drop_down_get_selected(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
 
 	GListModel *model_theme = gtk_drop_down_get_model(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
-	const char *selected_theme_name = gtk_string_list_get_string(GTK_STRING_LIST(model_theme), selected_item);
+
+	gpointer temp = g_list_model_get_item (G_LIST_MODEL(model_theme), selected_item);
+	const char *selected_theme_name = gtk_string_object_get_string (GTK_STRING_OBJECT(temp));
 
 	int new_compare = g_strcmp0(NEW_THEME, selected_theme_name);
 
@@ -447,7 +449,8 @@ void new_theme(GtkEventControllerFocus *self, gpointer data)
 	g_hash_table_insert(theme_hash, new_theme->name, new_theme);
 
 	GListModel *model_theme = gtk_drop_down_get_model(GTK_DROP_DOWN(gui_data_theme->dropdown_theme));
-	gtk_string_list_append(GTK_STRING_LIST(model_theme), new_theme->name);
+
+	g_list_store_insert_sorted(user_data->list_store_themes, gtk_string_object_new(new_theme->name), comparestrings, NULL);
 
 	guint new_theme_position = g_list_model_get_n_items (model_theme);
 

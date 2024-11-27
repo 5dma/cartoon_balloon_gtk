@@ -1,5 +1,6 @@
 CC = gcc
-OBJFILES = add_balloon.o add_text.o activate.o build_box_annotation.o build_box_theme.o build_box_configuration.o logging.o main.o process_image.o read_annotation.o read_configuration.o read_themes.o resize.o initialize_gui.o memory_management.o cleanup.o build_controllers_annotation.o build_controllers_window.o build_controllers_theme.o read_files.o read_annotation.o read_themes.o read_configuration.o save_files.o save_configuration.o save_annotation.o save_themes.o
+OBJFILES = add_balloon.o add_text.o activate.o build_box_annotation.o build_box_theme.o build_box_configuration.o logging.o main.o process_image.o read_annotation.o read_configuration.o read_themes.o resize.o initialize_gui.o memory_management.o cleanup.o build_controllers_annotation.o build_controllers_window.o build_controllers_theme.o read_files.o read_annotation.o read_themes.o read_configuration.o save_files.o save_configuration.o save_annotation.o save_themes.o utilities.o
+
 CFLAGS = -g -Wall `pkg-config --cflags ImageMagick` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags glib-2.0` `pkg-config --cflags gtk4`
 
 all: balloon
@@ -79,6 +80,10 @@ save_annotation.o: read_save/save_annotation.c read_save/headers.h
 
 save_themes.o: read_save/save_themes.c read_save/headers.h
 	$(CC) $(CFLAGS) -c $^
+
+utilities.o: build_gui/utilities.c headers.h
+	$(CC) $(CFLAGS) -c $^
+
 
 .PHONY: clean
 clean:

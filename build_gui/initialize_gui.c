@@ -39,6 +39,7 @@ void initialize_gui(User_Data *user_data) {
 	gpointer key_array = g_hash_table_get_keys_as_array (user_data->theme_hash, &hash_size);
 
 	GListStore *list_store_themes = g_list_store_new(GTK_TYPE_STRING_OBJECT);
+	user_data->list_store_themes = list_store_themes;
 
 	const gchar **interator = (const gchar **)key_array;
 	while(*interator != NULL) {
@@ -47,8 +48,11 @@ void initialize_gui(User_Data *user_data) {
 	}
 	
 	g_free(key_array);
+
 	g_list_store_append (list_store_themes, gtk_string_object_new(NEW_THEME));
 	
+	g_list_store_sort(list_store_themes,comparestrings, NULL);
+
 	gtk_drop_down_set_model ( GTK_DROP_DOWN( gui_data_annotation->dropdown_theme ), G_LIST_MODEL(list_store_themes));
 	/* On initialize, set the first item in the model as selected. */
 	gtk_drop_down_set_selected (GTK_DROP_DOWN( gui_data_annotation->dropdown_theme), 0); 
@@ -58,15 +62,19 @@ void initialize_gui(User_Data *user_data) {
 
 	Gui_Data_Theme *gui_data_theme = gui_data->gui_data_theme;
 
+	/* The signal notify::selected is already connected to dropdown_theme, so we need to block it here.
+	 Need to better structure the the initialization to avoid blocking the handler. */
+	gulong handler_id = g_signal_handler_find (gui_data_theme->dropdown_theme, G_SIGNAL_MATCH_FUNC, 0, 0, NULL, theme_selection_changed, NULL);
+	g_signal_handler_block (gui_data_theme->dropdown_theme, handler_id);
+
 	gtk_drop_down_set_model ( GTK_DROP_DOWN(gui_data_theme->dropdown_theme), G_LIST_MODEL(list_store_themes));
 	gtk_drop_down_set_selected (GTK_DROP_DOWN( gui_data_theme->dropdown_theme), 0);
-	//GtkSingleSelection *single_selection_theme_theme_dropdown = gtk_single_selection_new ( G_LIST_MODEL(stringlist));
 
-	//GtkStringObject *selected_theme_key = (GtkStringObject *)gtk_single_selection_get_selected_item (single_selection_annotation_theme_dropdown);
-	//const char *selected_theme_string = gtk_string_list_get_string (stringlist, 0);
+	/* Unblock the notify::select signal on the dropdown. */
+	g_signal_handler_unblock (gui_data_theme->dropdown_theme, handler_id);
 
 	gpointer temp = g_list_model_get_item (G_LIST_MODEL(list_store_themes), 0);
-	gchar *first_theme_name = (gchar *)temp;
+	const gchar *first_theme_name = gtk_string_object_get_string (GTK_STRING_OBJECT(temp));
 
 	Theme *selected_theme_value = (Theme *) g_hash_table_lookup (user_data->theme_hash, first_theme_name);
 

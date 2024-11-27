@@ -207,6 +207,7 @@ typedef struct User_Data
 	Configuration *configuration; /**< Address of the settings structure. */
 	Annotation *annotation; /**< Address of the annotation structure. */
 	GHashTable *theme_hash; /**< Hash table of themes, keyed by theme name. */
+	GListStore *list_store_themes; /**< Address of list store backing the theme dropdowns. */
 	Text_Analysis *text_analysis; /**< Address of the text_analysis structure. */
 	Gui_Data *gui_data; /**< Address of the gui_data structure. */
 	Theme_Preview *theme_preview;  /**< Address of a Theme_Preview. */
@@ -241,6 +242,8 @@ void initialize_gui(User_Data *user_data);
 void build_controllers_annotation(User_Data *user_data);
 void build_controllers_theme(User_Data *user_data);
 void build_controllers_window(User_Data *user_data);
+void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data);
+gint comparestrings (gconstpointer a, gconstpointer b, gpointer user_data);
 
 /* Memory management headers */
 User_Data *allocate_structures(void);

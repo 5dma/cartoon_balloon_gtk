@@ -110,6 +110,7 @@ void activate(GtkApplication *app, gpointer data) {
 	/* Apply values read from settings.json to the GUI. */
 	initialize_gui(user_data);
 
+
 	gtk_window_present(GTK_WINDOW(window));
 
 
