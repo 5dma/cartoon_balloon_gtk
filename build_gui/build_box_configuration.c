@@ -69,14 +69,7 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	gtk_grid_attach ( GTK_GRID(grid_configuration), spin_top_margin, 1, 4, 1, 1);
 
 	
-	/* Controls for saving the configuration */
-	GtkWidget *btn_save = gtk_button_new_with_label("Save");
-	gtk_widget_set_hexpand (btn_save, FALSE);
-	gtk_widget_set_halign (btn_save, GTK_ALIGN_START);
-
-
 	gtk_box_append(GTK_BOX(box_configuration), grid_configuration);
-	gtk_box_append(GTK_BOX(box_configuration), btn_save);
 
 
 	gtk_widget_add_css_class (box_configuration, "tab" );
