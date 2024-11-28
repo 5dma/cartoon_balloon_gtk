@@ -63,7 +63,6 @@ void save_selected_font_color_to_theme(GtkColorButton *self, gpointer data)
 	
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &text_color);
 	convert_rgb_to_hex(selected_theme->text_color, &text_color);
-	g_print("Hex string for new text color: %s\n", selected_theme->text_color);
 	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_font_color));
 	gtk_entry_buffer_set_text(entry_buffer, selected_theme->text_color, -1);
 
@@ -86,7 +85,6 @@ void save_selected_balloon_fill_color_to_theme(GtkColorButton *self, gpointer da
 
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &fill_color);
 	convert_rgb_to_hex(selected_theme->balloon_fill_color, &fill_color);
-	g_print("Hex string for new fill: %s\n", selected_theme->balloon_fill_color);
 	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_fill_color));
 	gtk_entry_buffer_set_text(entry_buffer, selected_theme->balloon_fill_color, -1);
 
@@ -110,7 +108,6 @@ void save_selected_balloon_stroke_color_to_theme(GtkColorButton *self, gpointer 
 
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &stroke_color);
 	convert_rgb_to_hex(selected_theme->balloon_stroke_color, &stroke_color);
-	g_print("Hex string for new fill: %s\n", selected_theme->balloon_stroke_color);
 	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_stroke_color));
 	gtk_entry_buffer_set_text(entry_buffer, selected_theme->balloon_stroke_color, -1);
 
@@ -233,7 +230,6 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 				int height,
 				gpointer data)
 {
-	g_print("Draw\n");
 
 	User_Data *user_data = (User_Data *)data;
 	Theme_Geometry *theme_geometry = user_data->theme_geometry;

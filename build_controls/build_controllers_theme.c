@@ -9,8 +9,6 @@ Assigns callbacks to controls in the theme tab
 void build_controllers_theme(User_Data *user_data)
 {
 
-	g_print("Started build_controllers_theme\n");
-
 	Theme_Geometry *theme_geometry = user_data->theme_geometry;
 	theme_geometry->balloon_top_left.x = 20;
 	theme_geometry->balloon_top_left.y = 15;
