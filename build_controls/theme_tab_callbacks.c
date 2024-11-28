@@ -1,5 +1,22 @@
 #include <headers.h>
 #include <rgb_hex.h>
+
+
+/**
+ * Returns a pointer to the theme for the currently selected theme name in the Themes tab.
+ */
+gpointer get_selected_theme_from_hash(User_Data *user_data) {
+
+	GtkWidget *dropdown_theme = user_data->gui_data->gui_data_theme->dropdown_theme;
+	guint selected_item = gtk_drop_down_get_selected(GTK_DROP_DOWN(dropdown_theme));
+	GListModel *model_theme = gtk_drop_down_get_model(GTK_DROP_DOWN(dropdown_theme));
+	gpointer temp = g_list_model_get_item (G_LIST_MODEL(model_theme), selected_item);
+	const char *selected_theme_name = gtk_string_object_get_string (GTK_STRING_OBJECT(temp));
+	gpointer *deleted_theme = g_hash_table_lookup( user_data->theme_hash, selected_theme_name);	
+	return deleted_theme;
+}
+
+
 /**
  * Called when the user selects a font. The function does the following:
  * - ingests the selected font, which includes the font's family, face and size. For example, for `DejaVu Sans Mono Bold 12`:
@@ -20,13 +37,14 @@ void save_selected_font_to_theme(GtkButton *self, gpointer data)
 	PangoFontFamily *pango_font_family = pango_font_face_get_family(pango_font_face);
 	const gchar *font_family = pango_font_family_get_name(pango_font_family);
 
-	g_snprintf(user_data->theme_preview->selected_theme->font_name, MAX_PATH_LENGTH, "%s %s", font_family, face_name);
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	g_snprintf(selected_theme->font_name, MAX_PATH_LENGTH, "%s %s", font_family, face_name);
 
 	g_print("The actual font retrieved is %s\n", gtk_font_chooser_get_font(GTK_FONT_CHOOSER(self)));
 
-	user_data->theme_preview->selected_theme->font_size = gtk_font_chooser_get_font_size(GTK_FONT_CHOOSER(self)) / 1000;
+	selected_theme->font_size = gtk_font_chooser_get_font_size(GTK_FONT_CHOOSER(self)) / 1000;
 
-	g_print("The new theme font is %s, size %ld\n", user_data->theme_preview->selected_theme->font_name, user_data->theme_preview->selected_theme->font_size);
+	g_print("The new theme font is %s, size %ld\n", selected_theme->font_name, selected_theme->font_size);
 }
 
 /**
@@ -40,11 +58,14 @@ void save_selected_font_color_to_theme(GtkColorButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
 
-	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &user_data->theme_preview->text_rgb);
-	convert_rgb_to_hex(user_data->theme_preview->selected_theme->text_color, &user_data->theme_preview->text_rgb);
-	g_print("Hex string for new text color: %s\n", user_data->theme_preview->selected_theme->text_color);
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	GdkRGBA text_color;
+	
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &text_color);
+	convert_rgb_to_hex(selected_theme->text_color, &text_color);
+	g_print("Hex string for new text color: %s\n", selected_theme->text_color);
 	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_font_color));
-	gtk_entry_buffer_set_text(entry_buffer, user_data->theme_preview->selected_theme->text_color, -1);
+	gtk_entry_buffer_set_text(entry_buffer, selected_theme->text_color, -1);
 
 	/* Go draw the theme preview. */
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
@@ -60,12 +81,14 @@ void save_selected_font_color_to_theme(GtkColorButton *self, gpointer data)
 void save_selected_balloon_fill_color_to_theme(GtkColorButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	GdkRGBA fill_color;
 
-	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &user_data->theme_preview->fill_rgb);
-	convert_rgb_to_hex(user_data->theme_preview->selected_theme->balloon_fill_color, &user_data->theme_preview->fill_rgb);
-	g_print("Hex string for new fill: %s\n", user_data->theme_preview->selected_theme->balloon_fill_color);
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &fill_color);
+	convert_rgb_to_hex(selected_theme->balloon_fill_color, &fill_color);
+	g_print("Hex string for new fill: %s\n", selected_theme->balloon_fill_color);
 	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_fill_color));
-	gtk_entry_buffer_set_text(entry_buffer, user_data->theme_preview->selected_theme->balloon_fill_color, -1);
+	gtk_entry_buffer_set_text(entry_buffer, selected_theme->balloon_fill_color, -1);
 
 	/* Go draw the theme preview. */
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
@@ -82,12 +105,14 @@ void save_selected_balloon_fill_color_to_theme(GtkColorButton *self, gpointer da
 void save_selected_balloon_stroke_color_to_theme(GtkColorButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	GdkRGBA stroke_color;
 
-	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &user_data->theme_preview->stroke_rgb);
-	convert_rgb_to_hex(user_data->theme_preview->selected_theme->balloon_stroke_color, &user_data->theme_preview->stroke_rgb);
-	g_print("Hex string for new fill: %s\n", user_data->theme_preview->selected_theme->balloon_stroke_color);
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &stroke_color);
+	convert_rgb_to_hex(selected_theme->balloon_stroke_color, &stroke_color);
+	g_print("Hex string for new fill: %s\n", selected_theme->balloon_stroke_color);
 	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_stroke_color));
-	gtk_entry_buffer_set_text(entry_buffer, user_data->theme_preview->selected_theme->balloon_stroke_color, -1);
+	gtk_entry_buffer_set_text(entry_buffer, selected_theme->balloon_stroke_color, -1);
 
 	/* Go draw the theme preview. */
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
@@ -95,8 +120,8 @@ void save_selected_balloon_stroke_color_to_theme(GtkColorButton *self, gpointer 
 
 
 /**
- * Called when the user selects a new color for the balloon stroke. The function does the following:
- * - Retrieves the color from the color picker.
+ * Called when the user selects a new width for the balloon stroke. The function does the following:
+ * - Retrieves the width from the spinner.
  * - Saves the color in hex format to the theme.
  * - Displays the hex value in the GUI.
  * - Redraws the preview with the new text color.
@@ -104,6 +129,8 @@ void save_selected_balloon_stroke_color_to_theme(GtkColorButton *self, gpointer 
 void save_selected_stroke_width_to_theme(GtkSpinButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	selected_theme->stroke_width = (gint64) gtk_spin_button_get_value(self);
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
 }
 
@@ -184,14 +211,14 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 	g_signal_connect(gui_data_theme->btn_balloon_stroke_color_picker, "color-set", G_CALLBACK(save_selected_balloon_stroke_color_to_theme), user_data);
 	gtk_grid_attach(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_stroke_color_picker, 2, 2, 1, 1);
 
-	/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. */
+	/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. 
 	Theme_Preview *theme_preview = user_data->theme_preview;
 	theme_preview->selected_theme = theme;
 
 	convert_hex_to_rgb(&(theme_preview->fill_rgb), theme->balloon_fill_color);
 	convert_hex_to_rgb(&(theme_preview->stroke_rgb), theme->balloon_stroke_color);
 	convert_hex_to_rgb(&(theme_preview->text_rgb), theme->text_color);
-	g_stpcpy(theme_preview->font, theme->font_name);
+	g_stpcpy(theme_preview->font, theme->font_name); */
 
 	/* Go draw the theme preview. */
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
@@ -209,45 +236,60 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 	g_print("Draw\n");
 
 	User_Data *user_data = (User_Data *)data;
-	Theme_Preview *theme_preview = user_data->theme_preview;
+	Theme_Geometry *theme_geometry = user_data->theme_geometry;
 
 	user_data->gui_data->gui_data_theme->cr = cr;
+	
+	
 	/* Draw balloon and fill */
 
 	gint64 stroke_width = (gint64)gtk_spin_button_get_value(GTK_SPIN_BUTTON(user_data->gui_data->gui_data_theme->spin_stroke_width));
-	cairo_set_source_rgb(cr, theme_preview->fill_rgb.red, theme_preview->fill_rgb.green, theme_preview->fill_rgb.blue);
+
+	GdkRGBA fill_rgb;
+	const gchar *fill_hex = gtk_editable_get_text(GTK_EDITABLE(user_data->gui_data->gui_data_theme->entry_fill_color));
+	convert_hex_to_rgb(&fill_rgb, fill_hex);
+	cairo_set_source_rgb(cr, fill_rgb.red, fill_rgb.green, fill_rgb.blue);
+	
 	cairo_set_line_width(cr, stroke_width);
 	cairo_new_path(cr);
-	cairo_move_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_top_left.y);
-	cairo_line_to(cr, theme_preview->balloon_bottom_right.x, theme_preview->balloon_top_left.y);
-	cairo_line_to(cr, theme_preview->balloon_bottom_right.x, theme_preview->balloon_bottom_right.y);
-	cairo_line_to(cr, theme_preview->balloon_top_left.x, theme_preview->balloon_bottom_right.y);
+	cairo_move_to(cr, theme_geometry->balloon_top_left.x, theme_geometry->balloon_top_left.y);
+	cairo_line_to(cr, theme_geometry->balloon_bottom_right.x, theme_geometry->balloon_top_left.y);
+	cairo_line_to(cr, theme_geometry->balloon_bottom_right.x, theme_geometry->balloon_bottom_right.y);
+	cairo_line_to(cr, theme_geometry->balloon_top_left.x, theme_geometry->balloon_bottom_right.y);
 	cairo_close_path(cr);
 	cairo_fill_preserve(cr);
 
 	/* Stroke balloon */
 
-	cairo_set_source_rgb(cr, theme_preview->stroke_rgb.red, theme_preview->stroke_rgb.green, theme_preview->stroke_rgb.blue);
+	GdkRGBA stroke_rgb;
+	const gchar *stroke_hex = gtk_editable_get_text(GTK_EDITABLE(user_data->gui_data->gui_data_theme->entry_stroke_color));
+	convert_hex_to_rgb(&stroke_rgb, stroke_hex);
+	cairo_set_source_rgb(cr, stroke_rgb.red, stroke_rgb.green, stroke_rgb.blue);
 	cairo_stroke(cr);
 
 	/* Draw vertex and fill */
 
-	cairo_set_source_rgb(cr, theme_preview->fill_rgb.red, theme_preview->fill_rgb.green, theme_preview->fill_rgb.blue);
+	cairo_set_source_rgb(cr, fill_rgb.red, fill_rgb.green, fill_rgb.blue);
 
-	cairo_move_to(cr, theme_preview->vertex_left.x, theme_preview->vertex_left.y);
-	cairo_line_to(cr, theme_preview->vertex_bottom.x, theme_preview->vertex_bottom.y);
-	cairo_line_to(cr, theme_preview->vertex_right.x, theme_preview->vertex_right.y);
+	cairo_move_to(cr, theme_geometry->vertex_left.x, theme_geometry->vertex_left.y);
+	cairo_line_to(cr, theme_geometry->vertex_bottom.x, theme_geometry->vertex_bottom.y);
+	cairo_line_to(cr, theme_geometry->vertex_right.x, theme_geometry->vertex_right.y);
 	cairo_fill_preserve(cr);
 
 	/* Stroke vertex */
-	cairo_set_source_rgb(cr, theme_preview->stroke_rgb.red, theme_preview->stroke_rgb.green, theme_preview->stroke_rgb.blue);
+	cairo_set_source_rgb(cr, stroke_rgb.red, stroke_rgb.green, stroke_rgb.blue);
 	cairo_stroke(cr);
 
 	/* Add text */
 	/* In following line, sans-serif is hard coded because cairo_selet_font_face supports only
 	the basic fonts sans-serif, serif, monospace. */
 	cairo_select_font_face(cr, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-	cairo_set_source_rgb(cr, theme_preview->text_rgb.red, theme_preview->text_rgb.green, theme_preview->text_rgb.blue);
+
+	GdkRGBA text_rgb;
+	const gchar *text_hex = gtk_editable_get_text(GTK_EDITABLE(user_data->gui_data->gui_data_theme->entry_font_color));
+	convert_hex_to_rgb(&text_rgb, text_hex);
+
+	cairo_set_source_rgb(cr, text_rgb.red, text_rgb.green, text_rgb.blue);
 
 	/*
 	Preliminary attempts at using cairo to retrieve the back-end fonts. Pango may be better way to go.
@@ -263,7 +305,7 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 								   ft_face, (cairo_destroy_func_t) FT_Done_Face); */
 
 	cairo_set_font_size(cr, 15);
-	cairo_move_to(cr, theme_preview->text_start.x, theme_preview->text_start.y);
+	cairo_move_to(cr, theme_geometry->text_start.x, theme_geometry->text_start.y);
 	cairo_show_text(cr, "THEME");
 }
 

@@ -11,27 +11,27 @@ void build_controllers_theme(User_Data *user_data)
 
 	g_print("Started build_controllers_theme\n");
 
-	Theme_Preview *theme_preview = user_data->theme_preview;
-	theme_preview->balloon_top_left.x = 20;
-	theme_preview->balloon_top_left.y = 15;
-	theme_preview->balloon_bottom_right.x = 158;
-	theme_preview->balloon_bottom_right.y = 90;
+	Theme_Geometry *theme_geometry = user_data->theme_geometry;
+	theme_geometry->balloon_top_left.x = 20;
+	theme_geometry->balloon_top_left.y = 15;
+	theme_geometry->balloon_bottom_right.x = 158;
+	theme_geometry->balloon_bottom_right.y = 90;
 
-	const int midpoint_horizontal = (theme_preview->balloon_bottom_right.x - theme_preview->balloon_top_left.x) / 2 + theme_preview->balloon_top_left.x;
-	const int midpoint_vertical = (theme_preview->balloon_bottom_right.y - theme_preview->balloon_top_left.y) / 2 + theme_preview->balloon_top_left.y;
-	const int elevation = theme_preview->balloon_bottom_right.y - 10;
+	const int midpoint_horizontal = (theme_geometry->balloon_bottom_right.x - theme_geometry->balloon_top_left.x) / 2 + theme_geometry->balloon_top_left.x;
+	const int midpoint_vertical = (theme_geometry->balloon_bottom_right.y - theme_geometry->balloon_top_left.y) / 2 + theme_geometry->balloon_top_left.y;
+	const int elevation = theme_geometry->balloon_bottom_right.y - 10;
 
-	theme_preview->vertex_left.x = midpoint_horizontal - 10;
-	theme_preview->vertex_left.y = elevation;
+	theme_geometry->vertex_left.x = midpoint_horizontal - 10;
+	theme_geometry->vertex_left.y = elevation;
 
-	theme_preview->vertex_bottom.x = midpoint_horizontal;
-	theme_preview->vertex_bottom.y = theme_preview->balloon_bottom_right.y + 20;
+	theme_geometry->vertex_bottom.x = midpoint_horizontal;
+	theme_geometry->vertex_bottom.y = theme_geometry->balloon_bottom_right.y + 20;
 
-	theme_preview->vertex_right.x = midpoint_horizontal + 10;
-	theme_preview->vertex_right.y = elevation;
+	theme_geometry->vertex_right.x = midpoint_horizontal + 10;
+	theme_geometry->vertex_right.y = elevation;
 
-	theme_preview->text_start.x = midpoint_horizontal - 20;
-	theme_preview->text_start.y = midpoint_vertical;
+	theme_geometry->text_start.x = midpoint_horizontal - 20;
+	theme_geometry->text_start.y = midpoint_vertical;
 
 	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
 	gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(gui_data_theme->drawing_balloon), draw_theme, user_data, NULL);

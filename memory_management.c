@@ -22,7 +22,7 @@ User_Data *allocate_structures(void)
 	/* Required to prevent premature running of callback when*/
 	user_data->gui_data->gui_data_theme->cr = NULL;
 
-	user_data->theme_preview = (Theme_Preview *) g_malloc(sizeof(Theme_Preview));
+	user_data->theme_geometry = (Theme_Geometry *) g_malloc(sizeof(Theme_Geometry));
 	
  return user_data; 
 }

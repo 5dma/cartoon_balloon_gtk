@@ -183,21 +183,16 @@ typedef struct Gui_Data {
 } Gui_Data;
 
 /**
- * Structure holding configuration for drawing the theme preview in the Theme tab.
+ * Structure holding geometric configuration for drawing the theme preview in the Theme tab.
  */
-typedef struct Theme_Preview {
+typedef struct Theme_Geometry {
 	Coordinates balloon_top_left;  /**< Coordinates for balloons top-left corner. */
 	Coordinates balloon_bottom_right;  /**< Coordinates for balloons top-left corner. */
 	Coordinates vertex_left; /**< Coordinates for vertex left side. */
 	Coordinates vertex_bottom; /**< Coordinates for vertex bottom. */
 	Coordinates vertex_right; /**< Coordinates for vertex right side. */
 	Coordinates text_start;  /**< Coordinates where text starts. */
-	GdkRGBA text_rgb; /**< RGB values for text color (range 0-1). */
-	GdkRGBA stroke_rgb; /**< RGB values for stroke color (range 0-1). */
-	GdkRGBA fill_rgb; /**< RGB values for fill color (range 0-1). */
-	gchar font[256]; /**< Name of the font. */
-	Theme *selected_theme; /**< Pointer to currently selected theme. */
-} Theme_Preview;
+} Theme_Geometry;
 
 /**
  * Parent structure for passing all settings between callbacks.
@@ -210,7 +205,7 @@ typedef struct User_Data
 	GListStore *list_store_themes; /**< Address of list store backing the theme dropdowns. */
 	Text_Analysis *text_analysis; /**< Address of the text_analysis structure. */
 	Gui_Data *gui_data; /**< Address of the gui_data structure. */
-	Theme_Preview *theme_preview;  /**< Address of a Theme_Preview. */
+	Theme_Geometry *theme_geometry;  /**< Address of theme geometry. */
 } User_Data;
 
 /* Processing headers */
