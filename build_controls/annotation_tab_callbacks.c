@@ -1,8 +1,7 @@
 #include <headers.h>
-
 /**
- * @file build_controllers_annotation.c
- * @brief Contains functions for adding callbacks to controls.
+ * @file annotation_tab_callbacks.c
+ * @brief Contains callback functions for controls in the Annotations tab.
  */
 
 /**

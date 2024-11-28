@@ -3,6 +3,12 @@
 #include <headers.h>
 #include <stdarg.h>
 /**
+ * @file logging.c
+ * @brief Contains macro definitions and functions pertaining to logging.
+ */
+
+
+/**
    \brief Maximal size of the possible literals for log levels `ERROR`, `CRITICAL`, etc. Required for performing `g_strlcpy` into the containing log message.
 */
 #define LOG_LEVEL_LENGTH 50

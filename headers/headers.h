@@ -3,9 +3,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <json-glib/json-glib.h>
-
-
-
 /**
  * @file headers.h
  * @brief C headers.

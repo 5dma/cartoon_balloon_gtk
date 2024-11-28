@@ -1,4 +1,9 @@
 #include <gtk/gtk.h>
+/**
+ * @file controls.c
+ * @brief Contains headers for callbacks in the annotation and theme tabs.
+ */
+
 
 /* Headers for annotation tab callbacks */
 void show_annotation_tab(GtkWidget *widget, gpointer data);

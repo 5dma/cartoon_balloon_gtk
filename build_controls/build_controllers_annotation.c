@@ -1,6 +1,11 @@
 #include <headers.h>
 #include <gtk/gtk.h>
 #include <controls.h>
+/**
+ * @file build_controllers_annotation.c
+ * @brief Contains a function for assigning callbacks to controls in the Annotations tab.
+ */
+
 
 /**
 Assigns callbacks to controls in the Annotation tab.

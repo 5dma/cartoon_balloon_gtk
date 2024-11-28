@@ -1,6 +1,4 @@
 #include <headers.h>
-
-
 /**
  * @file build_controllers_window.c
  * @brief Contains functions for adding callbacks to the application window.

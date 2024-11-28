@@ -1,10 +1,14 @@
 #include <headers.h>
 #include <rgb_hex.h>
 #include <controls.h>
+/**
+ * @file build_controllers_theme.c
+ * @brief Contains a function for configuring the theme preview.
+ */
 
 
 /**
-Assigns callbacks to controls in the theme tab
+Assigns callbacks to controls in the theme tab; configures the geometry for the theme preview.
  */
 void build_controllers_theme(User_Data *user_data)
 {

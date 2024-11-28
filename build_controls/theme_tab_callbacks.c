@@ -1,5 +1,9 @@
 #include <headers.h>
 #include <rgb_hex.h>
+/**
+ * @file theme_tab_callbacks.c
+ * @brief Contains callback functions for controls in the Themes tab.
+ */
 
 
 /**

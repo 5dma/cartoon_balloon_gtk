@@ -3,7 +3,7 @@
 
 
 /**
- * @file build_gui.c
+ * @file activate.c
  * @brief Contains functions for building the GUI.
  */
 

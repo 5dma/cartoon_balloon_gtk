@@ -1,6 +1,14 @@
 #include <gtk/gtk.h>
 #include <headers.h>
+/**
+ * @file utilities.c
+ * @brief Contains utility functions required for building the GUI.
+ */
 
+
+/**
+* Function for sorting the themes in the theme model. This sort function ensures that the entry (new) appears last.
+*/
 gint comparestrings (gconstpointer a, gconstpointer b, gpointer user_data) {
 	GtkStringObject *object_a = (GtkStringObject *)a;
 	GtkStringObject *object_b = (GtkStringObject *)b;

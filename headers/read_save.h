@@ -1,7 +1,7 @@
 #include <headers.h>
 /**
- * @file headers.h
- * @brief C headers pertaining to reading and saving settings.
+ * @file read_save.h
+ * @brief Contains headers pertaining to reading and saving settings.
  */
 
 
