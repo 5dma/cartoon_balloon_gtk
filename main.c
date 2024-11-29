@@ -41,11 +41,6 @@ int main(int argc, char *argv[]) {
 
 	User_Data *user_data = allocate_structures();
 
-	read_files(user_data);
-
-	logger(G_LOG_LEVEL_INFO, "Started", user_data);
-	log_configuration_values(user_data);
-
 
 	app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
 	g_signal_connect (app, "activate", G_CALLBACK (activate), user_data);

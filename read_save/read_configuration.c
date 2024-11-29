@@ -16,7 +16,6 @@ Reads the configuration file into a `Settings` struct. The settings in this conf
 */
 void read_configuration(User_Data *user_data, JsonReader *reader) {
 
-	user_data->configuration = (Configuration *)g_malloc(sizeof(Configuration));
 	Configuration *configuration = user_data->configuration;
 
 	json_reader_read_member(reader, "configuration");

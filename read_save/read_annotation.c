@@ -15,50 +15,49 @@ Reads the configuration file into an `Annotation` struct. The settings in this c
  */
 void read_annotation(User_Data *user_data, JsonReader *reader)
 {
-	user_data->annotation = (Annotation *)g_malloc(sizeof(Annotation));
-	
+
 	Annotation *annotation = user_data->annotation;
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
 
 	json_reader_read_member(reader, "annotation");
 
 	json_reader_read_member(reader, "input_image");
-	g_strlcpy(annotation->input_image, json_reader_get_string_value(reader), MAX_PATH_LENGTH);
+	gtk_editable_set_text(GTK_EDITABLE(gui_data_annotation->entry_input_image),json_reader_get_string_value(reader));
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "text_bottom_left");
 	json_reader_read_member(reader, "x");
-	annotation->text_bottom_left.x = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "y");
-	annotation->text_bottom_left.y = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
 	json_reader_end_member(reader); /* text_bottom_left */
 
 	json_reader_read_member(reader, "vertex");
 	json_reader_read_member(reader, "x");
-	annotation->vertex.x = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "y");
-	annotation->vertex.y = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
 	json_reader_end_member(reader); /* vertex */
 
 
 	json_reader_read_member(reader, "new_width");
-	annotation->new_width = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
-
 
 	json_reader_read_member(reader, "text_string");
-	g_strlcpy(annotation->text_string, json_reader_get_string_value(reader), user_data->configuration->max_annotation_length );
+	gtk_editable_set_text(GTK_EDITABLE(gui_data_annotation->entry_text_string ),json_reader_get_string_value(reader));
 	json_reader_end_member(reader);
 
-	json_reader_read_member(reader, "theme");
+/* 	json_reader_read_member(reader, "theme");
 	g_strlcpy(annotation->theme, json_reader_get_string_value(reader), MAX_PATH_LENGTH);
 	json_reader_end_member(reader);
-	json_reader_end_member(reader); /* annotation */
+ */	json_reader_end_member(reader); /* annotation */
 
 	annotation->resize_proportion_x = 0;
 	annotation->resize_proportion_y = 0;

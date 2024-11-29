@@ -59,12 +59,6 @@ typedef struct Dimensions
  */
 typedef struct Annotation
 {
-	gchar input_image[256]; /**< Maximal length of the original image's path. A reasonable value is 256. */
-	Coordinates text_bottom_left; /**< Position of the text's bottom-left corner on the final image. */
-	Coordinates vertex; /**< Position of the polyline's vertex on the final image. */
-	gint64 new_width; /**< Maximal width of the resulting image. For Twitter, 520 is a good value. */
-	gchar text_string[256];  /**< Maximal length of the text in the balloon. A reasonable value is 256. */
-	gchar theme[256];  /**< Theme to apply to the text and balloon.  */
 	float resize_proportion_x; /**< Proportion the image is resized in the x direction so that it does not exceed the maximal width. */
 	float preview_scale; /**< Ratio of the original image's height to the preview height. */
 	float resize_proportion_y; /**< Proportion the image is resized in the y direction so that it does not exceed the maximal width. (Typically matches `resize_proportion_x`.) */
@@ -206,12 +200,12 @@ typedef struct User_Data
 } User_Data;
 
 /* Processing headers */
-void scale_image(MagickWand *m_wand, Annotation *annotation);
+void scale_image(MagickWand *m_wand, User_Data *user_data);
 void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis);
-void add_balloon(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis);
+void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data);
 Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data);
-void resize_image(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
-void add_path(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis);
+void resize_image(MagickWand *m_wand, Theme *selected_theme, User_Data *user_data);
+void add_path(MagickWand *m_wand, Theme *theme, User_Data *user_data);
 void process_image(User_Data *user_data);
 
 /* GTK headers */

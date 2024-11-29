@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <wand/MagickWand.h>
 #include <headers.h>
-
+#include <gtk/gtk.h>
 /**
  * @file add_balloon.c
  * @brief Adds the speech balloon and the path to the balloon.
@@ -12,7 +12,12 @@
  *  
  * ImageMagick's <a href="https://imagemagick.org/api/drawing-wand.php#DrawRectangle">DrawRectangle</a> command requires providing four points representing the top-left and bottom-right corners. See the specification for detail about how those points are computed.
  */
-void add_balloon(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis) {
+void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
+
+	Text_Analysis *text_analysis = user_data->text_analysis;
+	Configuration *configuration = user_data->configuration;
+	Annotation *annotation = user_data->annotation;
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
 
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
@@ -35,8 +40,11 @@ void add_balloon(MagickWand *m_wand, Configuration *configuration, Theme *theme,
 		configuration->padding -
 		theme->stroke_width;
 
+
+	guint text_bottom_left_y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y));
+
 	gint64 top_left_y =
-		annotation->text_bottom_left.y * 
+		text_bottom_left_y * 
 		annotation->preview_scale * 
 		annotation->resize_proportion_y -
 		text_analysis->text_height -
@@ -72,7 +80,12 @@ void add_balloon(MagickWand *m_wand, Configuration *configuration, Theme *theme,
 /**
  * Adds the path to the image. The path is polyline of three points. The vertex is supplied by the user, and the other two points jut into the balloon. See the specification for detail about how those points are computed.
  */
-void add_path(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis) {
+void add_path(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
+
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
+	Text_Analysis *text_analysis = user_data->text_analysis;
+	Configuration *configuration = user_data->configuration;
+	Annotation *annotation = user_data->annotation;
 
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
@@ -94,10 +107,15 @@ void add_path(MagickWand *m_wand, Annotation *annotation, Configuration *configu
 	PointInfo p3;
 	
 	/* Compute the positions of the path. */
+
+	guint vertex_x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x));
+	guint vertex_y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y));
+
+
 	p1.x = text_analysis->balloon_midpoint - configuration->space;
 	p1.y = text_analysis->balloon_bottom - configuration->elevation;
-	vertex.x =  annotation->vertex.x * annotation->resize_proportion_x * annotation->preview_scale;
-	vertex.y = annotation->vertex.y  * annotation->resize_proportion_y * annotation->preview_scale - text_analysis->overflow;
+	vertex.x =  vertex_x * annotation->resize_proportion_x * annotation->preview_scale;
+	vertex.y = vertex_y  * annotation->resize_proportion_y * annotation->preview_scale - text_analysis->overflow;
 	p3.x = text_analysis->balloon_midpoint + configuration->space;
 	p3.y = text_analysis->balloon_bottom - configuration->elevation;
 

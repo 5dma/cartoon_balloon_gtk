@@ -108,8 +108,12 @@ void activate(GtkApplication *app, gpointer data) {
 	build_controllers_theme(user_data);
 
 	/* Apply values read from settings.json to the GUI. */
+	read_files(user_data);
+
 	initialize_gui(user_data);
 
+	logger(G_LOG_LEVEL_INFO, "Started", user_data);
+	log_configuration_values(user_data);
 
 	gtk_window_present(GTK_WINDOW(window));
 

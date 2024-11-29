@@ -41,18 +41,4 @@ void build_controllers_annotation(User_Data *user_data)
 	/* Add clicked signal to export the annotated image */
 	g_signal_connect(gui_data_annotation->btn_export, "clicked", G_CALLBACK(launch_processing), user_data);
 
-
-	/* Add changed signals to spin buttons. All this is unnecessary after removing the UI fields from the Annotation structure. */
-	g_signal_connect(gui_data_annotation->spin_text_bottom_left_x, "value-changed", G_CALLBACK(on_annotation_spinner_changed), user_data);
-
-	g_signal_connect(gui_data_annotation->spin_text_bottom_left_y, "value-changed", G_CALLBACK(on_annotation_spinner_changed), user_data);
-
-	g_signal_connect(gui_data_annotation->spin_vertex_x, "value-changed", G_CALLBACK(on_annotation_spinner_changed), user_data);
-
-	g_signal_connect(gui_data_annotation->spin_vertex_y, "value-changed", G_CALLBACK(on_annotation_spinner_changed), user_data);
-
-	g_signal_connect(gui_data_annotation->spin_new_width, "value-changed", G_CALLBACK(on_annotation_spinner_changed), user_data);
-
-
-
 }

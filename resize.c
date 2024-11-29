@@ -2,6 +2,7 @@
 #include <headers.h>
 #include <glib.h>
 #include <wand/MagickWand.h>
+#include <gtk/gtk.h>
 
 /**
  * @file resize.c
@@ -11,17 +12,21 @@
 /**
 Scales the original image to no wider than the user-specified width found in `annotation->new_width`.
  */
-void scale_image(MagickWand *m_wand, Annotation *annotation)
+void scale_image(MagickWand *m_wand, User_Data *user_data)
 {
+
+	Annotation *annotation = user_data->annotation;
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
 	gint64 old_width = MagickGetImageWidth(m_wand);
 	gint64 old_height = MagickGetImageHeight(m_wand);
+	guint new_width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width));
 
-	gint64 new_height = (annotation->new_width * old_height) / old_width;
+	gint64 new_height = (new_width * old_height) / old_width;
  
 	/* Previously used the LanczosFilter and similar, I got only black images. Need to find the best filter. See the available filters at /usr/include/ImageMagick-6/Magick++/Include.h */
-	MagickResizeImage(m_wand, annotation->new_width, new_height, BoxFilter, 0);
+	MagickResizeImage(m_wand, new_width, new_height, BoxFilter, 0);
 
-	annotation->resize_proportion_x = (float) annotation->new_width / old_width;
+	annotation->resize_proportion_x = (float) new_width / old_width;
 	annotation->resize_proportion_y = (float) new_height / old_height;
 }
 
@@ -29,21 +34,27 @@ void scale_image(MagickWand *m_wand, Annotation *annotation)
 /**
   Resizes the image vertically so that it can accommodate any overflow from the text, balloon, padding, and top margin.
  */
-void resize_image(MagickWand *m_wand, Annotation *annotation, Configuration *configuration, Theme *theme, Text_Analysis *text_analysis) {
+void resize_image(MagickWand *m_wand, Theme *selected_theme, User_Data *user_data) {
+
+	Configuration *configuration = user_data->configuration;
+	Text_Analysis *text_analysis = user_data->text_analysis;
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation; 
 
 	text_analysis->overflow = \
 		text_analysis->bottom_offset - \
 		text_analysis->text_height - \
 		configuration->padding - \
-		theme->stroke_width -\
+		selected_theme->stroke_width -\
 		configuration->top_margin;
 
 	unsigned long current_image_height = MagickGetImageHeight(m_wand);
 
 	if (text_analysis->overflow < 0) {
 
+			guint new_width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width));
+
 			MagickExtentImage(m_wand, \
-			annotation->new_width, \
+			new_width, \
 			current_image_height - text_analysis->overflow, \
 			0, \
 			text_analysis->overflow);

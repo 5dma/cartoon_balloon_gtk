@@ -24,6 +24,5 @@ void cleanup(User_Data *user_data) {
 	g_free(user_data->gui_data);
 	g_free(user_data->configuration);
 	g_free(user_data->annotation);
-	g_free(user_data->theme_preview);
 	g_free(user_data);
 }

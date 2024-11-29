@@ -66,19 +66,23 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_da
 
 	Configuration *configuration = user_data->configuration;
 	Annotation *annotation = user_data->annotation;
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
+	Text_Analysis *text_analysis = user_data->text_analysis;
 
-	Text_Analysis *text_analysis = (Text_Analysis *)g_malloc(sizeof(Text_Analysis));
 
 	// Need to find another place for this assignment, should not be here. 
 	annotation->preview_scale = (float) annotation->dimensions_original_image.height / annotation->dimensions_picture_preview_widget.height;
 	
 	/* Compute locations where text will be placed. */
+	guint text_bottom_left_x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x));
+	guint text_bottom_left_y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y));
+	
 	text_analysis->left_offset = 
-		annotation->text_bottom_left.x * 
+		text_bottom_left_x * 
 		annotation->preview_scale * 
 		annotation->resize_proportion_x;
 	text_analysis->bottom_offset = 
-		annotation->text_bottom_left.y * 
+		text_bottom_left_y * 
 		annotation->preview_scale *
 		annotation->resize_proportion_y;
 	text_analysis->text_width = 0;
@@ -89,7 +93,9 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_da
 
 
 	/* Determine the maximal width of the text. */
-	gint64 max_text_width = annotation->new_width - \
+	guint new_width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width));
+
+	gint64 max_text_width = new_width - \
 		text_analysis->left_offset - \
 		configuration->padding * 2 - \
 		theme->stroke_width * 2;

@@ -36,8 +36,6 @@ static void on_open_response(GtkDialog *dialog, int response, gpointer data)
 
 		gchar *file_name = g_file_get_parse_name(file);
 
-		g_strlcpy(user_data->annotation->input_image, file_name, MAX_PATH_LENGTH);
-
 		GtkEntryBuffer *file_name_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_annotation->entry_input_image));
 
 		gtk_entry_buffer_set_text(file_name_buffer, file_name, MAX_PATH_LENGTH);
@@ -129,33 +127,27 @@ void preview_clicked(GtkGestureClick *self, gint n_press, gdouble x, gdouble y, 
 {
 	User_Data *user_data = (User_Data *)data;
 	Annotation *annotation = user_data->annotation;
-	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
 	gchar log_message[256];
 
 	/* If pointing to text bottom left, save the value appearing in the appropriate spin boxes. */
 	if ((annotation->is_selecting_vertex_point == FALSE) &&
 		(annotation->is_selecting_text_bottom_left_point = TRUE))
 	{
-		annotation->text_bottom_left.x = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x));
-		annotation->text_bottom_left.y = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y));
+	
 		/* Turn off tracking the mouse's position inside the image. */
 		annotation->is_selecting_text_bottom_left_point = FALSE;
 
-		g_snprintf(log_message, MAX_INPUT, "Text bottom left clicked at x: %ld, y: %ld", annotation->text_bottom_left.x, annotation->text_bottom_left.y);
+		//g_snprintf(log_message, MAX_INPUT, "Text bottom left clicked at x: %ld, y: %ld", annotation->text_bottom_left.x, annotation->text_bottom_left.y);
 
 		/* If pointing to the vertex, save the value appearing in the appropriate spin boxes. */
 	}
 	else if ((annotation->is_selecting_vertex_point == TRUE) &&
 			 (annotation->is_selecting_text_bottom_left_point == FALSE))
 	{
-
-		annotation->vertex.x = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x));
-		annotation->vertex.y = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y));
-
 		/* Turn off tracking the mouse's position inside the image. */
 		annotation->is_selecting_vertex_point = FALSE;
 
-		g_snprintf(log_message, MAX_INPUT, "Vertex clicked at x: %ld, y: %ld", annotation->vertex.x, annotation->vertex.y);
+		//g_snprintf(log_message, MAX_INPUT, "Vertex clicked at x: %ld, y: %ld", annotation->vertex.x, annotation->vertex.y);
 	}
 	logger(G_LOG_LEVEL_INFO, log_message, user_data);
 }
@@ -213,6 +205,5 @@ void launch_processing(GtkWidget *widget, gpointer data)
 {
 
 	User_Data *user_data = (User_Data *)data;
-	user_data->annotation->new_width = (gint64)gtk_spin_button_get_value(GTK_SPIN_BUTTON(user_data->gui_data->gui_data_annotation->spin_new_width));
 	process_image(user_data);
 }

@@ -156,29 +156,41 @@ void log_configuration_values(User_Data *user_data) {
 	/* Writes annotation settigngs. */
 
 	Annotation *annotation = user_data->annotation;
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
+
 	g_strv_builder_add (message_builder,"\nAnnotation:");
 
-	current_line = g_strdup_printf ("%-23s: %s", "  input_image", annotation->input_image);
+	const gchar *input_image = gtk_editable_get_text (GTK_EDITABLE( gui_data_annotation->entry_input_image));
+	current_line = g_strdup_printf ("%-23s: %s", "  input_image", input_image);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: x: %ld, y: %ld", "  text_bottom_left",annotation->text_bottom_left.x, annotation->text_bottom_left.y);
+	guint text_bottom_left_x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x));
+	guint text_bottom_left_y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y));
+	current_line = g_strdup_printf ("%-23s: x: %ld, y: %ld", "  text_bottom_left",text_bottom_left_x, text_bottom_left_y);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: x: %ld, y: %ld", "  vertex",annotation->vertex.x, annotation->vertex.y);
+	guint vertex_x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x));
+	guint vertex_y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y));
+	current_line = g_strdup_printf ("%-23s: x: %ld, y: %ld", "  vertex",vertex_x, vertex_y);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %ld", "  new width", annotation->new_width);
+
+	guint new_width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width));
+	current_line = g_strdup_printf ("%-23s: %ld", "  new width", new_width);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %s", "  text_string", annotation->text_string);
+	const gchar *text_string = gtk_editable_get_text (GTK_EDITABLE( gui_data_annotation->entry_text_string));
+	current_line = g_strdup_printf ("%-23s: %s", "  text_string", text_string);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %s", "  theme", annotation->theme);
+	gpointer selected_theme = get_selected_theme_from_hash(user_data, gui_data_annotation->dropdown_theme);
+	const gchar *theme_name = ((Theme *)selected_theme)->name;
+	current_line = g_strdup_printf ("%-23s: %s", "  theme", theme_name);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
