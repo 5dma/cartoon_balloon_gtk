@@ -5,22 +5,6 @@
  * @brief Contains callback functions for controls in the Themes tab.
  */
 
-
-/**
- * Returns a pointer to the theme for the currently selected theme name in the Themes tab.
- */
-gpointer get_selected_theme_from_hash(User_Data *user_data) {
-
-	GtkWidget *dropdown_theme = user_data->gui_data->gui_data_theme->dropdown_theme;
-	guint selected_item = gtk_drop_down_get_selected(GTK_DROP_DOWN(dropdown_theme));
-	GListModel *model_theme = gtk_drop_down_get_model(GTK_DROP_DOWN(dropdown_theme));
-	gpointer temp = g_list_model_get_item (G_LIST_MODEL(model_theme), selected_item);
-	const char *selected_theme_name = gtk_string_object_get_string (GTK_STRING_OBJECT(temp));
-	gpointer *deleted_theme = g_hash_table_lookup( user_data->theme_hash, selected_theme_name);	
-	return deleted_theme;
-}
-
-
 /**
  * Called when the user selects a font. The function does the following:
  * - ingests the selected font, which includes the font's family, face and size. For example, for `DejaVu Sans Mono Bold 12`:
@@ -41,7 +25,7 @@ void save_selected_font_to_theme(GtkButton *self, gpointer data)
 	PangoFontFamily *pango_font_family = pango_font_face_get_family(pango_font_face);
 	const gchar *font_family = pango_font_family_get_name(pango_font_family);
 
-	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_theme->dropdown_theme);
 	g_snprintf(selected_theme->font_name, MAX_PATH_LENGTH, "%s %s", font_family, face_name);
 
 	g_print("The actual font retrieved is %s\n", gtk_font_chooser_get_font(GTK_FONT_CHOOSER(self)));
@@ -62,7 +46,7 @@ void save_selected_font_color_to_theme(GtkColorButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
 
-	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_theme->dropdown_theme);
 	GdkRGBA text_color;
 	
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &text_color);
@@ -84,7 +68,7 @@ void save_selected_font_color_to_theme(GtkColorButton *self, gpointer data)
 void save_selected_balloon_fill_color_to_theme(GtkColorButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
-	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_theme->dropdown_theme);
 	GdkRGBA fill_color;
 
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &fill_color);
@@ -107,7 +91,7 @@ void save_selected_balloon_fill_color_to_theme(GtkColorButton *self, gpointer da
 void save_selected_balloon_stroke_color_to_theme(GtkColorButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
-	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_theme->dropdown_theme);
 	GdkRGBA stroke_color;
 
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &stroke_color);
@@ -130,7 +114,7 @@ void save_selected_balloon_stroke_color_to_theme(GtkColorButton *self, gpointer 
 void save_selected_stroke_width_to_theme(GtkSpinButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
-	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data);
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_theme->dropdown_theme);
 	selected_theme->stroke_width = (gint64) gtk_spin_button_get_value(self);
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
 }

@@ -22,7 +22,6 @@
 void process_image(User_Data *user_data) {
 
 	Configuration *configuration = user_data->configuration;
-	GHashTable *theme_hash = user_data->theme_hash;
 	Annotation *annotation = user_data->annotation;
 
 
@@ -38,33 +37,32 @@ void process_image(User_Data *user_data) {
 		return;
 	}
 	MagickWriteImage(m_wand, "/tmp/original.jpg");
-	/* Get the name of the selected theme on the annotations tab. */
-	guint selected_item = gtk_drop_down_get_selected (GTK_DROP_DOWN(user_data->gui_data->gui_data_annotation->dropdown_theme));
 
-	GListModel *model_theme = gtk_drop_down_get_model (GTK_DROP_DOWN(user_data->gui_data->gui_data_annotation->dropdown_theme));
-	const char *selected_theme_name = gtk_string_list_get_string ( GTK_STRING_LIST(model_theme), selected_item);
-	Theme *theme = (Theme *) g_hash_table_lookup (theme_hash, selected_theme_name);
+	/* Get the name of the selected theme on the annotations tab. */
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_annotation->dropdown_theme);
 
 	/* Scale the image. */
 	scale_image(m_wand, annotation);
 	MagickWriteImage(m_wand, "/tmp/scaled.jpg");
 	/* Determine height of the annotation, and compute other measurements. */
-	Text_Analysis *text_analysis = analyze_text(m_wand, theme, user_data);
+	
+	Text_Analysis *text_analysis = analyze_text(m_wand, selected_theme, user_data);
+
 
 	/* Extend the image vertically to accommodate the balloon. */
-	resize_image(m_wand,annotation, configuration, theme, text_analysis);
+	resize_image(m_wand,annotation, configuration, selected_theme, text_analysis);
 	MagickWriteImage(m_wand, "/tmp/resized.jpg");
 	
 	/* Add the balloon. */
-	add_balloon(m_wand, configuration, theme, annotation, text_analysis);
+	add_balloon(m_wand, configuration, selected_theme, annotation, text_analysis);
 	MagickWriteImage(m_wand, "/tmp/add_balloon.jpg");
 
 	/* Add the text inside the balloon. */
-	add_text(m_wand, configuration,theme, annotation,text_analysis);
+	add_text(m_wand, configuration,selected_theme, annotation,text_analysis);
 	MagickWriteImage(m_wand, "/tmp/add_text.jpg");
 
 	/* Add the path to the balloon. */
-	add_path(m_wand, annotation, configuration, theme, text_analysis);
+	add_path(m_wand, annotation, configuration, selected_theme, text_analysis);
 	MagickWriteImage(m_wand, "/tmp/add_path.jpg");
 
 	/* Write the new image */
