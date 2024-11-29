@@ -237,6 +237,7 @@ void build_controllers_window(User_Data *user_data);
 void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data);
 gint comparestrings (gconstpointer a, gconstpointer b, gpointer user_data);
 gpointer get_selected_theme_from_hash(User_Data *user_data, GtkWidget *dropdown_theme);
+void on_annotation_spinner_changed (GtkSpinButton* self, gpointer data);
 
 /* Memory management headers */
 User_Data *allocate_structures(void);
