@@ -15,9 +15,9 @@
 void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
 	Text_Analysis *text_analysis = user_data->text_analysis;
-	Configuration *configuration = user_data->configuration;
 	Annotation *annotation = user_data->annotation;
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
+	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_configuration;
 
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
@@ -35,9 +35,11 @@ void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	DrawSetStrokeOpacity(d_wand, 1.0);
 	
 	/* Compute the four coordinates of the balloon. */
+	guint padding = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_padding));
+	
 	gint64 top_left_x =
 		text_analysis->left_offset -
-		configuration->padding -
+		padding -
 		theme->stroke_width;
 
 
@@ -48,19 +50,19 @@ void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 		annotation->preview_scale * 
 		annotation->resize_proportion_y -
 		text_analysis->text_height -
-		configuration->padding -
+		padding -
 		theme->stroke_width -
 		text_analysis->overflow;
 
 	gint64 bottom_right_x = top_left_x +
 							text_analysis->text_width +
-							configuration->padding * 2 +
+							padding * 2 +
 							theme->stroke_width * 2;
 
 	gint64 bottom_right_y =
 		top_left_y +
 		text_analysis->text_height +
-		configuration->padding * 2 +
+		padding * 2 +
 		theme->stroke_width * 2;
 
 	/* Save the midpoint and bottom edge for drawing the path. */
@@ -83,8 +85,8 @@ void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 void add_path(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
+	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_configuration;
 	Text_Analysis *text_analysis = user_data->text_analysis;
-	Configuration *configuration = user_data->configuration;
 	Annotation *annotation = user_data->annotation;
 
 	DrawingWand *d_wand = NewDrawingWand();
@@ -110,14 +112,15 @@ void add_path(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
 	guint vertex_x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x));
 	guint vertex_y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y));
+	guint space = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_space));
+	guint elevation = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_elevation));
 
-
-	p1.x = text_analysis->balloon_midpoint - configuration->space;
-	p1.y = text_analysis->balloon_bottom - configuration->elevation;
+	p1.x = text_analysis->balloon_midpoint - space;
+	p1.y = text_analysis->balloon_bottom - elevation;
 	vertex.x =  vertex_x * annotation->resize_proportion_x * annotation->preview_scale;
 	vertex.y = vertex_y  * annotation->resize_proportion_y * annotation->preview_scale - text_analysis->overflow;
-	p3.x = text_analysis->balloon_midpoint + configuration->space;
-	p3.y = text_analysis->balloon_bottom - configuration->elevation;
+	p3.x = text_analysis->balloon_midpoint + space;
+	p3.y = text_analysis->balloon_bottom - elevation;
 
 	PointInfo  path_points[3] = {p1, vertex, p3};
 

@@ -64,9 +64,9 @@ void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, An
  */
 Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
-	Configuration *configuration = user_data->configuration;
 	Annotation *annotation = user_data->annotation;
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
+	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_configuration;
 	Text_Analysis *text_analysis = user_data->text_analysis;
 
 
@@ -94,10 +94,11 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_da
 
 	/* Determine the maximal width of the text. */
 	guint new_width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width));
+	guint padding = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_padding ));
 
 	gint64 max_text_width = new_width - \
 		text_analysis->left_offset - \
-		configuration->padding * 2 - \
+		padding * 2 - \
 		theme->stroke_width * 2;
 
 	/* Set up wand for drawing text. */
@@ -116,11 +117,13 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_da
 	const gchar *text_string = gtk_entry_buffer_get_text (entry_buffer);
 	gchar *text_string_copy = g_strdup (text_string);
 
+	guint max_annotation_length = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_max_annotation_length));
+
 	gchar *token = strtok(text_string_copy, " ");
-	g_strlcpy(text_analysis->split_string, token, configuration->max_annotation_length);
+	g_strlcpy(text_analysis->split_string, token, max_annotation_length);
 	while ((token = strtok(NULL, " ")) != NULL) {
-		g_strlcat(text_analysis->split_string, " ", configuration->max_annotation_length);
-		g_strlcat(text_analysis->split_string, token, configuration->max_annotation_length);
+		g_strlcat(text_analysis->split_string, " ", max_annotation_length);
+		g_strlcat(text_analysis->split_string, token, max_annotation_length);
 		text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
 		if (text_metrics[4] > max_text_width) {
 			rightmost_space = g_strrstr(text_analysis->split_string, " ");

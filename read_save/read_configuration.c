@@ -17,27 +17,28 @@ Reads the configuration file into a `Settings` struct. The settings in this conf
 void read_configuration(User_Data *user_data, JsonReader *reader) {
 
 	Configuration *configuration = user_data->configuration;
+	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_configuration;
 
 	json_reader_read_member(reader, "configuration");
 
 	json_reader_read_member(reader, "max_annotation_length");
-	configuration->max_annotation_length = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_max_annotation_length), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "padding");
-	configuration->padding = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_padding), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "elevation");
-	configuration->elevation = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_elevation), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "space");
-	configuration->space = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_space), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "top_margin");
-	configuration->top_margin = json_reader_get_int_value(reader);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_top_margin), json_reader_get_int_value(reader));
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "log_file_path");

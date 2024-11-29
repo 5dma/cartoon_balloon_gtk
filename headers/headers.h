@@ -20,16 +20,9 @@
 
 
 /**
- * Structure containing user-defined configuration. The settings in this struct, such as the ballon's fill color, file are relatively static: they can apply to multiple images. The function read_json() reads the values from a JSON file.
- * 
- * All dimensions in this structure are in pixels. For a visual representation of the dimensions, see the specification.
+ * Structure containing various paths and pointers.
  */
 typedef struct Configuration {
-	gint64 max_annotation_length; /**< Maximal number of characters in an annotation. */
-	gint64 padding; /**< Padding around the text box. The balloon is drawn around the padding.*/
-	gint64 elevation; /**< Height of the polyline inside the balloon.*/
-	gint64 space; /**< Space between the balloon's midpoint and where the polyline intersects with the balloon.*/
-	gint64 top_margin; /**< Top margin, measured from the top of the image to the top of the balloon.*/
 	gchar new_image_path[256]; /**< Maximal length of the new image's path. A reasonable value is 256. */
 	gchar log_file_path[256]; /**< Path to log file. */
 	FILE *log_file_pointer; /**< Address of the log file's handle. */

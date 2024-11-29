@@ -118,6 +118,7 @@ Writes to the log file the current settings.
  */
 void log_configuration_values(User_Data *user_data) {
 	Configuration *configuration = user_data->configuration;
+	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_configuration;
 	GStrvBuilder *message_builder = g_strv_builder_new ();
 	g_strv_builder_add (message_builder,"Read settings values:");
 	
@@ -125,23 +126,28 @@ void log_configuration_values(User_Data *user_data) {
 	g_strv_builder_add (message_builder,"Configuration:");
 
 	gchar *current_line;
-	current_line = g_strdup_printf ("%-23s: %ld", "  max_annotation_length", configuration->max_annotation_length);
+	guint max_annotation_length = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_max_annotation_length));
+	current_line = g_strdup_printf ("%-23s: %d", "  max_annotation_length", max_annotation_length);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %ld", "  padding", configuration->padding);
+	guint padding = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_padding));
+	current_line = g_strdup_printf ("%-23s: %d", "  padding", padding);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %ld", "  elevation", configuration->elevation);
+	guint elevation = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_elevation));
+	current_line = g_strdup_printf ("%-23s: %d", "  elevation", elevation);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %ld", "  space", configuration->space);
+	guint space = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_space));
+	current_line = g_strdup_printf ("%-23s: %d", "  space", space);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	current_line = g_strdup_printf ("%-23s: %ld", "  top_margin", configuration->top_margin);
+	guint top_margin = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_top_margin));
+	current_line = g_strdup_printf ("%-23s: %d", "  top_margin", top_margin);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
@@ -153,9 +159,8 @@ void log_configuration_values(User_Data *user_data) {
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
-	/* Writes annotation settigngs. */
+	/* Writes annotation settings. */
 
-	Annotation *annotation = user_data->annotation;
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
 
 	g_strv_builder_add (message_builder,"\nAnnotation:");
@@ -167,19 +172,19 @@ void log_configuration_values(User_Data *user_data) {
 
 	guint text_bottom_left_x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x));
 	guint text_bottom_left_y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_y));
-	current_line = g_strdup_printf ("%-23s: x: %ld, y: %ld", "  text_bottom_left",text_bottom_left_x, text_bottom_left_y);
+	current_line = g_strdup_printf ("%-23s: x: %d, y: %d", "  text_bottom_left",text_bottom_left_x, text_bottom_left_y);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
 	guint vertex_x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_x));
 	guint vertex_y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_vertex_y));
-	current_line = g_strdup_printf ("%-23s: x: %ld, y: %ld", "  vertex",vertex_x, vertex_y);
+	current_line = g_strdup_printf ("%-23s: x: %d, y: %d", "  vertex",vertex_x, vertex_y);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 
 
 	guint new_width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width));
-	current_line = g_strdup_printf ("%-23s: %ld", "  new width", new_width);
+	current_line = g_strdup_printf ("%-23s: %d", "  new width", new_width);
 	g_strv_builder_add (message_builder,current_line);
 	g_free(current_line);
 

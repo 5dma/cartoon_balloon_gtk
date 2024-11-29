@@ -36,16 +36,19 @@ void scale_image(MagickWand *m_wand, User_Data *user_data)
  */
 void resize_image(MagickWand *m_wand, Theme *selected_theme, User_Data *user_data) {
 
-	Configuration *configuration = user_data->configuration;
 	Text_Analysis *text_analysis = user_data->text_analysis;
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation; 
+	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_annotation;
+
+	guint padding = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_padding));
+	guint top_margin = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_top_margin));
 
 	text_analysis->overflow = \
 		text_analysis->bottom_offset - \
 		text_analysis->text_height - \
-		configuration->padding - \
+		padding - \
 		selected_theme->stroke_width -\
-		configuration->top_margin;
+		top_margin;
 
 	unsigned long current_image_height = MagickGetImageHeight(m_wand);
 
