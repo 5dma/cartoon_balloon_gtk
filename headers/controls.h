@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 /**
- * @file controls.c
+ * @file controls.h
  * @brief Contains headers for callbacks in the annotation and theme tabs.
  */
 

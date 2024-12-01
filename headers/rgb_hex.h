@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 /**
- * @file rgb_hex.c
+ * @file rgb_hex.h
  * @brief Contains headers for RGB <-> hex conversion.
  */
 
