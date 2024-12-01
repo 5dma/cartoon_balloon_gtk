@@ -13,8 +13,10 @@
 
   The ImageMagic command <a href="https://imagemagick.org/api/magick-image.php#MagickAnnotateImage">MagickAnnotateImage</a> requires points for placing the text.  See the specification for detail about how those points are computed.
  */
-void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis) {
+void add_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	
+	Text_Analysis *text_analysis = user_data->text_analysis;
+
 	DrawingWand *d_wand = NewDrawingWand();
 	PixelWand *p_wand = NewPixelWand();
 
@@ -34,7 +36,6 @@ void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, An
 	g_print("The noramlized font name for drawing is %s\n", normalized_font_name);
 	g_free(normalized_font_name);
 
-
 	//DrawSetStrokeColor(d_wand, p_wand);
 	//DrawSetStrokeOpacity(d_wand, 1.0);
 
@@ -46,11 +47,12 @@ void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, An
 		text_analysis->split_string);
 
 	MagickDrawImage(m_wand, d_wand);
-
+	
 	/* Clean up. */
 	DestroyPixelWand(p_wand);
+	
 	DestroyDrawingWand(d_wand);
-	return;
+	
 } 
 
 /**
@@ -62,7 +64,7 @@ void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, An
  * - Compute the size of the balloon.
  * - Resize as necessary the image upward to contain the balloon.
  */
-Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
+void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
 	Annotation *annotation = user_data->annotation;
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
@@ -145,5 +147,4 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_da
 	/* Clean up */
 	RelinquishMagickMemory(text_metrics);
 	DestroyDrawingWand(d_wand);
-	return text_analysis;
 }

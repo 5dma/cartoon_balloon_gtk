@@ -194,9 +194,9 @@ typedef struct User_Data
 
 /* Processing headers */
 void scale_image(MagickWand *m_wand, User_Data *user_data);
-void add_text(MagickWand *m_wand, Configuration *configuration, Theme *theme, Annotation *annotation, Text_Analysis *text_analysis);
+void add_text(MagickWand *m_wand, Theme *theme, User_Data *user_data);
 void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data);
-Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data);
+void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data);
 void resize_image(MagickWand *m_wand, Theme *selected_theme, User_Data *user_data);
 void add_path(MagickWand *m_wand, Theme *theme, User_Data *user_data);
 void process_image(User_Data *user_data);
