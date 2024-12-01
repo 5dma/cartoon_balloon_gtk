@@ -36,9 +36,7 @@ static void on_open_response(GtkDialog *dialog, int response, gpointer data)
 
 		gchar *file_name = g_file_get_parse_name(file);
 
-		GtkEntryBuffer *file_name_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_annotation->entry_input_image));
-
-		gtk_entry_buffer_set_text(file_name_buffer, file_name, MAX_PATH_LENGTH);
+		gtk_editable_set_text (GTK_EDITABLE(user_data->gui_data->gui_data_annotation->entry_input_image), file_name);
 
 		gtk_picture_set_file(GTK_PICTURE(user_data->gui_data->gui_data_annotation->picture_preview), file);
 

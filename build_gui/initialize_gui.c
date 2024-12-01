@@ -56,14 +56,11 @@ void initialize_gui(User_Data *user_data) {
 
 	Theme *selected_theme_value = (Theme *) g_hash_table_lookup (user_data->theme_hash, first_theme_name);
 
-	GtkEntryBuffer *temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_theme->entry_font_color));
-	gtk_entry_buffer_set_text (temp_buffer, selected_theme_value->text_color , -1);
-	
-	temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_theme->entry_fill_color));
-	gtk_entry_buffer_set_text (temp_buffer, selected_theme_value->balloon_fill_color, -1);
+	gtk_editable_set_text (GTK_EDITABLE(gui_data_theme->entry_font_color), selected_theme_value->text_color);
 
-	temp_buffer = gtk_entry_get_buffer (GTK_ENTRY(gui_data_theme->entry_stroke_color));
-	gtk_entry_buffer_set_text (temp_buffer, selected_theme_value->balloon_stroke_color, -1);
+	gtk_editable_set_text (GTK_EDITABLE(gui_data_theme->entry_fill_color), selected_theme_value->balloon_fill_color);
+
+	gtk_editable_set_text (GTK_EDITABLE(gui_data_theme->entry_stroke_color), selected_theme_value->balloon_stroke_color);
 
 	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_theme->spin_stroke_width), selected_theme_value->stroke_width);
 

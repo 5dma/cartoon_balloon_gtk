@@ -51,8 +51,8 @@ void save_selected_font_color_to_theme(GtkColorButton *self, gpointer data)
 	
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &text_color);
 	convert_rgb_to_hex(selected_theme->text_color, &text_color);
-	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_font_color));
-	gtk_entry_buffer_set_text(entry_buffer, selected_theme->text_color, -1);
+
+	gtk_editable_set_text (GTK_EDITABLE(user_data->gui_data->gui_data_theme->entry_font_color), selected_theme->text_color);
 
 	/* Go draw the theme preview. */
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
@@ -73,8 +73,8 @@ void save_selected_balloon_fill_color_to_theme(GtkColorButton *self, gpointer da
 
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &fill_color);
 	convert_rgb_to_hex(selected_theme->balloon_fill_color, &fill_color);
-	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_fill_color));
-	gtk_entry_buffer_set_text(entry_buffer, selected_theme->balloon_fill_color, -1);
+
+	gtk_editable_set_text (GTK_EDITABLE(user_data->gui_data->gui_data_theme->entry_fill_color), selected_theme->balloon_fill_color);
 
 	/* Go draw the theme preview. */
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
@@ -96,8 +96,8 @@ void save_selected_balloon_stroke_color_to_theme(GtkColorButton *self, gpointer 
 
 	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(self), &stroke_color);
 	convert_rgb_to_hex(selected_theme->balloon_stroke_color, &stroke_color);
-	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(user_data->gui_data->gui_data_theme->entry_stroke_color));
-	gtk_entry_buffer_set_text(entry_buffer, selected_theme->balloon_stroke_color, -1);
+
+	gtk_editable_set_text (GTK_EDITABLE(user_data->gui_data->gui_data_theme->entry_stroke_color), selected_theme->balloon_stroke_color);
 
 	/* Go draw the theme preview. */
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
@@ -152,14 +152,11 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 	
 	Theme *theme = (Theme *)g_hash_table_lookup(user_data->theme_hash, selected_theme_name);
 
-	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_font_color));
-	gtk_entry_buffer_set_text(entry_buffer, theme->text_color, -1);
+	gtk_editable_set_text (GTK_EDITABLE(gui_data_theme->entry_font_color), theme->text_color);
 
-	entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_fill_color));
-	gtk_entry_buffer_set_text(entry_buffer, theme->balloon_fill_color, -1);
+	gtk_editable_set_text (GTK_EDITABLE(gui_data_theme->entry_fill_color), theme->balloon_fill_color);
 
-	entry_buffer = gtk_entry_get_buffer(GTK_ENTRY(gui_data_theme->entry_stroke_color));
-	gtk_entry_buffer_set_text(entry_buffer, theme->balloon_stroke_color, -1);
+	gtk_editable_set_text (GTK_EDITABLE(gui_data_theme->entry_stroke_color), theme->balloon_stroke_color);
 
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_theme->spin_stroke_width), theme->stroke_width);
 

@@ -38,7 +38,7 @@ void resize_image(MagickWand *m_wand, Theme *selected_theme, User_Data *user_dat
 
 	Text_Analysis *text_analysis = user_data->text_analysis;
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation; 
-	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_annotation;
+	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_configuration;
 
 	guint padding = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_padding));
 	guint top_margin = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_top_margin));

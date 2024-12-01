@@ -112,9 +112,8 @@ Text_Analysis *analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_da
 
 	/* Parse the annotation, placing newlines in places where the string exceeds max_text_width. */
 
-	GtkEntryBuffer *entry_buffer = gtk_entry_get_buffer (GTK_ENTRY(user_data->gui_data->gui_data_annotation->entry_text_string));
+	const gchar *text_string = gtk_editable_get_text (GTK_EDITABLE(user_data->gui_data->gui_data_annotation->entry_text_string));
 
-	const gchar *text_string = gtk_entry_buffer_get_text (entry_buffer);
 	gchar *text_string_copy = g_strdup (text_string);
 
 	guint max_annotation_length = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_max_annotation_length));

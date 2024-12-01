@@ -226,9 +226,7 @@ void populate_status_bar(GtkWidget *status_bar, const gchar *formatting_string, 
 	gchar *status_line;
 	status_line = g_strdup_vprintf (formatting_string, pargs);
 	
-	GtkEntryBuffer *buffer = gtk_entry_get_buffer (GTK_ENTRY(status_bar));
-
-	gtk_entry_buffer_set_text(buffer, status_line, -1);
+	gtk_editable_set_text (GTK_EDITABLE(status_bar), status_line);
 	
 	g_free(status_line);
 	va_end(pargs);
