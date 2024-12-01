@@ -97,13 +97,13 @@ void convert_rgb_to_hex(gchar *hex, GdkRGBA *rgb)
 
 	/* Convert red */
 	guint scaled_red = rgb->red * 256;
-	g_snprintf(hex + 1, 3, "%X", scaled_red);
+	g_snprintf(hex + 1, 3, "%02X", scaled_red);
 
 	/* Convert green */
 	guint scaled_green = rgb->green * 256;
-	g_snprintf(hex + 3, 3, "%X", scaled_green);
+	g_snprintf(hex + 3, 3, "%02X", scaled_green);
 
 	/* Convert blue */
 	guint scaled_blue = rgb->blue * 256;
-	g_snprintf(hex + 5, 3, "%X", scaled_blue);
+	g_snprintf(hex + 5, 3, "%02X", scaled_blue);
 }
