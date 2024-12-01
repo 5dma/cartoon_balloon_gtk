@@ -75,5 +75,5 @@ void process_image(User_Data *user_data) {
 	/* Clean up */
 	DestroyMagickWand(m_wand);
 	MagickWandTerminus();
-	g_free(text_analysis);
+
 }
