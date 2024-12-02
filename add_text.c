@@ -34,9 +34,6 @@ void add_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	DrawSetFont(d_wand,normalized_font_name);
 	g_free(normalized_font_name);
 
-	//DrawSetStrokeColor(d_wand, p_wand);
-	//DrawSetStrokeOpacity(d_wand, 1.0);
-
 	/* Add the text to the image. */
 	MagickAnnotateImage(m_wand, d_wand, \
 		text_analysis->left_offset, \

@@ -109,6 +109,8 @@ void activate(GtkApplication *app, gpointer data) {
 	/* Apply values read from settings.json to the GUI. */
 	read_files(user_data);
 
+	gtk_window_set_icon_name (GTK_WINDOW(window), "user-available");
+
 	initialize_gui(user_data);
 
 	logger(G_LOG_LEVEL_INFO, "Started", user_data);
