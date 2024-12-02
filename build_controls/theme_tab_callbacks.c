@@ -7,9 +7,8 @@
 
 /**
  * Called when the user selects a font. The function does the following:
- * - ingests the selected font, which includes the font's family, face and size. For example, for `DejaVu Sans Mono Bold 12`:
- *   - `DejaVu Sans Mono` is the font family.
- *   - `Bold` is the font face.
+ * - ingests the selected font, which includes the font's family and size. For example, for `DejaVu Sans Mono Bold 12`:
+ *   - `DejaVu Sans Mono Bold` is the font family.
  *   - `12` is the font size.
  * - Saves the font family and face in the theme's `font_name` field.
  * - Saves the font size in the theme's `font_size` field.
@@ -19,16 +18,16 @@ void save_selected_font_to_theme(GtkButton *self, gpointer data)
 
 	User_Data *user_data = (User_Data *)data;
 
-	PangoFontFace *pango_font_face = gtk_font_chooser_get_font_face(GTK_FONT_CHOOSER(self));
-	const gchar *face_name = pango_font_face_get_face_name(pango_font_face);
+	const gchar *font = gtk_font_chooser_get_font (GTK_FONT_CHOOSER(self));
 
-	PangoFontFamily *pango_font_family = pango_font_face_get_family(pango_font_face);
-	const gchar *font_family = pango_font_family_get_name(pango_font_family);
+	gchar *family_size_delimiter = g_strrstr (font, " ");
+
+	*family_size_delimiter = '\0';
 
 	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_theme->dropdown_theme);
-	g_snprintf(selected_theme->font_name, MAX_PATH_LENGTH, "%s %s", font_family, face_name);
 
-	g_print("The actual font retrieved is %s\n", gtk_font_chooser_get_font(GTK_FONT_CHOOSER(self)));
+	g_strlcpy ( selected_theme->font_name, font, MAX_PATH_LENGTH);
+	selected_theme->font_size = g_ascii_strtoull (family_size_delimiter + 1, NULL, 10);
 
 	selected_theme->font_size = gtk_font_chooser_get_font_size(GTK_FONT_CHOOSER(self)) / 1000;
 
@@ -163,10 +162,11 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 	/* Remove current font picker from the grid; create a new one, connect a signal, and add it to the grid. */
 	gtk_grid_remove(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker);
 	gchar *font_label = g_strdup_printf("%s %ld", theme->font_name, theme->font_size);
-	gui_data_theme->btn_font_name_picker = gtk_font_button_new_with_font(font_label);
+	g_print("The font label is now %s\n", font_label);
+	gui_data_theme->btn_font_name_picker = gtk_font_button_new();
 	gtk_font_chooser_set_font(GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker), font_label);
 
-	gtk_font_button_set_use_font(GTK_FONT_BUTTON(gui_data_theme->btn_font_name_picker), TRUE);
+	gtk_font_button_set_use_font(GTK_FONT_BUTTON(gui_data_theme->btn_font_name_picker), FALSE);
 	g_signal_connect(gui_data_theme->btn_font_name_picker, "font-set", G_CALLBACK(save_selected_font_to_theme), user_data);
 	gtk_grid_attach(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker, 1, 1, 1, 1);
 	g_free(font_label);
