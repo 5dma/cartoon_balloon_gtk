@@ -32,8 +32,6 @@ void add_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	gchar *normalized_font_name = g_strdelimit (g_strdup (theme->font_name), " ", '-');
 
 	DrawSetFont(d_wand,normalized_font_name);
-	g_print("The font name for drawing is %s\n", theme->font_name);
-	g_print("The noramlized font name for drawing is %s\n", normalized_font_name);
 	g_free(normalized_font_name);
 
 	//DrawSetStrokeColor(d_wand, p_wand);

@@ -31,7 +31,6 @@ void save_selected_font_to_theme(GtkButton *self, gpointer data)
 
 	selected_theme->font_size = gtk_font_chooser_get_font_size(GTK_FONT_CHOOSER(self)) / 1000;
 
-	g_print("The new theme font is %s, size %ld\n", selected_theme->font_name, selected_theme->font_size);
 }
 
 /**
@@ -162,7 +161,6 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 	/* Remove current font picker from the grid; create a new one, connect a signal, and add it to the grid. */
 	gtk_grid_remove(GTK_GRID(gui_data_theme->grid_text), gui_data_theme->btn_font_name_picker);
 	gchar *font_label = g_strdup_printf("%s %ld", theme->font_name, theme->font_size);
-	g_print("The font label is now %s\n", font_label);
 	gui_data_theme->btn_font_name_picker = gtk_font_button_new();
 	gtk_font_chooser_set_font(GTK_FONT_CHOOSER(gui_data_theme->btn_font_name_picker), font_label);
 
@@ -373,16 +371,16 @@ void new_theme(GtkEventControllerFocus *self, gpointer data)
 
 	guint new_theme_position = g_list_model_get_n_items (model_theme);
 
-	GQuark detail;
+	GQuark detail = g_quark_from_string (NULL);
 	gulong handler_id = g_signal_handler_find (gui_data_theme->dropdown_theme, G_SIGNAL_MATCH_FUNC, 0, detail, NULL, theme_selection_changed, NULL);
-
 	g_signal_handler_block (gui_data_theme->dropdown_theme, handler_id);	
+	
 	/* Set the new name, which is the last item in the model, to the selected theme.*/
 	gtk_drop_down_set_selected (GTK_DROP_DOWN(gui_data_theme->dropdown_theme), new_theme_position - 1); 
 	
 	g_signal_handler_unblock (gui_data_theme->dropdown_theme, handler_id);
 
-		/* Disable the text field, delete any text in the text field, and move focus to the dropdown */
+	/* Disable the text field, delete any text in the text field, and move focus to the dropdown */
 	gtk_widget_set_sensitive(gui_data_theme->entry_new_theme, FALSE);
 	gtk_editable_delete_text (GTK_EDITABLE(gui_data_theme->entry_new_theme), 0, -1);
 	gtk_widget_grab_focus(gui_data_theme->dropdown_theme);
