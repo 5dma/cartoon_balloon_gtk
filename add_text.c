@@ -105,7 +105,8 @@ void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
 	/* Set up wand for drawing text. */
 	DrawingWand *d_wand = NewDrawingWand();
-	DrawSetFont(d_wand, theme->font_name);
+	gchar *normalized_font_name = g_strdelimit (g_strdup (theme->font_name), " ", '-');
+	DrawSetFont(d_wand, normalized_font_name);
 	DrawSetFontSize(d_wand, theme->font_size);
 
 
@@ -147,4 +148,6 @@ void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	/* Clean up */
 	RelinquishMagickMemory(text_metrics);
 	DestroyDrawingWand(d_wand);
+	g_free(normalized_font_name);
+
 }
