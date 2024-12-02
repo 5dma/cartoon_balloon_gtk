@@ -373,11 +373,15 @@ void new_theme(GtkEventControllerFocus *self, gpointer data)
 
 	guint new_theme_position = g_list_model_get_n_items (model_theme);
 
+	GQuark detail;
+	gulong handler_id = g_signal_handler_find (gui_data_theme->dropdown_theme, G_SIGNAL_MATCH_FUNC, 0, detail, NULL, theme_selection_changed, NULL);
 
-	
+	g_signal_handler_block (gui_data_theme->dropdown_theme, handler_id);	
 	/* Set the new name, which is the last item in the model, to the selected theme.*/
 	gtk_drop_down_set_selected (GTK_DROP_DOWN(gui_data_theme->dropdown_theme), new_theme_position - 1); 
 	
+	g_signal_handler_unblock (gui_data_theme->dropdown_theme, handler_id);
+
 		/* Disable the text field, delete any text in the text field, and move focus to the dropdown */
 	gtk_widget_set_sensitive(gui_data_theme->entry_new_theme, FALSE);
 	gtk_editable_delete_text (GTK_EDITABLE(gui_data_theme->entry_new_theme), 0, -1);
