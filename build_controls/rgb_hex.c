@@ -66,19 +66,19 @@ void convert_hex_to_rgb(GdkRGBA *rgb, const gchar *hex)
 	int trash1 = convert_hex_to_int(r_hex[0]);
 	int trash2 = convert_hex_to_int(r_hex[1]);
 	int trash = 16 * trash1 + trash2;
-	rgb->red = (float)trash / 256;
+	rgb->red = (float)trash / 255;
 
 	/* Scale green */
 	trash1 = convert_hex_to_int(g_hex[0]);
 	trash2 = convert_hex_to_int(g_hex[1]);
 	trash = 16 * trash1 + trash2;
-	rgb->green = (float)trash / 256;
+	rgb->green = (float)trash / 255;
 
 	/* Scale blue */
 	trash1 = convert_hex_to_int(b_hex[0]);
 	trash2 = convert_hex_to_int(b_hex[1]);
 	trash = 16 * trash1 + trash2;
-	rgb->blue = (float)trash / 256;
+	rgb->blue = (float)trash / 255;
 
 	rgb->alpha = 1.0;
 
@@ -96,14 +96,14 @@ void convert_rgb_to_hex(gchar *hex, const GdkRGBA *rgb)
 	hex[0] = '#';
 
 	/* Convert red */
-	guint scaled_red = rgb->red * 256;
+	guint scaled_red = rgb->red * 255;
 	g_snprintf(hex + 1, 3, "%02X", scaled_red);
 
 	/* Convert green */
-	guint scaled_green = rgb->green * 256;
+	guint scaled_green = rgb->green * 255;
 	g_snprintf(hex + 3, 3, "%02X", scaled_green);
 
 	/* Convert blue */
-	guint scaled_blue = rgb->blue * 256;
+	guint scaled_blue = rgb->blue * 255;
 	g_snprintf(hex + 5, 3, "%02X", scaled_blue);
 }
