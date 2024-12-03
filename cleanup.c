@@ -6,6 +6,19 @@
  */
 
 /**
+  Frees memory of string objects in the list store of theme names.
+ */
+void free_themes_in_list_store(GListStore * list_store_themes) {
+
+	guint number_themes = g_list_model_get_n_items ( G_LIST_MODEL(list_store_themes));
+	for (int i=0; i<number_themes; i++) {
+		GObject *theme_object = g_list_model_get_object (G_LIST_MODEL(list_store_themes), 0);
+		g_object_unref(GTK_STRING_OBJECT(theme_object));
+	}
+}
+
+
+/**
   Frees memory in the User_Data instance.
  */
 void cleanup(User_Data *user_data, gboolean detailed)
@@ -21,6 +34,7 @@ void cleanup(User_Data *user_data, gboolean detailed)
 		fclose(user_data->configuration->log_file_pointer);
 	}
 
+	free_themes_in_list_store(user_data->list_store_themes);
 	g_list_store_remove_all(user_data->list_store_themes);
 	g_object_unref(user_data->list_store_themes);
 

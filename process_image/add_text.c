@@ -101,6 +101,7 @@ void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
 	/* Set up wand for drawing text. */
 	DrawingWand *d_wand = NewDrawingWand();
+	/* The following string is freed at the end of this function. */
 	gchar *normalized_font_name = g_strdelimit (g_strdup (theme->font_name), " ", '-');
 	DrawSetFont(d_wand, normalized_font_name);
 	DrawSetFontSize(d_wand, theme->font_size);
@@ -112,6 +113,7 @@ void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	/* Parse the annotation, placing newlines in places where the string exceeds max_text_width. */
 	const gchar *text_string = gtk_editable_get_text (GTK_EDITABLE(user_data->gui_data->gui_data_annotation->entry_text_string));
 
+	/* The following string is freed below. */
 	gchar *text_string_copy = g_strdup (text_string);
 
 	guint max_annotation_length = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_max_annotation_length));
@@ -121,6 +123,7 @@ void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	while ((token = strtok(NULL, " ")) != NULL) {
 		g_strlcat(text_analysis->split_string, " ", max_annotation_length);
 		g_strlcat(text_analysis->split_string, token, max_annotation_length);
+		/* The following object is freed with RelinquishMagickMemory, below. */
 		text_metrics = MagickQueryMultilineFontMetrics(m_wand, d_wand, text_analysis->split_string);
 		if (text_metrics[4] > max_text_width) {
 			rightmost_space = g_strrstr(text_analysis->split_string, " ");
