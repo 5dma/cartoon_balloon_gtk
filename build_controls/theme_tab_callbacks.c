@@ -120,7 +120,15 @@ void save_selected_stroke_width_to_theme(GtkSpinButton *self, gpointer data)
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
 }
 
-
+/**
+ * Fired when the user toggles the rounded corners checkbox in the **Themes** tab. The function saves the new setting in the theme, redraws the preview with or without rounded corners.
+ */
+void redraw_rounded_corners( GtkCheckButton* self,  gpointer data) {
+	User_Data *user_data = (User_Data *)data;
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_theme->dropdown_theme);
+	selected_theme->rounded_corners = gtk_check_button_get_active(self);
+	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
+}
 
 /**
  * Fired when the user selects a new theme in the **Themes** tab. The function does one of two things:
@@ -198,6 +206,7 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 	gtk_grid_attach(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_stroke_color_picker, 2, 2, 1, 1);
 
 	gtk_check_button_set_active (GTK_CHECK_BUTTON(gui_data_theme->check_rounded_corners), theme->rounded_corners); 
+	g_signal_connect(gui_data_theme->check_rounded_corners, "toggled", G_CALLBACK(redraw_rounded_corners), user_data);
 
 	/* Go draw the theme preview. */
 	gtk_widget_queue_draw(user_data->gui_data->gui_data_theme->drawing_balloon);
