@@ -3,10 +3,8 @@
 
 /**
  * @file read_files.c
- * @brief Contains parent function for reading settings from disk in JSON format.
+ * @brief Contains the parent function for reading settings in JSON format from disk.
 */
-
-
 
 /**
  * Reads settings from disk in JSON format. See also
@@ -18,7 +16,6 @@ void read_files(User_Data *user_data) {
 
 	JsonParser *parser;
 	GError *error;
-
 
 	parser = json_parser_new();
 	error = NULL;

@@ -4,7 +4,7 @@
 
 /**
  * @file activate.c
- * @brief Contains functions for building the GUI.
+ * @brief Contains functions for starting the application.
  */
 
 /**
@@ -28,7 +28,12 @@ void show_configuration_tab(GtkWidget *widget, gpointer data) {
 }
 
 /**
-Parent function for building the GTK GUI.
+Parent function for starting the application. This function does the following:
+ * - Loads CSS styling from the configuration directory.
+ * - Instantiates the GTK window.
+ * - Adds top-level widgets to the window (three buttons on the top, three tabs, status bar)
+ * - Calls read_files() to read settings from disk.
+ * - Calls initialize_gui() to initialize widgets with the read settings.
  */
 void activate(GtkApplication *app, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
