@@ -2,7 +2,7 @@
 #include <headers.h>
 /**
  * @file cleanup.c
- * @brief Frees memory.
+ * @brief Contains a function for freeing memory.
  */
 
 /**

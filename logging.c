@@ -14,11 +14,6 @@
 #define LOG_LEVEL_LENGTH 50
 
 /**
- * @file logging.c
- * @brief Functions for logging.
- */
-
-/**
 Receives a log level and text message, and outputs them along with a time stamp to the log file.
  */
 void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data) {
@@ -72,8 +67,8 @@ FILE *get_log_file_pointer(Configuration *configuration) {
 		g_print("Could not open log file, so no messages are logged\n");
 	}
 	return file_ptr;
-
 }
+
 /**
 * Constructs a log message describing a theme.
 */
@@ -117,6 +112,7 @@ void print_theme(gpointer key, gpointer value, gpointer user_data) {
 Writes to the log file the current settings.
  */
 void log_configuration_values(User_Data *user_data) {
+	
 	Configuration *configuration = user_data->configuration;
 	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_configuration;
 	GStrvBuilder *message_builder = g_strv_builder_new ();
