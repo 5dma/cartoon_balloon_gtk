@@ -1,5 +1,6 @@
 #include <glib/gstdio.h>
 #include <headers.h>
+#include <json-glib/json-glib.h>
 
 /**
  * @file save_themes.c

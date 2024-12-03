@@ -1,4 +1,5 @@
 #include <headers.h>
+#include <json-glib/json-glib.h>
 /**
  * @file read_save.h
  * @brief Contains headers pertaining to reading and saving settings.
