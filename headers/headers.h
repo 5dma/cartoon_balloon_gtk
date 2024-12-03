@@ -11,6 +11,12 @@
 */
 #define NEW_THEME "(new)"
 
+/**
+   \brief Radius used to draw a rounded balloon in the preview.
+*/
+#define PREVIEW_RADIUS 10
+
+
 
 /* Processing headers */
 void scale_image(MagickWand *m_wand, User_Data *user_data);

@@ -215,6 +215,7 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 
 	User_Data *user_data = (User_Data *)data;
 	Theme_Geometry *theme_geometry = user_data->theme_geometry;
+	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_theme->dropdown_theme);
 
 	user_data->gui_data->gui_data_theme->cr = cr;
 	
@@ -228,13 +229,90 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 	convert_hex_to_rgb(&fill_rgb, fill_hex);
 	cairo_set_source_rgb(cr, fill_rgb.red, fill_rgb.green, fill_rgb.blue);
 	
+	
 	cairo_set_line_width(cr, stroke_width);
+
 	cairo_new_path(cr);
-	cairo_move_to(cr, theme_geometry->balloon_top_left.x, theme_geometry->balloon_top_left.y);
-	cairo_line_to(cr, theme_geometry->balloon_bottom_right.x, theme_geometry->balloon_top_left.y);
-	cairo_line_to(cr, theme_geometry->balloon_bottom_right.x, theme_geometry->balloon_bottom_right.y);
-	cairo_line_to(cr, theme_geometry->balloon_top_left.x, theme_geometry->balloon_bottom_right.y);
-	cairo_close_path(cr);
+	if (selected_theme->rounded_corners) { 
+
+		Coordinates arc_center_top_left;
+		arc_center_top_left.x = theme_geometry->balloon_top_left.x + PREVIEW_RADIUS;
+		arc_center_top_left.y = theme_geometry->balloon_top_left.y + PREVIEW_RADIUS;
+
+		Coordinates arc_center_top_right;
+		arc_center_top_right.x = theme_geometry->balloon_bottom_right.x - PREVIEW_RADIUS;
+		arc_center_top_right.y = theme_geometry->balloon_top_left.y + PREVIEW_RADIUS;
+
+		Coordinates arc_center_bottom_right;
+		arc_center_bottom_right.x = theme_geometry->balloon_bottom_right.x - PREVIEW_RADIUS;
+		arc_center_bottom_right.y = theme_geometry->balloon_bottom_right.y - PREVIEW_RADIUS;
+
+		Coordinates arc_center_bottom_left;
+		arc_center_bottom_left.x = theme_geometry->balloon_top_left.x + PREVIEW_RADIUS;
+		arc_center_bottom_left.y = theme_geometry->balloon_bottom_right.y - PREVIEW_RADIUS;
+
+		cairo_move_to(cr, 
+			theme_geometry->balloon_top_left.x + PREVIEW_RADIUS,
+			theme_geometry->balloon_top_left.y);
+
+		cairo_line_to(cr, 
+			theme_geometry->balloon_bottom_right.x - PREVIEW_RADIUS,
+			theme_geometry->balloon_top_left.y);
+
+
+		 cairo_arc (cr,
+			arc_center_top_right.x,
+			arc_center_top_right.y,
+			PREVIEW_RADIUS,
+			1.5 * M_PI,
+			2.0 * M_PI);
+
+		cairo_line_to(cr, 
+			theme_geometry->balloon_bottom_right.x,
+			theme_geometry->balloon_bottom_right.y - PREVIEW_RADIUS);
+		
+
+		 cairo_arc(cr,
+			arc_center_bottom_right.x,
+			arc_center_bottom_right.y,
+			PREVIEW_RADIUS,
+			0.0 * M_PI,
+			0.5 * M_PI); 
+
+		
+		cairo_line_to(cr, 
+			theme_geometry->balloon_top_left.x + PREVIEW_RADIUS,
+			theme_geometry->balloon_bottom_right.y);
+
+		 cairo_arc (cr,
+			arc_center_bottom_left.x,
+			arc_center_bottom_left.y,
+			PREVIEW_RADIUS,
+			0.5 * M_PI,
+			1.0 * M_PI);
+
+		cairo_line_to(cr, 
+			theme_geometry->balloon_top_left.x,
+			theme_geometry->balloon_top_left.y + PREVIEW_RADIUS);
+
+		cairo_arc (cr,
+			arc_center_top_left.x,
+			arc_center_top_left.y,
+			PREVIEW_RADIUS,
+			1.0 * M_PI,
+			1.5 * M_PI);
+
+
+
+		cairo_close_path(cr);
+
+	} else {
+		cairo_move_to(cr, theme_geometry->balloon_top_left.x, theme_geometry->balloon_top_left.y);
+		cairo_line_to(cr, theme_geometry->balloon_bottom_right.x, theme_geometry->balloon_top_left.y);
+		cairo_line_to(cr, theme_geometry->balloon_bottom_right.x, theme_geometry->balloon_bottom_right.y);
+		cairo_line_to(cr, theme_geometry->balloon_top_left.x, theme_geometry->balloon_bottom_right.y);
+		cairo_close_path(cr);
+	}
 	cairo_fill_preserve(cr);
 
 	/* Stroke balloon */
