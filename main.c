@@ -14,7 +14,7 @@
  * This GTK application is a small graphics editor for adding speech balloons to images. 
  *
  * \section motivation Motivation
- * Full-feature graphics editors, such as GIMP or LibreOffice Draw, have the functionality for adding speech balloons. For someone doing a lot of this graphical work, there are many steps involved and the repetitive effort can become a burden. This small application reduces the number of steps and corresponding time to add speech balloons.
+ * Full-feature graphics editors, such as GIMP or LibreOffice Draw, have the functionality for adding speech balloons. There are many steps involved with these graphics editors, so for someone doing a lot of these annotations the repetitive effort can become a burden. This small application reduces the number of steps and corresponding time to add speech balloons.
  * 
  * \section architecture Architecture
  * This application runs on GTK and incorporates commands from the ImageMagick C API.
@@ -26,21 +26,17 @@
 
 /**
  * Starts the program and makes function calls representing a drawing process with the following steps:
- * -# Read in the image
- * -# Scale the image to the maximum width specified by the user.
- * -# Determine properties of the text, such as its final bounding box.
- * -# Draw a balloon sized to contain the text.
- * -# Draw the text.
- * -# Draw a path from user-specified point to the speech balloon.
- * -# Write the image.
+ * -# Allocate memory for the structures.
+ * -# Run the application.
+ * -# Free allocated memory.
  */
 int main(int argc, char *argv[]) {
 
 	GtkApplication *app;
 	int status;
 
+	/* Allocate memory for the structures (and sub-structures) with root structure User_Data.*/
 	User_Data *user_data = allocate_structures();
-
 
 	app = gtk_application_new ("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
 	g_signal_connect (app, "activate", G_CALLBACK (activate), user_data);
@@ -49,7 +45,8 @@ int main(int argc, char *argv[]) {
 	/* Decrease reference count because assigning it in on_app_activate */
 	g_object_unref(app);
 
+	/* Free allocated memory */
 	cleanup(user_data);
-		
+
 	return status;
 }
