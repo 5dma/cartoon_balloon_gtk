@@ -7,11 +7,11 @@
 
 /**
  * @file read_themes.c
- * @brief Functions for reading and applying themes.
+ * @brief Contains a function for reading the `themes` stanza in the settings file.
  */
 
 /**
- * Reads the file of defined themes into a `GHashTable` of `Theme` structs. 
+ * Reads the relevant settings file into a Themes struct. In particular, it creates a new Theme struct for every theme in the settings file and places that struct into a hash table. 
  */
 void read_themes(User_Data *user_data, JsonReader *reader)
 {
@@ -25,6 +25,7 @@ void read_themes(User_Data *user_data, JsonReader *reader)
 	json_reader_is_array(reader);
 	gint number_of_themes = json_reader_count_elements (reader);
 
+	/* For each theme in the `themes` stanza, allocate a struct and place that struct in a hash table. */
 	for (gint i = 0; i<number_of_themes; i++) {
 		Theme *theme = (Theme *)g_malloc(sizeof(Theme));
 		json_reader_read_element (reader, i);

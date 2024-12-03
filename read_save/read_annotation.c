@@ -7,11 +7,11 @@
 
 /**
  * @file read_annotation.c
- * @brief Reads an annotation's configuration file.
+ * @brief Contains a function for reading the `annotation` stanza in the settings file.
  */
 
 /**
-Reads the configuration file into an `Annotation` struct. The settings in this configuration file, such as the annotation text, are one-off: they can apply to only the current image. 
+Reads the relevant settings file into an Annotation struct. The settings in this struct file, such as the annotation text, are one-off: they can apply to only the current image. 
  */
 void read_annotation(User_Data *user_data, JsonReader *reader)
 {

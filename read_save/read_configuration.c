@@ -6,13 +6,11 @@
 
 /**
  * @file read_configuration.c
- * @brief Reads the application's configuration file.
+ * @brief Contains a function for reading the `configuration` stanza in the settings file.
  */
 
 /**
-Reads the configuration file into a `Settings` struct. The settings in this configuration file are relatively static: they can apply to multiple images. Also opens the log file.
-*
-* If the configuration file CONFIG_FILE (defined in headers.h) is not available, the memory allocated to far is freed and the application exits with error code `1`.
+Reads the relevant settings file into a Configuration struct. The settings in this struct file are relatively static: they can apply to multiple images and themes. Also calls get_log_file_pointer() to open the log file.
 */
 void read_configuration(User_Data *user_data, JsonReader *reader) {
 
