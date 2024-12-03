@@ -54,13 +54,11 @@ void read_annotation(User_Data *user_data, JsonReader *reader)
 	gtk_editable_set_text(GTK_EDITABLE(gui_data_annotation->entry_text_string ),json_reader_get_string_value(reader));
 	json_reader_end_member(reader);
 
-/* 	json_reader_read_member(reader, "theme");
-	g_strlcpy(annotation->theme, json_reader_get_string_value(reader), MAX_PATH_LENGTH);
-	json_reader_end_member(reader);
- */	json_reader_end_member(reader); /* annotation */
+	json_reader_end_member(reader); /* annotation */
 
 	annotation->resize_proportion_x = 0;
 	annotation->resize_proportion_y = 0;
+	/* The following object is freed in cleanup(). */
 	annotation->crosshair_cursor = gdk_cursor_new_from_name ("crosshair", NULL );
 	annotation->is_selecting_text_bottom_left_point = FALSE;
 	annotation->is_selecting_vertex_point = FALSE;

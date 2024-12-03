@@ -38,6 +38,7 @@ Parent function for starting the application. This function does the following:
 void activate(GtkApplication *app, gpointer data) {
 	User_Data *user_data = (User_Data *)data;
 
+	/* The following CssProvider is freed in cleanup(). */
 	user_data->gui_data->provider = gtk_css_provider_new();
 	gtk_css_provider_load_from_path(user_data->gui_data->provider, "/home/abba/programming/c_programs/cartoon_balloon_gtk/styles.css");
 

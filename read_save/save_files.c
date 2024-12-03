@@ -16,6 +16,7 @@ void save_files(User_Data *user_data) {
 
 	GError *error;
 
+	/* Copy the settings file to a backup file. */
 	g_rename (CONFIG_FILE, CONFIG_FILE_BACKUP);
 
 	JsonBuilder *builder = json_builder_new ();

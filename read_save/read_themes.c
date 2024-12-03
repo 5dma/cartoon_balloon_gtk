@@ -16,6 +16,7 @@
 void read_themes(User_Data *user_data, JsonReader *reader)
 {
 
+	/* The following object is freed in cleanup(). Each value in the hash is a Theme struct with no pointers, so they can safey be freed with the g_free function specified in the following statement. */
 	user_data->theme_hash  = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, g_free);
 
 	GHashTable* theme_hash = user_data->theme_hash;
@@ -27,6 +28,7 @@ void read_themes(User_Data *user_data, JsonReader *reader)
 
 	/* For each theme in the `themes` stanza, allocate a struct and place that struct in a hash table. */
 	for (gint i = 0; i<number_of_themes; i++) {
+		/* Each Theme object is freed in cleanup with g_hash_table_destroy(). */
 		Theme *theme = (Theme *)g_malloc(sizeof(Theme));
 		json_reader_read_element (reader, i);
 		json_reader_read_member(reader, "name");
