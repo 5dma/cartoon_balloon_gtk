@@ -1,13 +1,10 @@
 #include <glib/gstdio.h>
 #include <headers.h>
 #include <read_save.h>
-
-
 /**
  * @file save_files.c
- * @brief Contains parent function for saving settings to disk in JSON format.
+ * @brief Contains the parent function for saving settings in JSON format to disk.
 */
-
 
 /**
  * Saves settings to disk in JSON format. See also

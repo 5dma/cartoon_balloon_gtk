@@ -4,13 +4,14 @@
 
 /**
  * @file save_themes.c
- * @brief Places theme settings into a passed JSON builder.
+ * @brief Contains a function for saving the `themes` stanza in the settings file.
  */
 
 
 /**
- * Creates a theme object in the `themes` JSON array.
- */
+* Formats into JSON the settings in the hash of Theme structs.
+*/
+
 void add_theme_object (gpointer key, gpointer value, gpointer data) {
 
 	gchar *theme_name = (gchar *)key;
@@ -40,7 +41,6 @@ void add_theme_object (gpointer key, gpointer value, gpointer data) {
 	json_builder_set_member_name (builder, "balloon_stroke_color");
 	json_builder_add_string_value(builder, theme->balloon_stroke_color);
 
-
 	json_builder_set_member_name (builder, "rounded_corners");
 	json_builder_add_boolean_value(builder,theme->rounded_corners);
 
@@ -49,12 +49,11 @@ void add_theme_object (gpointer key, gpointer value, gpointer data) {
 
 
 /**
- * Places theme settings into a JSON structure for later save to disk. See also save_files().
- */
+* Formats into JSON the settings in the hash of Theme structs. For each entry in the hash, calls add_theme_object() to format an individual theme.
+*/
 void save_themes(User_Data *user_data, JsonBuilder *builder) {
 
 	GHashTable* theme_hash = user_data->theme_hash;
-
 
 	json_builder_set_member_name (builder, "themes");
 

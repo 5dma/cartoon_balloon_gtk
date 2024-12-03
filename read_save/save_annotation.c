@@ -4,13 +4,14 @@
 
 /**
  * @file save_annotation.c
- * @brief Places an annotation's settings into a passed JSON builder.
+ * @brief Contains a function for saving the `annotation` stanza in the settings file.
  */
 
 
 /**
- * Places annotation settings into a JSON structure for later save to disk. See also save_files().
- */
+* Formats into JSON the settings in the Annotation struct.
+*/
+
 void save_annotation(User_Data *user_data, JsonBuilder *builder) {
 
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;

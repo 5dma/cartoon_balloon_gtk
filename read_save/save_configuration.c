@@ -4,12 +4,12 @@
 
 /**
  * @file save_configuration.c
- * @brief Places a configuration's settings into a passed JSON builder.
+ * @brief Contains a function for saving the `configuration` stanza in the settings file.
  */
 
 /**
- * Places configuration settings into a JSON structure for later save to disk. See also save_files().
- */
+* Formats into JSON the settings in the Configuration struct.
+*/
 void save_configuration(User_Data *user_data, JsonBuilder *builder) {
 
 	Configuration *configuration = user_data->configuration;
