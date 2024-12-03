@@ -21,6 +21,7 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	GtkAdjustment *adjustment_elevation = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
 	GtkAdjustment *adjustment_space = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
 	GtkAdjustment *adjustment_top_margin = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
+	GtkAdjustment *adjustment_rounding_radius = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
 
 
 	GtkWidget *lbl_max_annotation_length = gtk_label_new ("Maximal annotation length:");
@@ -36,7 +37,7 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	GtkWidget *spin_elevation = gtk_spin_button_new (adjustment_elevation, 2, 0);
 	GtkWidget *spin_space = gtk_spin_button_new (adjustment_space, 2, 0);
 	GtkWidget *spin_top_margin = gtk_spin_button_new (adjustment_top_margin, 2, 0);
-	GtkWidget *spin_rounding_radius = gtk_spin_button_new (adjustment_top_margin, 2, 0);
+	GtkWidget *spin_rounding_radius = gtk_spin_button_new (adjustment_rounding_radius, 2, 0);
 
 	gtk_widget_set_halign (lbl_padding, GTK_ALIGN_START);
 	gtk_widget_set_halign (lbl_elevation, GTK_ALIGN_START);

@@ -70,7 +70,14 @@ void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	text_analysis->balloon_bottom = bottom_right_y;
 
 	/* Draw the balloon. */
-	DrawRectangle(d_wand, top_left_x, top_left_y, bottom_right_x, bottom_right_y);
+	
+	
+	if (theme->rounded_corners){
+		double rounding_radius = (double) gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_rounding_radius));
+		DrawRoundRectangle(d_wand, top_left_x, top_left_y, bottom_right_x, bottom_right_y, rounding_radius, rounding_radius);
+	} else {
+		DrawRectangle(d_wand, top_left_x, top_left_y, bottom_right_x, bottom_right_y);
+	}
 	MagickDrawImage(m_wand, d_wand);
 
 	/* Clean up */
