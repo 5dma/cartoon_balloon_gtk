@@ -5,19 +5,20 @@
 #include <headers.h>
 /**
  * @file process_image.c
- * @brief Processes the image based on the current settings for annotation and configuration.
+ * @brief Contains the parent function for adding an annotation to the input image.
  */
 
 
 /**
  * Makes function calls representing a drawing process with the following steps:
- * -# Read in the image
+ * -# Read in the input image
  * -# Scale the image to the maximum width specified by the user.
- * -# Determine properties of the text, such as its final bounding box.
+ * -# Determine properties of the text, such as its bounding box.
  * -# Draw a balloon sized to contain the text.
  * -# Draw the text.
- * -# Draw a path from user-specified point to the speech balloon.
+ * -# Draw the vertex.
  * -# Write the image.
+ * This function writes intermediate images to `/tmp/`.
  */
 void process_image(User_Data *user_data) {
 
@@ -39,18 +40,17 @@ void process_image(User_Data *user_data) {
 	}
 	MagickWriteImage(m_wand, "/tmp/original.jpg");
 
-	/* Get the name of the selected theme on the annotations tab. */
+	/* Get the name of the selected theme on the *Annotation* tab. */
 	Theme *selected_theme = (Theme *)get_selected_theme_from_hash(user_data, user_data->gui_data->gui_data_annotation->dropdown_theme);
 
 	/* Scale the image. */
 	scale_image(m_wand, user_data);
 	MagickWriteImage(m_wand, "/tmp/scaled.jpg");
-	/* Determine height of the annotation, and compute other measurements. */
 	
+	/* Determine height of the annotation, and compute other measurements. */
 	analyze_text(m_wand, selected_theme, user_data);
 
-
-	/* Extend the image vertically to accommodate the balloon. */
+	/* Extend the image vertically to accommodate the balloon as necessary. */
 	resize_image(m_wand, selected_theme, user_data);
 	MagickWriteImage(m_wand, "/tmp/resized.jpg");
 	
@@ -64,7 +64,6 @@ void process_image(User_Data *user_data) {
 
 	/* Add the path to the balloon. */
 	add_path(m_wand, selected_theme, user_data);
-
 	MagickWriteImage(m_wand, "/tmp/add_path.jpg");
 
 	/* Write the new image */

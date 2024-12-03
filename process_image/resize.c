@@ -6,11 +6,11 @@
 
 /**
  * @file resize.c
- * @brief Scales and resizes the image.
+ * @brief Contains functions for scaling and resizing the input image.
  */
 
 /**
-Scales the original image to no wider than the user-specified width found in `annotation->new_width`.
+Scales the original image to no wider than the user-specified width found in **Annotation** tab.
  */
 void scale_image(MagickWand *m_wand, User_Data *user_data)
 {
@@ -64,6 +64,4 @@ void resize_image(MagickWand *m_wand, Theme *selected_theme, User_Data *user_dat
 		} else {
 			text_analysis->overflow = 0;
 		}
-
-	
 }

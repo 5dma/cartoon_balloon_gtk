@@ -5,7 +5,7 @@
 #include <headers.h>
 /**
  * @file add_text.c
- * @brief Analyzes and places the text on the image.
+ * @brief Contains functions for drawing the text on the image.
  */
 
 /**
@@ -28,7 +28,7 @@ void add_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	DrawSetGravity(d_wand, NorthWestGravity);
 	DrawSetFontSize(d_wand, theme->font_size);
 
-
+	/* The font name returned from the GtkFontChooser has spaces, and ImageMagick uses a font name with hyphens in those spaces. For example DejaVu Sans Light and DejaVu-Sans-Light. In this step we normalize the font name so that ImageMagick can use it. */
 	gchar *normalized_font_name = g_strdelimit (g_strdup (theme->font_name), " ", '-');
 
 	DrawSetFont(d_wand,normalized_font_name);
@@ -45,7 +45,6 @@ void add_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	
 	/* Clean up. */
 	DestroyPixelWand(p_wand);
-	
 	DestroyDrawingWand(d_wand);
 	
 } 
@@ -53,7 +52,7 @@ void add_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 /**
   Processes and analyzes the text.
 
-  The user provides the lower-left corner of the text's position. In addition, there is a right margin on the image beyond which the text cannot flow. Using <a href="https://imagemagick.org/api/magick-wand.php#MagickQueryMultilineFontMetrics">MagickQueryMultilineFontMetrics</a>, this function examines the text word-by-word, and inserts newlines `\n` to prevent the text from extending past the margin.
+  The user provides the lower-left corner of the text's position. In addition, there is a right margin on the image beyond which the text cannot flow. Using <a href="https://imagemagick.org/api/magick-wand.php#MagickQueryMultilineFontMetrics">MagickQueryMultilineFontMetrics</a>, this function examines the text word-by-word, and inserts newlines `\n` to prevent the text from extending past the balloon.
  *
  * At the end of this function, this function saves the dimensions of the resulting text block. These dimenions are used for the following tasks:
  * - Compute the size of the balloon.
@@ -78,10 +77,12 @@ void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 		text_bottom_left_x * 
 		annotation->preview_scale * 
 		annotation->resize_proportion_x;
+	
 	text_analysis->bottom_offset = 
 		text_bottom_left_y * 
 		annotation->preview_scale *
 		annotation->resize_proportion_y;
+	
 	text_analysis->text_width = 0;
 	text_analysis->text_height = 0;
 	text_analysis->overflow = 0;
@@ -109,7 +110,6 @@ void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	gchar *rightmost_space;
 
 	/* Parse the annotation, placing newlines in places where the string exceeds max_text_width. */
-
 	const gchar *text_string = gtk_editable_get_text (GTK_EDITABLE(user_data->gui_data->gui_data_annotation->entry_text_string));
 
 	gchar *text_string_copy = g_strdup (text_string);

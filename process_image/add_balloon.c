@@ -4,7 +4,7 @@
 #include <gtk/gtk.h>
 /**
  * @file add_balloon.c
- * @brief Adds the speech balloon and the path to the balloon.
+ * @brief Contains function for drawing the balloon and vertex.
  */
 
 /**
@@ -69,10 +69,8 @@ void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	text_analysis->balloon_midpoint =  (bottom_right_x - top_left_x)/2 + top_left_x;
 	text_analysis->balloon_bottom = bottom_right_y;
 
-	/* Draw the balloon. */
-	
-	
-	if (theme->rounded_corners){
+	/* Draw the balloon. Included rounded corners if the theme so specifies. */
+	if (theme->rounded_corners) {
 		double rounding_radius = (double) gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_configuration->spin_rounding_radius));
 		DrawRoundRectangle(d_wand, top_left_x, top_left_y, bottom_right_x, bottom_right_y, rounding_radius, rounding_radius);
 	} else {
