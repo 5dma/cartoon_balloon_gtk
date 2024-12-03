@@ -1,9 +1,11 @@
 Adds speech balloons to images.
 
+![Example image](example_image.jpg)
+
 
 # Library dependencies
 
-As of Ubuntu 24.04, install the following packages
+As of Debian Bookworm, install the following packages
 
 * libmagick++-6-headers
 * libjson-glib-dev
@@ -16,8 +18,8 @@ As of Ubuntu 24.04, install the following packages
 
 # Running
 
-1. Configure settings in `annotation.json` and `configuration.json`.
-2. `./balloon`
+1. Configure settings in `settings.json`.
+2. `bin/balloon`
 
 # Memory check
 
