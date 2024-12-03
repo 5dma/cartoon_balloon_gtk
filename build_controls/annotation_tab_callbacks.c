@@ -11,7 +11,6 @@ void show_annotation_tab(GtkWidget *widget, gpointer data)
 {
 	Gui_Data *gui_data = (Gui_Data *)data;
 
-	gtk_css_provider_load_from_path(gui_data->provider, "/home/abba/programming/c_programs/cartoon_balloon_gtk/styles.css");
 	gtk_widget_set_visible(gui_data->gui_data_annotation->box_annotation, TRUE);
 	gtk_widget_set_visible(gui_data->box_theme, FALSE);
 	gtk_widget_set_visible(gui_data->gui_data_configuration->box_configuration, FALSE);
