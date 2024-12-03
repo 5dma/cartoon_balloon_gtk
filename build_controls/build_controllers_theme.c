@@ -47,6 +47,6 @@ void build_controllers_theme(User_Data *user_data)
 	g_signal_connect(new_theme_controller_focus, "leave", G_CALLBACK(new_theme), user_data);
 	gtk_widget_add_controller(gui_data_theme->entry_new_theme, new_theme_controller_focus);
 
-	g_signal_connect(GTK_EDITABLE(gui_data_theme->entry_new_theme), "changed", G_CALLBACK(get_new_theme_name), user_data);
-	g_signal_connect(GTK_BUTTON(gui_data_theme->btn_delete), "clicked", G_CALLBACK(delete_theme), user_data);
+	g_signal_connect(gui_data_theme->entry_new_theme, "changed", G_CALLBACK(get_new_theme_name), user_data);
+	g_signal_connect(gui_data_theme->btn_delete, "clicked", G_CALLBACK(delete_theme), user_data);
 }
