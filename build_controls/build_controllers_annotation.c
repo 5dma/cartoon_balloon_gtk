@@ -3,12 +3,12 @@
 #include <controls.h>
 /**
  * @file build_controllers_annotation.c
- * @brief Contains a function for assigning callbacks to controls in the Annotations tab.
+ * @brief Contains a function for assigning callbacks to controls in the **Annotations** tab.
  */
 
 
 /**
-Assigns callbacks to controls in the Annotation tab.
+* Assigns callbacks to controls in the **Annotation** tab. For a description of the callbacks, see build_controls/annotation_tab_callbacks.c.
  */
 void build_controllers_annotation(User_Data *user_data)
 {
@@ -22,11 +22,11 @@ void build_controllers_annotation(User_Data *user_data)
 	/* Add clicked signal to show the file open dialog. */
 	g_signal_connect(gui_data_annotation->btn_file_open, "clicked", G_CALLBACK(select_input_file), user_data);
 
-	/* Add clicked signal for the **Point** buttons. */
+	/* Add clicked signal for each **Point** button. */
 	g_signal_connect(gui_data_annotation->btn_point_vertex, "clicked", G_CALLBACK(on_btn_vertex_clicked), user_data);
 	g_signal_connect(gui_data_annotation->btn_point_text_bottom, "clicked", G_CALLBACK(on_btn_text_bottom_clicked), user_data);
 
-	/* Add motion controller to picture preview */
+	/* Add motion controller to picture preview. */
 	GtkEventController *eventMouseMotion = gtk_event_controller_motion_new();
 	gtk_event_controller_set_propagation_phase(eventMouseMotion, GTK_PHASE_CAPTURE);
 	g_signal_connect(eventMouseMotion, "enter", G_CALLBACK(on_mouse_enter_image), user_data);

@@ -1,11 +1,11 @@
 #include <headers.h>
 /**
  * @file annotation_tab_callbacks.c
- * @brief Contains callback functions for controls in the Annotations tab.
+ * @brief Contains callback functions for controls in the **Annotations** tab.
  */
 
 /**
-Fired when user clicks the **Annotation** button, and displays the controls in the annotations tab.
+Fired when user clicks the **Annotation** button, and displays the **Annotations** tab.
  */
 void show_annotation_tab(GtkWidget *widget, gpointer data)
 {
@@ -18,7 +18,7 @@ void show_annotation_tab(GtkWidget *widget, gpointer data)
 }
 
 /**
-This function is fired when the user selects a file in the file open dialog box. The processing includes the following:
+Fired when the user selects a file in the file open dialog box. The processing includes the following:
 * - Storing the path of the selected file.
 * - Displaying the path in the GUI.
 * - Displaying the file in the picture preview widget.
@@ -49,15 +49,14 @@ static void on_open_response(GtkDialog *dialog, int response, gpointer data)
 }
 
 /**
-Determines the bounding box of the image in the preview. When the mouse enters the preview widget, we know the following measurements:
+ * Fired when the user enters the image preview with the mouse. When the mouse enters the preview widget, we know the following measurements:
 * - The dimensions of the preview widget.
 * - The dimensions of the original image.
-* The image in the preview is a scaled version of the original image. It is scaled by the ratio of the preview widget's height divided by the original image's height. This ratio provides enough information to image preview's bounding box. This bounding box is used in on_mouse_motion_image().
+* Using these two dimensions, we can compute the ratio for scaling the original image so that it fits in the preview. In particular, the ratio is the preview widget's height divided by the original image's height. This bounding box is used in on_mouse_motion_image().
  */
 void on_mouse_enter_image(GtkEventControllerMotion *self, gdouble x, gdouble y, gpointer data)
 {
-	// GdkCursor *cursor_crosshair = gdk_cursor_new_from_name ("crosshair", NULL );
-	//  g_object_unref(cursor_crosshair);
+
 	User_Data *user_data = (User_Data *)data;
 	GtkWidget *picture_preview = user_data->gui_data->gui_data_annotation->picture_preview;
 	Dimensions *dimensions_picture_preview_widget = &(user_data->annotation->dimensions_picture_preview_widget);
@@ -81,9 +80,9 @@ void on_mouse_enter_image(GtkEventControllerMotion *self, gdouble x, gdouble y, 
 }
 
 /**
-This function is fired when there is mouse motion on the widget containing the image preview. This function has two purposes:
+* Fired when there is mouse motion on the widget containing the image preview. This function has two purposes:
 * - Changing the cursor to a crosshair as the mouse hovers over the image preview. When outside the image preview, the cursor changes back to the default.
-* - Update the value of the spin boxes, depending on the depressed **Point** button.
+* - Updating the value of the spin boxes, depending on the currently depressed **Point** button.
  */
 void on_mouse_motion_image(GtkEventControllerMotion *self, gdouble x, gdouble y, gpointer data)
 {
@@ -116,8 +115,8 @@ void on_mouse_motion_image(GtkEventControllerMotion *self, gdouble x, gdouble y,
 }
 
 /**
-This function is fired when the mouse is clicked on the preview.
-* -If the user is pointing to the text bottom left, then the clicked point is stored as the text bottom left.
+* Fired when the mouse is clicked on the preview.
+* - If the user is pointing to the text bottom left, then the clicked point is stored as the text bottom left.
 * - If the user is pointing to the vertex, then the clicked point is stored as the vertex.
 * - In either case, prepare a log message.
  */
@@ -135,7 +134,7 @@ void preview_clicked(GtkGestureClick *self, gint n_press, gdouble x, gdouble y, 
 		/* Turn off tracking the mouse's position inside the image. */
 		annotation->is_selecting_text_bottom_left_point = FALSE;
 
-		//g_snprintf(log_message, MAX_INPUT, "Text bottom left clicked at x: %ld, y: %ld", annotation->text_bottom_left.x, annotation->text_bottom_left.y);
+		g_snprintf(log_message, MAX_INPUT, "Text bottom left clicked at x: %d, y: %d", (guint) x, (guint) y);
 
 		/* If pointing to the vertex, save the value appearing in the appropriate spin boxes. */
 	}
@@ -145,13 +144,13 @@ void preview_clicked(GtkGestureClick *self, gint n_press, gdouble x, gdouble y, 
 		/* Turn off tracking the mouse's position inside the image. */
 		annotation->is_selecting_vertex_point = FALSE;
 
-		//g_snprintf(log_message, MAX_INPUT, "Vertex clicked at x: %ld, y: %ld", annotation->vertex.x, annotation->vertex.y);
+		g_snprintf(log_message, MAX_INPUT, "Vertex clicked at x: %d, y: %d", (guint) x, (guint) y);
 	}
 	logger(G_LOG_LEVEL_INFO, log_message, user_data);
 }
 
 /**
- * This function is fired when the user clicks on the **Point** button for pointing to the vertex.
+* Fired when the user clicks on the **Point** button for pointing to the vertex. The function sets flags indicating the user wants to set that coordinate. See preview_clicked().
  */
 void on_btn_vertex_clicked(GtkWidget *widget, gpointer data)
 {
@@ -161,7 +160,7 @@ void on_btn_vertex_clicked(GtkWidget *widget, gpointer data)
 }
 
 /**
- * This function is fired when the user clicks on the **Point** button for pointing to the text bottom left.
+ * Fired when the user clicks on the **Point** button for pointing to the balloon's bottom-left corner. The function sets flags indicating the user wants to set that coordinate. See preview_clicked().
  */
 void on_btn_text_bottom_clicked(GtkWidget *widget, gpointer data)
 {
@@ -171,7 +170,7 @@ void on_btn_text_bottom_clicked(GtkWidget *widget, gpointer data)
 }
 
 /**
-This function is fired when the user clicks the Browse button to select an image.
+* Fired when the user clicks the **Browse** button to select an input image. The GtkFileChooser is filtered for png, jpg, and gif as defined in build_box_annotation().
  */
 void select_input_file(GtkWidget *widget, gpointer data)
 {
@@ -197,7 +196,7 @@ void select_input_file(GtkWidget *widget, gpointer data)
 }
 
 /**
-This function is fired when the user clicks the **Export** button. It launches the image processing function process_image().
+* Fired when the user clicks the **Export** button. It launches the image processing function process_image().
  */
 void launch_processing(GtkWidget *widget, gpointer data)
 {

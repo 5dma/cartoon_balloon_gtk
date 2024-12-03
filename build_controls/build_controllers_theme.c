@@ -3,12 +3,12 @@
 #include <controls.h>
 /**
  * @file build_controllers_theme.c
- * @brief Contains a function for configuring the theme preview.
+ * @brief Contains a function for assigning callbacks to controls in the **Themes** tab.
  */
 
 
 /**
-Assigns callbacks to controls in the theme tab; configures the geometry for the theme preview.
+* Assigns callbacks to controls in the **Themes** tab. For a description of the callbacks, see build_controls/theme_tab_callbacks.c.
  */
 void build_controllers_theme(User_Data *user_data)
 {

@@ -53,7 +53,7 @@ gint convert_hex_to_int(const gchar digit)
 }
 
 /**
- * Converts a hexadecimal color (such as `#ABCD12`) to an RGB triplet.
+ * Converts a hexadecimal color (such as `#ABCD12`) to an RGB triplet. The RGB triplets are in the range 0-100.
  */
 void convert_hex_to_rgb(GdkRGBA *rgb, const gchar *hex)
 {
