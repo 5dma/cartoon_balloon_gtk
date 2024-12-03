@@ -5,7 +5,7 @@
  */
 
 /**
-Fired when user clicks the **Annotation** button, and displays the **Annotations** tab.
+Fired when user clicks the **Annotation** button, and displays the **Annotations** tab. This function shows the **Annotation** tab and hides the other two tabs.
  */
 void show_annotation_tab(GtkWidget *widget, gpointer data)
 {
@@ -40,6 +40,7 @@ static void on_open_response(GtkDialog *dialog, int response, gpointer data)
 		gtk_picture_set_file(GTK_PICTURE(user_data->gui_data->gui_data_annotation->picture_preview), file);
 
 		gdk_pixbuf_get_file_info(g_file_get_parse_name(file), &(user_data->annotation->dimensions_original_image.width), &(user_data->annotation->dimensions_original_image.height));
+
 		g_object_unref(file);
 		g_free(file_name);
 	}
@@ -175,6 +176,8 @@ void select_input_file(GtkWidget *widget, gpointer data)
 {
 
 	User_Data *user_data = (User_Data *)data;
+
+	/* The following object is destroyed in on_open_response(). */
 
 	GtkWidget *file_dialog = gtk_file_chooser_dialog_new(
 		"Choose a file",

@@ -143,7 +143,11 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_editable_set_alignment (GTK_EDITABLE(spin_vertex_y), 1.0);
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_new_width), 1.0);
 
-	/* Create filters applied to the GtkFileChooser opened in select_input_file(). */
+	/* 
+		Create filters applied to the GtkFileChooser opened in select_input_file(). 
+		The filters are sunk to file choosers when they are created, and destroyed along
+		with the file chooser when closed.
+	*/
 	GtkFileFilter *file_filter = gtk_file_filter_new ();
 	gtk_file_filter_add_suffix (file_filter, "png");
 	gtk_file_filter_add_suffix (file_filter, "jpg");
