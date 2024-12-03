@@ -79,6 +79,7 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	GtkWidget *entry_fill_color = gtk_entry_new();
 	GtkWidget *entry_stroke_color = gtk_entry_new();
 	GtkWidget *spin_stroke_width = gtk_spin_button_new (adjustment_stroke_width, 2, 0);
+	GtkWidget *check_rounded_corners = gtk_check_button_new_with_label ("Rounded corners");
 
 	GtkWidget *btn_balloon_fill_color_picker = gtk_color_button_new_with_rgba (&rgba);
 	GtkWidget *btn_balloon_stroke_color_picker = gtk_color_button_new_with_rgba (&rgba);
@@ -103,6 +104,10 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	/* Row 3 */
 	gtk_grid_attach ( GTK_GRID(grid_balloon), lbl_stroke_width, 0, 3, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_balloon), spin_stroke_width, 1, 3, 1, 1);
+
+	/* Row 4 */
+
+	gtk_grid_attach ( GTK_GRID(grid_balloon), check_rounded_corners, 0, 4, 1, 1);
 
 	GtkWidget *drawing_balloon = gtk_drawing_area_new ();
 	gtk_drawing_area_set_content_height (GTK_DRAWING_AREA(drawing_balloon), 156);
@@ -161,6 +166,7 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	user_data->gui_data->gui_data_theme->btn_font_color_picker = btn_font_color_picker;
 	user_data->gui_data->gui_data_theme->btn_balloon_fill_color_picker = btn_balloon_fill_color_picker;
 	user_data->gui_data->gui_data_theme->btn_balloon_stroke_color_picker = btn_balloon_stroke_color_picker;
+	user_data->gui_data->gui_data_theme->check_rounded_corners = check_rounded_corners;
 	user_data->gui_data->gui_data_theme->grid_text = grid_text;
 	user_data->gui_data->gui_data_theme->grid_balloon = grid_balloon;
 	user_data->gui_data->gui_data_theme->btn_delete = btn_delete;

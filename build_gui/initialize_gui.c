@@ -64,4 +64,6 @@ void initialize_gui(User_Data *user_data) {
 
 	gtk_spin_button_set_value ( GTK_SPIN_BUTTON(gui_data_theme->spin_stroke_width), selected_theme_value->stroke_width);
 
+	gtk_check_button_set_active (GTK_CHECK_BUTTON(gui_data_theme->check_rounded_corners), selected_theme_value->rounded_corners); 
+
 }

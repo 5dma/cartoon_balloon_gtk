@@ -39,6 +39,10 @@ void save_configuration(User_Data *user_data, JsonBuilder *builder) {
 	json_builder_set_member_name (builder, "top_margin");
 	json_builder_add_int_value(builder, (guint64) config_value);
 
+	config_value  = gtk_spin_button_get_value (GTK_SPIN_BUTTON(gui_data_configuration->spin_rounding_radius));
+	json_builder_set_member_name (builder, "rounding_radius");
+	json_builder_add_int_value(builder, (guint64) config_value);
+
 	json_builder_set_member_name (builder, "log_file_path");
 	json_builder_add_string_value(builder, configuration->log_file_path);
 

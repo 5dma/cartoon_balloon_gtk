@@ -39,6 +39,10 @@ void add_theme_object (gpointer key, gpointer value, gpointer data) {
 	json_builder_set_member_name (builder, "balloon_stroke_color");
 	json_builder_add_string_value(builder, theme->balloon_stroke_color);
 
+
+	json_builder_set_member_name (builder, "rounded_corners");
+	json_builder_add_boolean_value(builder,theme->rounded_corners);
+
 	json_builder_end_object(builder);
 }
 

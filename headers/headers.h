@@ -26,6 +26,7 @@ typedef struct Configuration {
 	gchar new_image_path[256]; /**< Maximal length of the new image's path. A reasonable value is 256. */
 	gchar log_file_path[256]; /**< Path to log file. */
 	FILE *log_file_pointer; /**< Address of the log file's handle. */
+	guint64 rounding_radius;  /**< Rounding radius used for drawing balloon. */
 } Configuration;
 
 /**
@@ -86,14 +87,14 @@ typedef struct Theme
 {
 	gchar name[100];  /**< Name of the theme. */
 	gchar text_color[8]; /**< Hex value of the text color including the octothorp. For example, white is `#FFFFFF`.*/
-	gchar font_name[MAX_PATH_LENGTH]; /**< Name of the font, provided as the font's full name with spaces replaced by hyphens. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu-Serif-Bold`. (A more complete command is `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf | sed "s/ /-/g"` .)
-
-	A list of fonts is available from `fc-list`. 
+	gchar font_name[MAX_PATH_LENGTH]; /**< Name of the font, provided as the font's full name with spaces replaced by hyphens. For example, the command `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf` gives `DejaVu Serif Bold`. Therefore, the font name in the configuration file needs to be `DejaVu-Serif-Bold`. (A more complete command is `fc-scan --format "%{fullname}\n" DejaVuSerif-Bold.ttf | sed "s/ /-/g"` .)  A list of fonts is available from `fc-list`. 
 	 */
 	gint64 font_size; /**< Font size, in points.*/
 	gint64 stroke_width; /**< Stroke width around balloon and polyline.*/
 	gchar balloon_fill_color[8]; /**< Hex value of the fill color including the octothorp. For example, white is `#FFFFFF`.*/
 	gchar balloon_stroke_color[8]; /**< Hex value of the fill color including the octothorp. For example, black is `#000000`.*/
+	gboolean rounded_corners; /**< Boolean indicating the balloons are drawn with rounded corners. */
+
 } Theme;
 
 /**
@@ -106,6 +107,7 @@ typedef struct Gui_Data_Configuration {
 	GtkWidget *spin_elevation; /**< Address of elevation in the configuration tab. */
 	GtkWidget *spin_space; /**< Address of space in the configuration tab. */
 	GtkWidget *spin_top_margin; /**< Address of top_margin in the configuration tab. */
+	GtkWidget *spin_rounding_radius; /**< Address of rounding radius in the configuration tab. */
 } Gui_Data_Configuration;
 
 /**
@@ -147,6 +149,7 @@ typedef struct Gui_Data_Theme {
 	GtkWidget *btn_balloon_stroke_color_picker; /**< Address of the baloon stroke color picker. */
 	GtkWidget *grid_text; /**< Address of the grid containing the theme's text controls. */
 	GtkWidget *grid_balloon; /**< Address of the grid containing the theme's balloon controls. */
+	GtkWidget *check_rounded_corners;  /**< Address of the checkbox indicating theme's balloon has rounded corners. */
 	GtkWidget *btn_delete;  /**< Address of the Delete button. */
 	cairo_t *cr; /**< Address of the Cairo context in the theme preview. */
 } Gui_Data_Theme;

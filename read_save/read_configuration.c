@@ -49,6 +49,10 @@ void read_configuration(User_Data *user_data, JsonReader *reader) {
 	g_strlcpy(configuration->new_image_path, json_reader_get_string_value(reader), 256);
 	json_reader_end_member(reader);
 
+	json_reader_read_member(reader, "rounding_radius");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_rounding_radius), json_reader_get_int_value (reader));
+	json_reader_end_member(reader);
+
 	json_reader_end_member(reader); /* configuration stanza */
 
 	configuration->log_file_pointer = get_log_file_pointer(configuration);

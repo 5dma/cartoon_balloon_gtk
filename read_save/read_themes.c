@@ -55,6 +55,11 @@ void read_themes(User_Data *user_data, JsonReader *reader)
 		json_reader_read_member(reader, "balloon_stroke_color");
 		g_strlcpy(theme->balloon_stroke_color, json_reader_get_string_value(reader), 100);
 		json_reader_end_member(reader); /* From read_member inside balloon_stroke_color. */
+
+		json_reader_read_member(reader, "rounded_corners");
+		theme->rounded_corners = json_reader_get_boolean_value(reader);
+		json_reader_end_member(reader); /* rounded corners. */
+
 		json_reader_end_element(reader); /* From read_element at element inside themes array . */
 
 		g_hash_table_insert (theme_hash, theme->name, theme);

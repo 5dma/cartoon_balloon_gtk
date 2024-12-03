@@ -28,6 +28,7 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	GtkWidget *lbl_elevation = gtk_label_new ("Elevation:");
 	GtkWidget *lbl_space = gtk_label_new ("Space:");
 	GtkWidget *lbl_top_margin = gtk_label_new ("Top margin:");
+	GtkWidget *lbl_rounding_radius = gtk_label_new ("Rounding radius:");
 
 
 	GtkWidget *spin_max_annotation_length = gtk_spin_button_new (adjustment_max_annotation_length, 2, 0);
@@ -35,11 +36,13 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	GtkWidget *spin_elevation = gtk_spin_button_new (adjustment_elevation, 2, 0);
 	GtkWidget *spin_space = gtk_spin_button_new (adjustment_space, 2, 0);
 	GtkWidget *spin_top_margin = gtk_spin_button_new (adjustment_top_margin, 2, 0);
+	GtkWidget *spin_rounding_radius = gtk_spin_button_new (adjustment_top_margin, 2, 0);
 
 	gtk_widget_set_halign (lbl_padding, GTK_ALIGN_START);
 	gtk_widget_set_halign (lbl_elevation, GTK_ALIGN_START);
 	gtk_widget_set_halign (lbl_space, GTK_ALIGN_START);
 	gtk_widget_set_halign (lbl_top_margin, GTK_ALIGN_START);
+	gtk_widget_set_halign (lbl_rounding_radius, GTK_ALIGN_START);
 
 	
 
@@ -68,7 +71,10 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	gtk_grid_attach ( GTK_GRID(grid_configuration), lbl_top_margin, 0, 4, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_configuration), spin_top_margin, 1, 4, 1, 1);
 
-	
+	/* Row 5 */
+	gtk_grid_attach ( GTK_GRID(grid_configuration), lbl_rounding_radius, 0, 5, 1, 1);
+	gtk_grid_attach ( GTK_GRID(grid_configuration), spin_rounding_radius, 1, 5, 1, 1);
+
 	gtk_box_append(GTK_BOX(box_configuration), grid_configuration);
 
 
@@ -84,6 +90,7 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_elevation), 1.0);
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_space), 1.0);
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_top_margin), 1.0);
+	gtk_editable_set_alignment(GTK_EDITABLE(spin_rounding_radius), 1.0);
 
 	gtk_editable_set_max_width_chars (GTK_EDITABLE(spin_max_annotation_length), 5);
 
@@ -95,6 +102,7 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	user_data->gui_data->gui_data_configuration->spin_elevation = spin_elevation;
 	user_data->gui_data->gui_data_configuration->spin_space = spin_space;
 	user_data->gui_data->gui_data_configuration->spin_top_margin = spin_top_margin;
+	user_data->gui_data->gui_data_configuration->spin_rounding_radius = spin_rounding_radius;
 
 
 	return box_configuration;

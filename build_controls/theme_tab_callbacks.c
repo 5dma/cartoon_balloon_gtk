@@ -191,6 +191,8 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 	g_signal_connect(gui_data_theme->btn_balloon_stroke_color_picker, "color-set", G_CALLBACK(save_selected_balloon_stroke_color_to_theme), user_data);
 	gtk_grid_attach(GTK_GRID(gui_data_theme->grid_balloon), gui_data_theme->btn_balloon_stroke_color_picker, 2, 2, 1, 1);
 
+	gtk_check_button_set_active (GTK_CHECK_BUTTON(gui_data_theme->check_rounded_corners), theme->rounded_corners); 
+
 	/* Save values in the theme_preview structure as we will be passing them to the function that draws the preview. 
 	Theme_Preview *theme_preview = user_data->theme_preview;
 	theme_preview->selected_theme = theme;
