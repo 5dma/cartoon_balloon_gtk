@@ -47,7 +47,7 @@ gpointer get_selected_theme_from_hash(User_Data *user_data, GtkWidget *dropdown_
 
 /* Memory management headers */
 User_Data *allocate_structures(void);
-void cleanup(User_Data *user_data);
+void cleanup(User_Data *user_data, gboolean detailed);
 
 /* read/save settings headers */
 void read_files(User_Data *user_data);

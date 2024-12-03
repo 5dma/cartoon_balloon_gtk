@@ -42,11 +42,11 @@ int main(int argc, char *argv[]) {
 	g_signal_connect (app, "activate", G_CALLBACK (activate), user_data);
 	status = g_application_run (G_APPLICATION (app), argc, argv);
  
-	/* Decrease reference count because assigning it in on_app_activate */
+	/* Decrease reference count because assigning it in activate() */
 	g_object_unref(app);
 
 	/* Free allocated memory */
-	cleanup(user_data);
+	cleanup(user_data, TRUE);
 
 	return status;
 }

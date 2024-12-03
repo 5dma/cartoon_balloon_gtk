@@ -25,12 +25,7 @@ void read_files(User_Data *user_data) {
 		g_error_free(error);
 		g_object_unref(parser);
 
-		/* Free memory that was allocated in allocate_structures(). */
-		g_free(user_data->gui_data->gui_data_theme);
-		g_free(user_data->gui_data->gui_data_annotation);
-		g_free(user_data->gui_data->gui_data_configuration);
-		g_free(user_data->gui_data);
-		g_free(user_data);
+		cleanup(user_data, FALSE);
 		exit(1);
 	}
 
