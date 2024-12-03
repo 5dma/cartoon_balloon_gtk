@@ -2,7 +2,7 @@
 #include <headers.h>
 /**
  * @file build_box_annotation.c
- * @brief Builds the GUI tab `box_annotation`.
+ * @brief Contains a function for building the GUI tab `box_annotation`.
  */
 
 /**
@@ -24,8 +24,6 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	GtkEntryBuffer *buffer_input_image = gtk_entry_buffer_new (NULL, -1);
 	GtkWidget *entry_input_image = gtk_entry_new();
 	gtk_entry_set_buffer (GTK_ENTRY(entry_input_image), buffer_input_image);
-
-
 
 	GtkWidget *btn_file_open = gtk_button_new_with_label ("Browse…");
 
@@ -113,7 +111,7 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_box_append(GTK_BOX(box_width_theme), lbl_theme);
 	gtk_box_append(GTK_BOX(box_width_theme), dropdown_theme);
 
-
+	/* Control for the image preview. */
 	GtkWidget *picture_preview = gtk_picture_new();
 
 	gtk_box_append(GTK_BOX(box_annotation), grid_annotation);
@@ -151,23 +149,25 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_file_filter_add_suffix (file_filter, "jpg");
 	gtk_file_filter_add_suffix (file_filter, "gif");
 
-	user_data->gui_data->gui_data_annotation->btn_annotation = btn_annotation;
-	user_data->gui_data->gui_data_annotation->entry_input_image = entry_input_image;
-	user_data->gui_data->gui_data_annotation->btn_file_open = btn_file_open;
-	user_data->gui_data->gui_data_annotation->spin_text_bottom_left_x = spin_text_bottom_left_x;
-	user_data->gui_data->gui_data_annotation->spin_text_bottom_left_y = spin_text_bottom_left_y;
-	user_data->gui_data->gui_data_annotation->spin_vertex_x = spin_vertex_x;
-	user_data->gui_data->gui_data_annotation->spin_vertex_y = spin_vertex_y;
-	user_data->gui_data->gui_data_annotation->btn_point_vertex = btn_point_vertex;
-	user_data->gui_data->gui_data_annotation->btn_point_text_bottom = btn_point_text_bottom;
-	user_data->gui_data->gui_data_annotation->spin_new_width = spin_new_width;
-	user_data->gui_data->gui_data_annotation->dropdown_theme = dropdown_theme;
-	user_data->gui_data->gui_data_annotation->entry_text_string = entry_text_string;
-	user_data->gui_data->gui_data_annotation->btn_export = btn_export;
-	user_data->gui_data->gui_data_annotation->picture_preview = picture_preview;
-	user_data->gui_data->gui_data_annotation->file_filter = file_filter;
+	/* Save widgets in User_Data struct. */
+	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;
+	gui_data_annotation->btn_annotation = btn_annotation;
+	gui_data_annotation->entry_input_image = entry_input_image;
+	gui_data_annotation->btn_file_open = btn_file_open;
+	gui_data_annotation->spin_text_bottom_left_x = spin_text_bottom_left_x;
+	gui_data_annotation->spin_text_bottom_left_y = spin_text_bottom_left_y;
+	gui_data_annotation->spin_vertex_x = spin_vertex_x;
+	gui_data_annotation->spin_vertex_y = spin_vertex_y;
+	gui_data_annotation->btn_point_vertex = btn_point_vertex;
+	gui_data_annotation->btn_point_text_bottom = btn_point_text_bottom;
+	gui_data_annotation->spin_new_width = spin_new_width;
+	gui_data_annotation->dropdown_theme = dropdown_theme;
+	gui_data_annotation->entry_text_string = entry_text_string;
+	gui_data_annotation->btn_export = btn_export;
+	gui_data_annotation->picture_preview = picture_preview;
+	gui_data_annotation->file_filter = file_filter;
 
-
+	/* At program start, the annotation tab is visible. */
 	gtk_widget_set_visible(box_annotation, TRUE);
 
 	return box_annotation;

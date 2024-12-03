@@ -3,7 +3,7 @@
 
 /**
  * @file build_box_theme.c
- * @brief Builds the GUI tab `box_theme`.
+ * @brief Contains a function for building the GUI tab `box_theme`.
  */
 
 /**
@@ -49,10 +49,10 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	/* Grid for styling the text */
 	GtkWidget *grid_text = gtk_grid_new ();
 
-	/* Row 1*/
+	/* Row 0 */
 	gtk_grid_attach ( GTK_GRID(grid_text), lbl_text, 0, 0, 3, 1);
 
-	/* Row 1*/
+	/* Row 1 */
 	gtk_grid_attach ( GTK_GRID(grid_text), lbl_font, 0, 1, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_text), btn_font_name_picker, 1, 1, 2, 1);
 
@@ -88,10 +88,10 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	/* Grid for styling the balloon */
 	GtkWidget *grid_balloon = gtk_grid_new ();
 
-	/* Row 1*/
+	/* Row 0 */
 	gtk_grid_attach ( GTK_GRID(grid_balloon), lbl_balloon, 0, 0, 3, 1);
 
-	/* Row 1*/
+	/* Row 1 */
 	gtk_grid_attach ( GTK_GRID(grid_balloon), lbl_fill_color, 0, 1, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_balloon), entry_fill_color, 1, 1, 1, 1);
 	gtk_grid_attach ( GTK_GRID(grid_balloon), btn_balloon_fill_color_picker, 2, 1, 1, 1);
@@ -106,15 +106,15 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	gtk_grid_attach ( GTK_GRID(grid_balloon), spin_stroke_width, 1, 3, 1, 1);
 
 	/* Row 4 */
-
 	gtk_grid_attach ( GTK_GRID(grid_balloon), check_rounded_corners, 0, 4, 1, 1);
 
+
+	/* Control for drawing the theme preview. */
 	GtkWidget *drawing_balloon = gtk_drawing_area_new ();
 	gtk_drawing_area_set_content_height (GTK_DRAWING_AREA(drawing_balloon), 156);
 	gtk_drawing_area_set_content_width (GTK_DRAWING_AREA(drawing_balloon), 178);
 
 	/* Control to delete theme */
-
 	GtkWidget *btn_delete = gtk_button_new_with_label("Delete");
 	GtkWidget *box_save_copy_delete = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_append(GTK_BOX(box_save_copy_delete), btn_delete);
@@ -129,7 +129,6 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 	gtk_box_append(GTK_BOX(box_theme), box_theme_selector);
 	gtk_box_append(GTK_BOX(box_theme), grid_font_balloon_preview);
 	gtk_box_append(GTK_BOX(box_theme), box_save_copy_delete);
-
 
 
 	gtk_widget_add_css_class (box_theme, "tab" );
@@ -151,25 +150,28 @@ GtkWidget *build_box_theme(User_Data *user_data) {
 
 	gtk_widget_set_sensitive (entry_new_theme, FALSE);
 
-
+	/* At program start, the theme tab is invisible. */
 	gtk_widget_set_visible(box_theme, FALSE);
 
-	user_data->gui_data->gui_data_theme->dropdown_theme = dropdown_theme;
-	user_data->gui_data->gui_data_theme->entry_new_theme = entry_new_theme;
-	user_data->gui_data->gui_data_theme->entry_font_color = entry_font_color;
-	user_data->gui_data->gui_data_theme->entry_fill_color = entry_fill_color;
-	user_data->gui_data->gui_data_theme->entry_font_color = entry_font_color;
-	user_data->gui_data->gui_data_theme->entry_stroke_color = entry_stroke_color;
-	user_data->gui_data->gui_data_theme->spin_stroke_width = spin_stroke_width;
-	user_data->gui_data->gui_data_theme->drawing_balloon = drawing_balloon;
-	user_data->gui_data->gui_data_theme->btn_font_name_picker = btn_font_name_picker;
-	user_data->gui_data->gui_data_theme->btn_font_color_picker = btn_font_color_picker;
-	user_data->gui_data->gui_data_theme->btn_balloon_fill_color_picker = btn_balloon_fill_color_picker;
-	user_data->gui_data->gui_data_theme->btn_balloon_stroke_color_picker = btn_balloon_stroke_color_picker;
-	user_data->gui_data->gui_data_theme->check_rounded_corners = check_rounded_corners;
-	user_data->gui_data->gui_data_theme->grid_text = grid_text;
-	user_data->gui_data->gui_data_theme->grid_balloon = grid_balloon;
-	user_data->gui_data->gui_data_theme->btn_delete = btn_delete;
+	/* Save widgets in User_Data struct. */
+
+	Gui_Data_Theme *gui_data_theme = user_data->gui_data->gui_data_theme;
+	gui_data_theme->dropdown_theme = dropdown_theme;
+	gui_data_theme->entry_new_theme = entry_new_theme;
+	gui_data_theme->entry_font_color = entry_font_color;
+	gui_data_theme->entry_fill_color = entry_fill_color;
+	gui_data_theme->entry_font_color = entry_font_color;
+	gui_data_theme->entry_stroke_color = entry_stroke_color;
+	gui_data_theme->spin_stroke_width = spin_stroke_width;
+	gui_data_theme->drawing_balloon = drawing_balloon;
+	gui_data_theme->btn_font_name_picker = btn_font_name_picker;
+	gui_data_theme->btn_font_color_picker = btn_font_color_picker;
+	gui_data_theme->btn_balloon_fill_color_picker = btn_balloon_fill_color_picker;
+	gui_data_theme->btn_balloon_stroke_color_picker = btn_balloon_stroke_color_picker;
+	gui_data_theme->check_rounded_corners = check_rounded_corners;
+	gui_data_theme->grid_text = grid_text;
+	gui_data_theme->grid_balloon = grid_balloon;
+	gui_data_theme->btn_delete = btn_delete;
 
 	return box_theme;
 }

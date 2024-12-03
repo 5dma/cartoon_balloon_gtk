@@ -3,18 +3,18 @@
 
 /**
  * @file build_box_configuration.c
- * @brief Builds the GUI tab `box_configuration`.
+ * @brief Contains a function for building the GUI tab `box_configuration`.
  */
 
 /**
-* Builds the box containing configuration controls, and returns the associated widget.
-*/
+ * Builds the box containing configuration controls, and returns the associated widget.
+ */
 GtkWidget *build_box_configuration(User_Data *user_data) {
 
-	/* Build the box containing configuration controls. */
+	/* Instantiate the box containing configuration controls. */
 	GtkWidget *box_configuration  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
-	/* Controls for configuring the theme. */
+	/* Adjustments for the various spin boxes. */
 
 	GtkAdjustment *adjustment_max_annotation_length = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
 	GtkAdjustment *adjustment_padding = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
@@ -23,7 +23,7 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	GtkAdjustment *adjustment_top_margin = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
 	GtkAdjustment *adjustment_rounding_radius = gtk_adjustment_new (125, 0, 256, 1, 10, 0);
 
-
+	/* Instantiate labels. */
 	GtkWidget *lbl_max_annotation_length = gtk_label_new ("Maximal annotation length:");
 	GtkWidget *lbl_padding = gtk_label_new ("Padding:");
 	GtkWidget *lbl_elevation = gtk_label_new ("Elevation:");
@@ -31,7 +31,7 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	GtkWidget *lbl_top_margin = gtk_label_new ("Top margin:");
 	GtkWidget *lbl_rounding_radius = gtk_label_new ("Rounding radius:");
 
-
+	/* Instantiate spin buttons. */
 	GtkWidget *spin_max_annotation_length = gtk_spin_button_new (adjustment_max_annotation_length, 2, 0);
 	GtkWidget *spin_padding = gtk_spin_button_new (adjustment_padding, 2, 0);
 	GtkWidget *spin_elevation = gtk_spin_button_new (adjustment_elevation, 2, 0);
@@ -47,7 +47,7 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 
 	
 
-	/* Grid for styling the text */
+	/* Grid for the configuration controls. */
 	
 	GtkWidget *grid_configuration = gtk_grid_new ();
 
@@ -93,18 +93,23 @@ GtkWidget *build_box_configuration(User_Data *user_data) {
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_top_margin), 1.0);
 	gtk_editable_set_alignment(GTK_EDITABLE(spin_rounding_radius), 1.0);
 
+	/* Allow a maximum of five digits (99,999 characters) to specify an annotation's length. */
 	gtk_editable_set_max_width_chars (GTK_EDITABLE(spin_max_annotation_length), 5);
 
 	gtk_widget_add_css_class(grid_configuration,"grid_coordinates");
+
+	/* At program start, the configuration tab is invisible. */
 	gtk_widget_set_visible(box_configuration, FALSE);
 
-	user_data->gui_data->gui_data_configuration->spin_max_annotation_length = spin_max_annotation_length;
-	user_data->gui_data->gui_data_configuration->spin_padding = spin_padding;
-	user_data->gui_data->gui_data_configuration->spin_elevation = spin_elevation;
-	user_data->gui_data->gui_data_configuration->spin_space = spin_space;
-	user_data->gui_data->gui_data_configuration->spin_top_margin = spin_top_margin;
-	user_data->gui_data->gui_data_configuration->spin_rounding_radius = spin_rounding_radius;
 
+	/* Save widgets in User_Data struct. */
+	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_configuration;
+	gui_data_configuration->spin_max_annotation_length = spin_max_annotation_length;
+	gui_data_configuration->spin_padding = spin_padding;
+	gui_data_configuration->spin_elevation = spin_elevation;
+	gui_data_configuration->spin_space = spin_space;
+	gui_data_configuration->spin_top_margin = spin_top_margin;
+	gui_data_configuration->spin_rounding_radius = spin_rounding_radius;
 
 	return box_configuration;
 
