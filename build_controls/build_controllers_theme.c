@@ -9,6 +9,7 @@
 
 /**
 * Assigns callbacks to controls in the **Themes** tab. For a description of the callbacks, see build_controls/theme_tab_callbacks.c.
+* @param user_data Pointer to user data.
  */
 void build_controllers_theme(User_Data *user_data)
 {

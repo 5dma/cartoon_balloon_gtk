@@ -5,7 +5,10 @@
  */
 
 /**
-Fired when user clicks the window close control. The function writes all settings to disk and then destroys the window. See save_files().
+Fired when user clicks the window close control. The function writes all settings to disk and then destroys the window.
+* @param self Pointer to the application window.
+* @param data Pointer to user data.
+* \sa save_files()
 */
 void save_settings(GtkWidget *self, gpointer data) {
 
@@ -15,7 +18,9 @@ void save_settings(GtkWidget *self, gpointer data) {
 }
 
 /**
-Assigns callbacks to controls in the application window. See save_settings().
+Assigns callbacks to controls in the application window.
+* @param user_data Pointer to user data.
+* \sa save_files()
  */
 void build_controllers_window(User_Data *user_data) {
 

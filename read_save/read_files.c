@@ -7,10 +7,11 @@
 */
 
 /**
- * Reads settings from disk in JSON format. See also
- * - read_configuration()
- * - read_annotation()
- * - read_themes()
+ * Reads settings from disk in JSON format.
+ * @param user_data Pointer to user data.
+ * \sa read_configuration()
+ * read_annotation()
+ * read_themes() 
 */
 void read_files(User_Data *user_data) {
 

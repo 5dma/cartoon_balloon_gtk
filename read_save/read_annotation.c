@@ -12,6 +12,8 @@
 
 /**
 Reads the relevant settings file into an Annotation struct. The settings in this struct file, such as the annotation text, are one-off: they can apply to only the current image. 
+* @param user_data Pointer to user data.
+* @param reader Pointer to the currently active JSON object.
  */
 void read_annotation(User_Data *user_data, JsonReader *reader)
 {

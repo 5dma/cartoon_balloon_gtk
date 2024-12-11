@@ -7,6 +7,7 @@
 
 /**
   Frees memory of string objects in the list store of theme names.
+  @param list_store_themes Pointer to the `GListStore` for which we are freeing the entries' memory.
  */
 void free_themes_in_list_store(GListStore * list_store_themes) {
 
@@ -20,6 +21,9 @@ void free_themes_in_list_store(GListStore * list_store_themes) {
 
 /**
   Frees memory in the User_Data instance.
+  @param user_data Pointer to user data.
+  @param detailed If `TRUE`, all memory has been allocated and this function frees it as well. If `FALSE`, only the preliminary memory was allocated at application start.
+  \sa allocate_structures()
  */
 void cleanup(User_Data *user_data, gboolean detailed)
 {

@@ -10,8 +10,10 @@
 
 /**
 * Formats into JSON the settings in the hash of Theme structs.
+* @param key Key for the theme.
+* @param value Pointer to the theme being saved.
+* @param data Pointer to user data.
 */
-
 void add_theme_object (gpointer key, gpointer value, gpointer data) {
 
 	gchar *theme_name = (gchar *)key;
@@ -50,6 +52,8 @@ void add_theme_object (gpointer key, gpointer value, gpointer data) {
 
 /**
 * Formats into JSON the settings in the hash of Theme structs. For each entry in the hash, calls add_theme_object() to format an individual theme.
+* @param user_data Pointer to user data.
+* @param builder Pointer to a `JsonBuilder`.
 */
 void save_themes(User_Data *user_data, JsonBuilder *builder) {
 

@@ -8,7 +8,9 @@
  */
 
 /**
-Fires when user clicks the **Theme** button, and displays the controls in the theme tab.
+Fires when user clicks the **Themes** button, and displays the controls in the theme tab.
+* @param widget Pointer to the **Themes** button.
+* @param data Pointer to user data.
  */
 void show_theme_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
@@ -19,6 +21,8 @@ void show_theme_tab(GtkWidget *widget, gpointer data) {
 
 /**
 Fires when user clicks the **Configuration** button, and displays the controls in the configuration tab.
+* @param widget Pointer to the **Configuration** button.
+* @param data Pointer to user data.
  */
 void show_configuration_tab(GtkWidget *widget, gpointer data) {
 	Gui_Data *gui_data = (Gui_Data *)data;
@@ -34,6 +38,8 @@ Parent function for starting the application. This function does the following:
  * - Adds top-level widgets to the window (three buttons on the top, three tabs, status bar)
  * - Calls read_files() to read settings from disk.
  * - Calls initialize_gui() to initialize widgets with the read settings.
+* @param app Pointer to the instantiated application.
+* @param data Pointer to user data.
  */
 void activate(GtkApplication *app, gpointer data) {
 	User_Data *user_data = (User_Data *)data;

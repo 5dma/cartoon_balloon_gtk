@@ -11,6 +11,8 @@
 
 /**
 Reads the relevant settings file into a Configuration struct. The settings in this struct file are relatively static: they can apply to multiple images and themes. Also calls get_log_file_pointer() to open the log file.
+* @param user_data Pointer to user data.
+* @param reader Pointer to the currently active JSON object.
 */
 void read_configuration(User_Data *user_data, JsonReader *reader) {
 

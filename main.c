@@ -17,10 +17,10 @@
  * Full-feature graphics editors, such as GIMP or LibreOffice Draw, have the functionality for adding speech balloons. There are many steps involved with these graphics editors, so for someone doing a lot of these annotations the repetitive effort can become a burden. This small application reduces the number of steps and corresponding time to add speech balloons.
  * 
  * \section architecture Architecture
- * This application runs on GTK and incorporates commands from the ImageMagick C API.
+ * This application runs on GTK 4 and incorporates commands from the ImageMagick C API.
  * 
  * \section documentation Documentation
- * To generate this code documentation, run `doxygen Doxyfile`. The output is in the `doc/html/` directory of this source code.
+ * To generate this code documentation, run `doxygen Doxyfile`. The output is in the `html/` directory of this source code.
  *
 */
 
@@ -29,6 +29,9 @@
  * -# Allocate memory for the structures.
  * -# Run the application.
  * -# Free allocated memory.
+ * @param argc Count of arguments passed from the shell.
+ * @param argv Character array of arguments passed from the shell.
+ * @return Status code returned from `g_application_run`.
  */
 int main(int argc, char *argv[]) {
 

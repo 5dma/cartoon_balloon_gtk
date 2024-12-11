@@ -7,10 +7,9 @@
 */
 
 /**
- * Saves settings to disk in JSON format. See also
- * - save_configuration()
- * - save_annotation()
- * - save_themes()
+ * Saves settings to disk in JSON format.
+ * @param user_data Pointer to user data.
+ * \sa save_configuration(), save_annotation(), save_themes()
 */
 void save_files(User_Data *user_data) {
 

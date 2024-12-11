@@ -8,6 +8,8 @@
 
 /**
  * Builds the box containing configuration controls, and returns the associated widget.
+ @param user_data Pointer to user data.
+ @return Widget with the configuration controls.
  */
 GtkWidget *build_box_configuration(User_Data *user_data) {
 

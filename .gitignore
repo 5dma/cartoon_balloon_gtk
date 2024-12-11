@@ -5,6 +5,7 @@ balloon.dSYM/*
 *.odt
 *.odg*
 .~lock.specifications.odt#
+html/
 doc/
 *.gch
 *.bak

@@ -11,6 +11,8 @@
 
 /**
 Scales the original image to no wider than the user-specified width found in **Annotation** tab.
+* @param m_wand Pointer to the wand.
+* @param user_data Pointer to user data.
  */
 void scale_image(MagickWand *m_wand, User_Data *user_data)
 {
@@ -33,6 +35,9 @@ void scale_image(MagickWand *m_wand, User_Data *user_data)
 
 /**
   Resizes the image vertically so that it can accommodate any overflow from the text, balloon, padding, and top margin.
+* @param m_wand Pointer to the wand.
+* @param selected_theme Pointer to the currently selected theme.
+* @param user_data Pointer to user data.
  */
 void resize_image(MagickWand *m_wand, Theme *selected_theme, User_Data *user_data) {
 

@@ -10,8 +10,9 @@
 
 /**
 * Formats into JSON the settings in the Annotation struct.
+* @param user_data Pointer to user data.
+* @param builder Pointer to the currently active JSON builder.
 */
-
 void save_annotation(User_Data *user_data, JsonBuilder *builder) {
 
 	Gui_Data_Annotation *gui_data_annotation = user_data->gui_data->gui_data_annotation;

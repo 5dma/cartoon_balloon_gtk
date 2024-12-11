@@ -6,7 +6,9 @@
  */
 
 /**
- * Builds the box containing annotation controls, and returns the associated widget.
+ * Builds the box containing annotation controls.
+ @param user_data Pointer to user data.
+ @return Widget with the annotation controls.
  */
 GtkWidget *build_box_annotation(User_Data *user_data) {
 

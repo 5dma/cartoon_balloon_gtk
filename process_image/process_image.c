@@ -19,6 +19,7 @@
  * -# Draw the vertex.
  * -# Write the image.
  * This function writes intermediate images to `/tmp/`.
+ * @param user_data Pointer to user data.
  */
 void process_image(User_Data *user_data) {
 

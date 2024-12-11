@@ -9,7 +9,8 @@
 
 /**
 * Assigns callbacks to controls in the **Annotation** tab. For a description of the callbacks, see build_controls/annotation_tab_callbacks.c.
- */
+* @param user_data Pointer to user data.
+*/
 void build_controllers_annotation(User_Data *user_data)
 {
 

@@ -12,7 +12,9 @@
 
 /**
  * Reads the relevant settings file into a Themes struct. In particular, it creates a new Theme struct for every theme in the settings file and places that struct into a hash table. 
- */
+ * @param user_data Pointer to user data.
+ * @param reader Pointer to the currently active JSON object.
+*/
 void read_themes(User_Data *user_data, JsonReader *reader)
 {
 

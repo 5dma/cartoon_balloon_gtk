@@ -11,7 +11,10 @@
  * Draws a balloon large enough to accommodate the text, and in an appropriate location.
  *  
  * ImageMagick's <a href="https://imagemagick.org/api/drawing-wand.php#DrawRectangle">DrawRectangle</a> command requires providing four points representing the top-left and bottom-right corners. See the specification for detail about how those points are computed.
- */
+ * @param m_wand Pointer to the wand.
+* @param theme Pointer to the currently selected theme.
+* @param user_data Pointer to user data.
+*/
 void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
 	Text_Analysis *text_analysis = user_data->text_analysis;
@@ -86,6 +89,9 @@ void add_balloon(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
 /**
  * Adds the path to the image. The path is polyline of three points. The vertex is supplied by the user, and the other two points jut into the balloon. See the specification for detail about how those points are computed.
+* @param m_wand Pointer to the wand.
+* @param theme Pointer to the currently selected theme.
+* @param user_data Pointer to user data.
  */
 void add_path(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 

@@ -15,6 +15,9 @@
 
 /**
 Receives a log level and text message, and outputs them along with a time stamp to the log file.
+* @param log_level Standard `GLogLevelFlags` representing the message severity.
+* @param message Message sent to the log file.
+* @param user_data Pointer to user data.
  */
 void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data) {
 	
@@ -60,6 +63,8 @@ void logger(GLogLevelFlags log_level, const gchar *message, User_Data *user_data
 
 /**
 Opens the log file and returns the pointer.
+* @param configuration Pointer to the Configuration structure that contains the path to the log file.
+* @return Pointer to the log file.
  */
 FILE *get_log_file_pointer(Configuration *configuration) {
 	FILE *file_ptr = fopen (configuration ->log_file_path, "a");
@@ -71,6 +76,10 @@ FILE *get_log_file_pointer(Configuration *configuration) {
 
 /**
 * Constructs a log message describing a theme.
+* @param key Points to the theme's name.
+* @param value Pointer to the theme being logged.
+* @param user_data Pointer to user data.
+* \sa log_configuration_values()
 */
 void print_theme(gpointer key, gpointer value, gpointer user_data) {
 
@@ -110,6 +119,7 @@ void print_theme(gpointer key, gpointer value, gpointer user_data) {
 
 /**
 Writes to the log file the current settings.
+* @param user_data Pointer to user data.
  */
 void log_configuration_values(User_Data *user_data) {
 	
@@ -213,6 +223,8 @@ void log_configuration_values(User_Data *user_data) {
 
 /**
  * Updates the text in the status bar.
+ * @param status_bar Pointer to the status bar.
+ * @param formatting_string Standard formatting string for assembling a message from the subsequent parameters (if any).
  */
 void populate_status_bar(GtkWidget *status_bar, const gchar *formatting_string, ...) {
 

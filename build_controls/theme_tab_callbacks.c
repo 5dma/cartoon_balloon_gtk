@@ -12,6 +12,8 @@
  *   - `12` is the font size.
  * - Saves the font family and face in the theme's `font_name` field.
  * - Saves the font size in the theme's `font_size` field.
+* @param self Pointer to the font chooser widget.
+* @param data Pointer to user data.
  */
 void save_selected_font_to_theme(GtkButton *self, gpointer data)
 {
@@ -41,7 +43,9 @@ void save_selected_font_to_theme(GtkButton *self, gpointer data)
  * - Saves the color in hex format to the theme.
  * - Displays the hex value in the GUI.
  * - Redraws the preview with the new text color.
- */
+ * @param self Pointer to the color chooser widget.
+ * @param data Pointer to user data.
+*/
 void save_selected_font_color_to_theme(GtkColorButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
@@ -64,6 +68,8 @@ void save_selected_font_color_to_theme(GtkColorButton *self, gpointer data)
  * - Saves the color in hex format to the theme.
  * - Displays the hex value in the GUI.
  * - Redraws the preview with the new fill color.
+ * @param self Pointer to the color chooser widget.
+ * @param data Pointer to user data.
  */
 void save_selected_balloon_fill_color_to_theme(GtkColorButton *self, gpointer data)
 {
@@ -87,6 +93,8 @@ void save_selected_balloon_fill_color_to_theme(GtkColorButton *self, gpointer da
  * - Saves the color in hex format to the theme.
  * - Displays the hex value in the GUI.
  * - Redraws the preview with the new stroke color.
+ * @param self Pointer to the color chooser widget.
+ * @param data Pointer to user data.
  */
 void save_selected_balloon_stroke_color_to_theme(GtkColorButton *self, gpointer data)
 {
@@ -110,7 +118,9 @@ void save_selected_balloon_stroke_color_to_theme(GtkColorButton *self, gpointer 
  * - Saves the color in hex format to the theme.
  * - Displays the hex value in the GUI.
  * - Redraws the preview with the new width.
- */
+  * @param self Pointer to the spin button.
+ * @param data Pointer to user data.
+*/
 void save_selected_stroke_width_to_theme(GtkSpinButton *self, gpointer data)
 {
 	User_Data *user_data = (User_Data *)data;
@@ -122,6 +132,8 @@ void save_selected_stroke_width_to_theme(GtkSpinButton *self, gpointer data)
 
 /**
  * Fired when the user toggles the rounded corners checkbox in the **Themes** tab. The function saves the new setting in the theme, redraws the preview with or without rounded corners.
+ * @param self Pointer to the checkbox.
+ * @param data Pointer to user data.
  */
 void redraw_rounded_corners( GtkCheckButton* self,  gpointer data) {
 	User_Data *user_data = (User_Data *)data;
@@ -134,6 +146,9 @@ void redraw_rounded_corners( GtkCheckButton* self,  gpointer data) {
  * Fired when the user selects a new theme in the **Themes** tab. The function does one of two things:
  * - If the user selected an existing theme, retrieve the theme's settings and assign them to the widgets.
  * - If the user selected **(new)**, activate the text box for entering a the new theme's name. Implicitly the new theme inherits the settings of the currently selected theme.
+ * @param self Pointer to the theme dropdown.
+ * @param pspec Provided by GTK, not used.
+ * @param data Pointer to user data.
  */
 void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 {
@@ -215,6 +230,11 @@ void theme_selection_changed(GObject *self, GParamSpec *pspec, gpointer data)
 
 /**
  * Draws a preview of the selected theme in the Themes tab.
+ * @param drawing_area Pointer to the preview's drawing area.
+ * @param cr Pointer to the Cairo context associated with the preview.
+ * @param width Width of the drawing area provided by GTK; not used.
+ * @param height Height of the drawing area provided by GTK; not used.
+ * @param data Pointer to user data.
  */
 void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 				int width,
@@ -376,6 +396,8 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr,
 
 /**
  * Fired when the user changes the name in the new theme field. As the user types characters, the function displays a message if the new name already exists in the hash of themes. The new theme is actually saved when the user exits the entry field. See new_theme().
+* @param self Pointer to the anonymous text box holding a new theme's name.
+* @param data Pointer to user data.
  */
 void get_new_theme_name(GtkWidget *self, gpointer data)
 {
@@ -401,6 +423,8 @@ void get_new_theme_name(GtkWidget *self, gpointer data)
  * -# Populates the new theme's fields with values from the currently displayed theme.
  * -# Adds the new theme to the hash.
  * -# Adds the new theme's name to the model populating the theme dropdown.
+ * @param self Pointer to the anonymous text box holding a new theme's name.
+ * @param data Pointer to user data.
  */
 void new_theme(GtkEventControllerFocus *self, gpointer data)
 {
@@ -490,7 +514,8 @@ void new_theme(GtkEventControllerFocus *self, gpointer data)
  * -# Frees memory allocated to the theme.
  * -# Removes the theme from the list model populating the dropdown.
  * -# Selects the next available theme in the dropdown.
- */
+ * @param self Pointer to the **Delete** button.
+ * @param data Pointer to user data. */
 void delete_theme(GtkButton *self, gpointer data)
 {
 

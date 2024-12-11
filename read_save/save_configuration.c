@@ -9,6 +9,8 @@
 
 /**
 * Formats into JSON the settings in the Configuration struct.
+* @param user_data Pointer to user data.
+* @param builder Pointer to the currently active JSON builder.
 */
 void save_configuration(User_Data *user_data, JsonBuilder *builder) {
 

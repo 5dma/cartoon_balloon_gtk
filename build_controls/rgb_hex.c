@@ -7,7 +7,9 @@
  */
 
 /**
- * Converts a passed hexadecimal character to its corresponding integer.
+ * Converts a passed hexadecimal character to its corresponding integer. For example, passing ``'1'`` to this function returns `1`.
+ * @param digit A digit literal, such as `0` and `1`.
+ * @return Integer corresponding to the literal. 
  */
 gint convert_hex_to_int(const gchar digit)
 {
@@ -54,6 +56,8 @@ gint convert_hex_to_int(const gchar digit)
 
 /**
  * Converts a hexadecimal color (such as `#ABCD12`) to an RGB triplet. The RGB triplets are in the range 0-100.
+ * @param rgb Pointer to an instantiated `GdkRGBA` triplet.
+ * @param hex A gchar pointing to the hexadecimal color string.
  */
 void convert_hex_to_rgb(GdkRGBA *rgb, const gchar *hex)
 {
@@ -89,6 +93,8 @@ void convert_hex_to_rgb(GdkRGBA *rgb, const gchar *hex)
 
 /**
  *Converts a `GdkRGBA` struct to a hexadecimal color.
+ * @param hex A gchar pointing to the hexadecimal color string. The calling function owns this array.
+ * @param rgb Pointer to an instantiated `GdkRGBA` triplet.
  */
 void convert_rgb_to_hex(gchar *hex, const GdkRGBA *rgb)
 {

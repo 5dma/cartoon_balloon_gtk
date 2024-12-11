@@ -12,6 +12,9 @@
   Adds text to the image.
 
   The ImageMagic command <a href="https://imagemagick.org/api/magick-image.php#MagickAnnotateImage">MagickAnnotateImage</a> requires points for placing the text.  See the specification for detail about how those points are computed.
+* @param m_wand Pointer to the wand.
+* @param theme Pointer to the currently selected theme.
+* @param user_data Pointer to user data.
  */
 void add_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 	
@@ -57,6 +60,9 @@ void add_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
  * At the end of this function, this function saves the dimensions of the resulting text block. These dimenions are used for the following tasks:
  * - Compute the size of the balloon.
  * - Resize as necessary the image upward to contain the balloon.
+ * @param m_wand Pointer to the wand.
+* @param theme Pointer to the currently selected theme.
+* @param user_data Pointer to user data.
  */
 void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 

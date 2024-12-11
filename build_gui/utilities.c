@@ -7,7 +7,11 @@
 
 
 /**
-* Function for sorting the themes in the theme model. This sort function ensures that the entry (new) appears last.
+* Function for sorting the themes in the theme model. This sort function ensures that the entry `(new)` appears last.
+* @param a First string in comparison.
+* @param b Second string in comparison.
+* @param user_data Pointer to user data.
+* @return `-1`, `0`, or `1` if `a` is smaller than, equal to, or greater than `b`.
 */
 gint comparestrings (gconstpointer a, gconstpointer b, gpointer user_data) {
 	GtkStringObject *object_a = (GtkStringObject *)a;
@@ -30,7 +34,11 @@ gint comparestrings (gconstpointer a, gconstpointer b, gpointer user_data) {
 
 
 /**
- * Returns a pointer to the theme for the currently selected theme name in the Themes or Annotation tab.
+ * Returns a pointer to the theme for the currently selected theme name in the **Themes** or **Annotation** tab.
+ * @param user_data Pointer to user data.
+ * @param dropdown_theme Pointer to the theme dropdown.
+ * @return Pointer to the selected theme in the theme hash.
+ * \sa Theme
  */
 gpointer get_selected_theme_from_hash(User_Data *user_data, GtkWidget *dropdown_theme) {
 

@@ -8,6 +8,7 @@
 
 /**
  * Initializes the GUI from the settings read from disk.
+*  @param user_data Pointer to user data.
  */
 void initialize_gui(User_Data *user_data) {
 	Gui_Data *gui_data = user_data->gui_data;

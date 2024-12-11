@@ -8,7 +8,8 @@
 
 /**
  * Builds the box containing theme controls, and returns the associated widget.
- */
+ @param user_data Pointer to user data.
+ @return Widget with the theme controls. */
 GtkWidget *build_box_theme(User_Data *user_data) {
 
 	/* Build the box containing theme controls. */
