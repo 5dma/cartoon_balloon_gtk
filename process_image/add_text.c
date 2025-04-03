@@ -73,7 +73,7 @@ void analyze_text(MagickWand *m_wand, Theme *theme, User_Data *user_data) {
 
 
 	// Need to find another place for this assignment, should not be here. 
-	annotation->preview_scale = (float) annotation->dimensions_original_image.height / annotation->dimensions_picture_preview_widget.height;
+	annotation->preview_scale = (float) annotation->dimensions_original_image.height / annotation->dimensions_original_preview_widget.height;
 	
 	/* Compute locations where text will be placed. */
 	guint text_bottom_left_x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gui_data_annotation->spin_text_bottom_left_x));

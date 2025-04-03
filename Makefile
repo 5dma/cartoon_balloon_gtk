@@ -13,7 +13,7 @@ SRCEXT      := c
 OBJEXT      := o
 INSTALLDIR  := /usr/local/bin/
 #Flags, Libraries and Includes
-CFLAGS      := -Wall `pkg-config --cflags ImageMagick` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags glib-2.0` `pkg-config --cflags gtk4`
+CFLAGS      := -Wall -g `pkg-config --cflags ImageMagick` `pkg-config --cflags json-glib-1.0` `pkg-config --cflags glib-2.0` `pkg-config --cflags gtk4`
 LFLAGS         := `pkg-config --libs glib-2.0` `pkg-config --libs json-glib-1.0` `pkg-config --libs gtk4` `pkg-config --libs ImageMagick` `pkg-config --libs MagickWand`
 INC          := -I$(INCDIR)
 

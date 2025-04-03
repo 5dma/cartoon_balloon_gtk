@@ -18,7 +18,8 @@ void initialize_gui(User_Data *user_data) {
 
 	const gchar *input_image = gtk_editable_get_text (GTK_EDITABLE(gui_data_annotation->entry_input_image));
 	
-	gtk_picture_set_filename (GTK_PICTURE(gui_data_annotation->picture_preview), input_image);
+	gtk_picture_set_filename (GTK_PICTURE(gui_data_annotation->original_preview), input_image);
+	gtk_picture_set_filename (GTK_PICTURE(gui_data_annotation->annotated_preview), input_image);
 	/* Get initial dimensions of the image. */
 	gdk_pixbuf_get_file_info(input_image, &(user_data->annotation->dimensions_original_image.width), &(user_data->annotation->dimensions_original_image.height));
 

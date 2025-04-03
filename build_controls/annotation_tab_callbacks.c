@@ -22,7 +22,7 @@ void show_annotation_tab(GtkWidget *widget, gpointer data)
 Fired when the user selects a file in the file open dialog box. The processing includes the following:
 * - Storing the path of the selected file.
 * - Displaying the path in the GUI.
-* - Displaying the file in the picture preview widget.
+* - Displaying the file in the original preview widget.
 * - Storing the image's width and height.
 * @param dialog Pointer to the file open dialog.
 * @param response Response received from the file open dialog.
@@ -43,7 +43,8 @@ static void on_open_response(GtkDialog *dialog, int response, gpointer data)
 
 		gtk_editable_set_text (GTK_EDITABLE(user_data->gui_data->gui_data_annotation->entry_input_image), file_name);
 
-		gtk_picture_set_file(GTK_PICTURE(user_data->gui_data->gui_data_annotation->picture_preview), file);
+		gtk_picture_set_file(GTK_PICTURE(user_data->gui_data->gui_data_annotation->original_preview), file);
+		gtk_picture_set_file(GTK_PICTURE(user_data->gui_data->gui_data_annotation->annotated_preview), file);
 
 		gdk_pixbuf_get_file_info(g_file_get_parse_name(file), &(user_data->annotation->dimensions_original_image.width), &(user_data->annotation->dimensions_original_image.height));
 
@@ -68,21 +69,21 @@ void on_mouse_enter_image(GtkEventControllerMotion *self, gdouble x, gdouble y, 
 {
 
 	User_Data *user_data = (User_Data *)data;
-	GtkWidget *picture_preview = user_data->gui_data->gui_data_annotation->picture_preview;
-	Dimensions *dimensions_picture_preview_widget = &(user_data->annotation->dimensions_picture_preview_widget);
+	GtkWidget *original_preview = user_data->gui_data->gui_data_annotation->original_preview;
+	Dimensions *dimensions_original_preview_widget = &(user_data->annotation->dimensions_original_preview_widget);
 
-	dimensions_picture_preview_widget->width = gtk_widget_get_width(picture_preview);
-	dimensions_picture_preview_widget->height = gtk_widget_get_height(picture_preview);
+	dimensions_original_preview_widget->width = gtk_widget_get_width(original_preview);
+	dimensions_original_preview_widget->height = gtk_widget_get_height(original_preview);
 
 	Annotation *annotation = user_data->annotation;
 	Dimensions image_preview;
 
-	image_preview.height = dimensions_picture_preview_widget->height;
+	image_preview.height = dimensions_original_preview_widget->height;
 	image_preview.width = ((float)annotation->dimensions_original_image.width /
 						   annotation->dimensions_original_image.height) *
-						  dimensions_picture_preview_widget->height;
+						  dimensions_original_preview_widget->height;
 
-	annotation->coordinates_scaled_image_top_left.x = (dimensions_picture_preview_widget->width - image_preview.width) / 2;
+	annotation->coordinates_scaled_image_top_left.x = (dimensions_original_preview_widget->width - image_preview.width) / 2;
 	annotation->coordinates_scaled_image_top_left.y = 0;
 
 	annotation->coordinates_scaled_image_bottom_right.x = annotation->coordinates_scaled_image_top_left.x + image_preview.width;
@@ -108,7 +109,7 @@ void on_mouse_motion_image(GtkEventControllerMotion *self, gdouble x, gdouble y,
 	if ((x >= annotation->coordinates_scaled_image_top_left.x) &&
 		(x <= annotation->coordinates_scaled_image_bottom_right.x))
 	{
-		gtk_widget_set_cursor(gui_data_annotation->picture_preview, user_data->annotation->crosshair_cursor);
+		gtk_widget_set_cursor(gui_data_annotation->original_preview, user_data->annotation->crosshair_cursor);
 
 		if (annotation->is_selecting_vertex_point)
 		{
@@ -124,7 +125,7 @@ void on_mouse_motion_image(GtkEventControllerMotion *self, gdouble x, gdouble y,
 	}
 	else
 	{
-		gtk_widget_set_cursor(user_data->gui_data->gui_data_annotation->picture_preview, NULL);
+		gtk_widget_set_cursor(user_data->gui_data->gui_data_annotation->original_preview, NULL);
 	}
 }
 

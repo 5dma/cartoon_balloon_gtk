@@ -15,8 +15,10 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	/* Appears in the top button bar*/
 	GtkWidget *btn_annotation = gtk_button_new_with_label("Annotation");
 
-	GtkWidget *box_annotation  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+	GtkWidget *box_annotation  = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	GtkWidget *grid_annotation = gtk_grid_new ();
+	GtkWidget *box_previews  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+	GtkWidget *box_annotation_controls  = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
 	/* Controls for selecting the input image. */
 	GtkWidget *lbl_input_image = gtk_label_new ("Input image:");
@@ -114,15 +116,25 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_box_append(GTK_BOX(box_width_theme), dropdown_theme);
 
 	/* Control for the image preview. */
-	GtkWidget *picture_preview = gtk_picture_new();
+	GtkWidget *original_preview = gtk_picture_new();
+	GtkWidget *annotated_preview = gtk_picture_new();
+	gtk_box_append(GTK_BOX(box_previews), original_preview);
+	gtk_box_append(GTK_BOX(box_previews), annotated_preview);
+	gtk_widget_set_size_request (original_preview, 200, -1);
+	gtk_widget_set_size_request (annotated_preview, 200, -1);
 
-	gtk_box_append(GTK_BOX(box_annotation), grid_annotation);
-	gtk_box_append(GTK_BOX(box_annotation), grid_coordinates);
-	gtk_box_append(GTK_BOX(box_annotation), box_width_theme);
-	gtk_box_append(GTK_BOX(box_annotation), grid_text_string_export);
-	gtk_box_append(GTK_BOX(box_annotation), picture_preview);
+
+	gtk_box_append(GTK_BOX(box_annotation_controls), grid_annotation);
+	gtk_box_append(GTK_BOX(box_annotation_controls), grid_coordinates);
+	gtk_box_append(GTK_BOX(box_annotation_controls), box_width_theme);
+	gtk_box_append(GTK_BOX(box_annotation_controls), grid_text_string_export);
+
+	gtk_box_append(GTK_BOX(box_annotation), box_annotation_controls);
+	gtk_box_append(GTK_BOX(box_annotation), box_previews);
 
 	gtk_widget_add_css_class (box_annotation, "tab" );
+	gtk_widget_add_css_class (box_annotation_controls, "tab" );
+	gtk_widget_add_css_class (box_previews, "tab" );
 
 	
 	gtk_widget_add_css_class (lbl_text_bottom_left, "horizontal_field_label");
@@ -138,6 +150,9 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_widget_add_css_class(grid_coordinates,"grid_coordinates");
 	gtk_widget_add_css_class(box_width_theme,"grid_coordinates");
 	gtk_widget_add_css_class(grid_text_string_export,"grid_coordinates");
+
+	gtk_widget_add_css_class(original_preview,"preview");
+	gtk_widget_add_css_class(annotated_preview,"preview");
 
 	gtk_editable_set_alignment (GTK_EDITABLE(spin_text_bottom_left_x), 1.0);
 	gtk_editable_set_alignment (GTK_EDITABLE(spin_text_bottom_left_y), 1.0);
@@ -170,7 +185,8 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gui_data_annotation->dropdown_theme = dropdown_theme;
 	gui_data_annotation->entry_text_string = entry_text_string;
 	gui_data_annotation->btn_export = btn_export;
-	gui_data_annotation->picture_preview = picture_preview;
+	gui_data_annotation->original_preview = original_preview;
+	gui_data_annotation->annotated_preview = annotated_preview;
 	gui_data_annotation->file_filter = file_filter;
 
 	/* At program start, the annotation tab is visible. */

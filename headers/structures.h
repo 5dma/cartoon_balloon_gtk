@@ -49,7 +49,7 @@ typedef struct Annotation
 	float resize_proportion_x; /**< Proportion the image is resized in the x direction so that it does not exceed the maximal width. */
 	float preview_scale; /**< Ratio of the original image's height to the preview height. */
 	float resize_proportion_y; /**< Proportion the image is resized in the y direction so that it does not exceed the maximal width. (Typically matches `resize_proportion_x`.) */
-	Dimensions dimensions_picture_preview_widget; /**< Dimensions of the widget containing the displayed image.) */
+	Dimensions dimensions_original_preview_widget; /**< Dimensions of the widget containing the displayed image.) */
 	Dimensions dimensions_original_image; /**< Dimensions of the actual image (not scaled). */
 	Coordinates coordinates_scaled_image_top_left; /**< Coordinates of the top-left corner of the image inside inside the preview widget. */
 	Coordinates coordinates_scaled_image_bottom_right; /**< Coordinates of the bottom-right corner of the image inside inside the preview widget. */
@@ -120,7 +120,8 @@ typedef struct Gui_Data_Annotation {
 	GtkWidget *dropdown_theme; /**< Address of theme in the box_annotation tab. */
 	GtkWidget *entry_text_string; /**< Address of the entry_text_string in the box_annotaton tab. */
 	GtkWidget *btn_export; /**< Address of btn_export in the box_annotation tab. */
-	GtkWidget *picture_preview; /**< Address of the picture_preview in the box_annotaton tab. */
+	GtkWidget *original_preview; /**< Address of the original_preview in the box_annotaton tab. */
+	GtkWidget *annotated_preview; /**< Address of the original_preview in the box_annotaton tab. */
 	GtkFileFilter *file_filter; /**< Address of the file filter applied to the file chooser in the annotation tab. */
 } Gui_Data_Annotation;
 
