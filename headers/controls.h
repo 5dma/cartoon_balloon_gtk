@@ -26,3 +26,4 @@ void draw_theme(GtkDrawingArea *drawing_area, cairo_t *cr, int width, int height
 void get_new_theme_name(GtkWidget *self, gpointer data);
 void new_theme(GtkEventControllerFocus *self, gpointer data);
 void delete_theme(GtkButton *self, gpointer data);
+void draw_annotated_preview(GtkDrawingArea *drawing_area, cairo_t *cr, int width, int height, gpointer data);

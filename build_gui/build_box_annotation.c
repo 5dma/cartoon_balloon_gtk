@@ -117,13 +117,14 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 
 	/* Control for the image preview. */
 	GtkWidget *original_preview = gtk_picture_new();
-	GtkWidget *annotated_preview = gtk_picture_new();
+	GtkWidget *annotated_preview = gtk_drawing_area_new();
 	gtk_box_append(GTK_BOX(box_previews), original_preview);
 	gtk_box_append(GTK_BOX(box_previews), annotated_preview);
 	gtk_widget_set_size_request (original_preview, 200, -1);
-	gtk_widget_set_size_request (annotated_preview, 200, -1);
-
-
+	//gtk_widget_set_size_request (annotated_preview, 200, -1);
+	gtk_drawing_area_set_content_height (GTK_DRAWING_AREA(annotated_preview), 120);
+	gtk_drawing_area_set_content_width (GTK_DRAWING_AREA(annotated_preview), 200);
+	
 	gtk_box_append(GTK_BOX(box_annotation_controls), grid_annotation);
 	gtk_box_append(GTK_BOX(box_annotation_controls), grid_coordinates);
 	gtk_box_append(GTK_BOX(box_annotation_controls), box_width_theme);
@@ -136,7 +137,6 @@ GtkWidget *build_box_annotation(User_Data *user_data) {
 	gtk_widget_add_css_class (box_annotation_controls, "tab" );
 	gtk_widget_add_css_class (box_previews, "tab" );
 
-	
 	gtk_widget_add_css_class (lbl_text_bottom_left, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_coordinates_x, "horizontal_field_label");
 	gtk_widget_add_css_class (lbl_coordinates_y, "horizontal_field_label");

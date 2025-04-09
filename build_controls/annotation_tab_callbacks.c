@@ -1,4 +1,5 @@
 #include <headers.h>
+#include <rgb_hex.h>
 /**
  * @file annotation_tab_callbacks.c
  * @brief Contains callback functions for controls in the **Annotations** tab.
@@ -236,4 +237,35 @@ void launch_processing(GtkWidget *widget, gpointer data)
 
 	User_Data *user_data = (User_Data *)data;
 	process_image(user_data);
+}
+
+
+void draw_annotated_preview(GtkDrawingArea *drawing_area, cairo_t *cr,
+	int width,
+	int height,
+	gpointer data)
+{
+	g_print("Here drawing the annotated preview\n");
+	//cairo_surface_t *surface = cairo_image_surface_create_from_png ("/tmp/Untitled.png");
+	//cr = cairo_create (surface);
+
+	//GdkRGBA stroke_rgb;
+	//const gchar *stroke_hex = "FF0000";
+	//convert_hex_to_rgb(&stroke_rgb, stroke_hex);
+	cairo_set_source_rgb(cr, 0.9, 0.9, 0.5);
+	cairo_stroke(cr);
+
+	/* Draw vertex and fill */
+
+	cairo_set_source_rgb(cr, 0.5, 0.5, 0.9);
+
+	cairo_move_to(cr, 50,50);
+	cairo_line_to(cr, 90, 90);
+	cairo_line_to(cr, 60, 60);
+	cairo_fill_preserve(cr);
+
+	/* Stroke vertex */
+	cairo_set_source_rgb(cr, 0.7, 0.8, 0.9);
+	cairo_stroke(cr);
+
 }

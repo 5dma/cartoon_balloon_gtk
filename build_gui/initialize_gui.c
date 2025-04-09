@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <headers.h>
+#include <controls.h>
 
 /**
  * @file initialize_gui.c
@@ -19,7 +20,9 @@ void initialize_gui(User_Data *user_data) {
 	const gchar *input_image = gtk_editable_get_text (GTK_EDITABLE(gui_data_annotation->entry_input_image));
 	
 	gtk_picture_set_filename (GTK_PICTURE(gui_data_annotation->original_preview), input_image);
-	gtk_picture_set_filename (GTK_PICTURE(gui_data_annotation->annotated_preview), input_image);
+	gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(gui_data_annotation->annotated_preview), draw_annotated_preview, user_data, NULL);
+	gtk_widget_queue_draw(gui_data_annotation->annotated_preview);
+
 	/* Get initial dimensions of the image. */
 	gdk_pixbuf_get_file_info(input_image, &(user_data->annotation->dimensions_original_image.width), &(user_data->annotation->dimensions_original_image.height));
 
