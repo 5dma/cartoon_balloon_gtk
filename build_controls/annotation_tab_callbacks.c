@@ -246,17 +246,23 @@ void draw_annotated_preview(GtkDrawingArea *drawing_area, cairo_t *cr,
 	gpointer data)
 {
 	g_print("Here drawing the annotated preview\n");
-	//cairo_surface_t *surface = cairo_image_surface_create_from_png ("/tmp/Untitled.png");
-	//cr = cairo_create (surface);
+	cairo_surface_t *image = cairo_image_surface_create_from_png ("/tmp/booze.png");
+	cairo_status_t status = cairo_surface_status (image);
+	g_print("The status is %d\n", status);
 
-	//GdkRGBA stroke_rgb;
-	//const gchar *stroke_hex = "FF0000";
-	//convert_hex_to_rgb(&stroke_rgb, stroke_hex);
+	cairo_set_source_surface (cr, image, 0, 0);
+	cairo_paint (cr);
+
+	cairo_surface_destroy (image);
+
+	
+	GdkRGBA stroke_rgb;
+	const gchar *stroke_hex = "FF0000";
+	convert_hex_to_rgb(&stroke_rgb, stroke_hex);
 	cairo_set_source_rgb(cr, 0.9, 0.9, 0.5);
 	cairo_stroke(cr);
 
-	/* Draw vertex and fill */
-
+	
 	cairo_set_source_rgb(cr, 0.5, 0.5, 0.9);
 
 	cairo_move_to(cr, 50,50);
@@ -264,7 +270,6 @@ void draw_annotated_preview(GtkDrawingArea *drawing_area, cairo_t *cr,
 	cairo_line_to(cr, 60, 60);
 	cairo_fill_preserve(cr);
 
-	/* Stroke vertex */
 	cairo_set_source_rgb(cr, 0.7, 0.8, 0.9);
 	cairo_stroke(cr);
 
