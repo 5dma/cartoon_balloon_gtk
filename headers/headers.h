@@ -16,6 +16,10 @@
 */
 #define PREVIEW_RADIUS 10
 
+/**
+   \brief Default message in status bar.
+*/
+#define READY "Ready…"
 
 
 /* Processing headers */
