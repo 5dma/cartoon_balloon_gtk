@@ -21,9 +21,11 @@ void read_themes(User_Data *user_data, JsonReader *reader)
 	/* The following object is freed in cleanup(). Each value in the hash is a Theme struct with no pointers, so they can safey be freed with the g_free function specified in the following statement. */
 	user_data->theme_hash  = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, g_free);
 
+	GHashTable *barf = user_data->theme_hash  = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, g_free);
+
 	GHashTable* theme_hash = user_data->theme_hash;
 
-	json_reader_read_member(reader, "themes");
+	gboolean omg = json_reader_read_member(reader, "themes");
 
 	json_reader_is_array(reader);
 	gint number_of_themes = json_reader_count_elements (reader);
