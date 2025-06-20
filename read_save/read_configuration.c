@@ -18,27 +18,49 @@ void read_configuration(User_Data *user_data, JsonReader *reader) {
 
 	Configuration *configuration = user_data->configuration;
 	Gui_Data_Configuration *gui_data_configuration = user_data->gui_data->gui_data_configuration;
+	gint64 configuration_value;
 
 	json_reader_read_member(reader, "configuration");
 
 	json_reader_read_member(reader, "max_annotation_length");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_max_annotation_length), json_reader_get_int_value(reader));
+	configuration_value = json_reader_get_int_value(reader);
+	if (configuration_value == 0) {
+		configuration_value = 256;
+	}
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_max_annotation_length), configuration_value);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "padding");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_padding), json_reader_get_int_value(reader));
+	configuration_value = json_reader_get_int_value(reader);
+	if (configuration_value == 0) {
+		configuration_value = 5;
+	}
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_padding), configuration_value);
 	json_reader_end_member(reader);
 
+
 	json_reader_read_member(reader, "elevation");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_elevation), json_reader_get_int_value(reader));
+	configuration_value = json_reader_get_int_value(reader);
+	if (configuration_value == 0) {
+		configuration_value = 5;
+	}
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_elevation), configuration_value);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "space");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_space), json_reader_get_int_value(reader));
+	configuration_value = json_reader_get_int_value(reader);
+	if (configuration_value == 0) {
+		configuration_value = 5;
+	}
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_space), configuration_value);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "top_margin");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_top_margin), json_reader_get_int_value(reader));
+	configuration_value = json_reader_get_int_value(reader);
+	if (configuration_value == 0) {
+		configuration_value = 10;
+	}
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_configuration->spin_top_margin), configuration_value);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "log_file_path");

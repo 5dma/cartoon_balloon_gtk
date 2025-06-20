@@ -48,7 +48,11 @@ void read_annotation(User_Data *user_data, JsonReader *reader) {
 	json_reader_end_member(reader); /* vertex */
 
 	json_reader_read_member(reader, "new_width");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width), json_reader_get_int_value(reader));
+	guint annotation_value = json_reader_get_int_value(reader);
+	if (annotation_value == 0) {
+		annotation_value = 520;
+	}
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(gui_data_annotation->spin_new_width), annotation_value);
 	json_reader_end_member(reader);
 
 	json_reader_read_member(reader, "text_string");
