@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include <wand/MagickWand.h>
+#include <MagickWand/MagickWand.h>
 #include <glib.h>
 #include <headers.h>
 /**

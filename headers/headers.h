@@ -1,4 +1,4 @@
-#include <wand/MagickWand.h>
+#include <MagickWand/MagickWand.h>
 #include <structures.h>
 /**
  * @file headers.h

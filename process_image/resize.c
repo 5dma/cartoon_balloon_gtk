@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <headers.h>
 #include <glib.h>
-#include <wand/MagickWand.h>
+#include <MagickWand/MagickWand.h>
 #include <gtk/gtk.h>
 
 /**
@@ -25,8 +25,8 @@ void scale_image(MagickWand *m_wand, User_Data *user_data)
 
 	gint64 new_height = (new_width * old_height) / old_width;
  
-	/* Previously used the LanczosFilter and similar, I got only black images. Need to find the best filter. See the available filters at /usr/include/ImageMagick-6/Magick++/Include.h */
-	MagickResizeImage(m_wand, new_width, new_height, BoxFilter, 0);
+	/* Previously used the LanczosFilter and similar, I got only black images. Need to find the best filter. See the available filters at /usr/include/ImageMagick-7/MagickCore/resample.h */
+	MagickResizeImage(m_wand, new_width, new_height, BoxFilter);
 
 	annotation->resize_proportion_x = (float) new_width / old_width;
 	annotation->resize_proportion_y = (float) new_height / old_height;

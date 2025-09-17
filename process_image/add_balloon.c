@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <wand/MagickWand.h>
+#include <MagickWand/MagickWand.h>
 #include <headers.h>
 #include <gtk/gtk.h>
 /**

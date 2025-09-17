@@ -3,7 +3,7 @@
 #include <glib-object.h>
 #include <headers.h>
 #include <gtk/gtk.h>
-#include <wand/MagickWand.h>
+#include <MagickWand/MagickWand.h>
 /**
  * @file main.c
  * @brief Starts the application.
